@@ -1,0 +1,2975 @@
+<!DOCTYPE html>
+<!-- saved from url=(0078)file:///Users/anandpatil/Downloads/marketing-assets-guide_2026-05-13_1749.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Go-Live Marketing Assets — Visual Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', sans-serif; background: #0f0f14; color: #e8e0d8; min-height: 100vh; padding: 32px 24px; }
+
+  h1 { font-size: 22px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #f5e6c8; margin-bottom: 4px; }
+  .subtitle { font-size: 13px; color: #6a6058; margin-bottom: 28px; letter-spacing: 0.4px; }
+
+  /* Legend */
+  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #9a9088; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Summary */
+  .summary-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 8px; }
+  .card { background: #1a1a22; border: 1px solid #272724; border-radius: 10px; padding: 16px 18px; }
+  .card .num   { font-size: 30px; font-weight: 800; line-height: 1; }
+  .card .lbl   { font-size: 10px; color: #6a6058; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.9px; }
+  .card.c-shot   .num { color: #e07b54; }
+  .card.c-render .num { color: #b888e0; }
+  .card.c-ai     .num { color: #6e9ecf; }
+  .card.c-vid    .num { color: #9ab0d0; }
+  .card.c-total  .num { color: #c9a96e; }
+  .summary-note { font-size: 11px; color: #3e3c38; margin-bottom: 26px; padding-left: 2px; }
+
+  /* Page blocks */
+  .page-block { background: #1a1a22; border: 1px solid #272724; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
+  .page-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; background: #1d1d26; border-bottom: 1px solid #272724; cursor: pointer; user-select: none; }
+  .page-name { font-size: 13px; font-weight: 600; color: #f0e6d0; }
+  .page-chips { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+  .chip { font-size: 10px; padding: 2px 9px; border-radius: 20px; font-weight: 600; }
+  .chip.ch-shot   { background: rgba(224,123,84,0.14); color: #e07b54; border: 1px solid rgba(224,123,84,0.28); }
+  .chip.ch-render { background: rgba(160,110,200,0.14); color: #b888e0; border: 1px solid rgba(160,110,200,0.28); }
+  .chip.ch-ai     { background: rgba(110,158,207,0.14); color: #6e9ecf; border: 1px solid rgba(110,158,207,0.28); }
+  .chip.ch-done   { background: rgba(90,122,90,0.18);   color: #7db87d; border: 1px solid rgba(90,122,90,0.28); }
+  .chevron { color: #444; font-size: 16px; transition: transform 0.2s; margin-left: 6px; }
+  .chevron.open { transform: rotate(90deg); }
+
+  /* Table */
+  .widgets-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
+  .widgets-table th { padding: 7px 12px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.9px; color: #555048; background: #141418; border-bottom: 1px solid #272724; }
+  .widgets-table td { padding: 9px 12px; border-bottom: 1px solid #1c1c24; vertical-align: middle; }
+  .widgets-table tr:last-child td { border-bottom: none; }
+  .widgets-table tr:hover td { background: #1c1c26; }
+  .col-name   { width: 190px; }
+  .col-req    { width: 140px; }
+  .col-assets { width: 200px; }
+  .col-prod   { width: 100px; text-align: center; }
+  .col-status { width: 130px; text-align: center; }
+  .col-notes  { width: 260px; }
+  th.col-prod, th.col-status { text-align: center; }
+
+  /* Notes cell */
+  .notes-field {
+    display: block;
+    width: 100%;
+    min-height: 18px;
+    outline: none;
+    border-radius: 5px;
+    padding: 3px 6px;
+    margin: -3px -6px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #8a8278;
+    transition: background 0.12s, box-shadow 0.12s, color 0.12s;
+    cursor: text;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .notes-field:empty::before { content: attr(data-ph); color: #3a3830; pointer-events: none; }
+  .notes-field:hover { background: rgba(255,255,255,0.03); }
+  .notes-field:focus { background: rgba(201,169,110,0.07); box-shadow: 0 0 0 1px rgba(201,169,110,0.25); color: #c0b8a8; }
+
+  .w-name { color: #d0c8bc; font-size: 12px; line-height: 1.4; }
+  .w-req  { color: #6a6058; font-size: 11px; line-height: 1.5; }
+  .type-badge { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 8px; font-weight: 700; text-transform: uppercase; margin-left: 5px; vertical-align: middle; }
+  .tb-fixed  { background: rgba(90,100,140,0.22); color: #9ab0d0; }
+  .tb-custom { background: rgba(160,120,60,0.18);  color: #c0904a; }
+
+  /* Asset pills */
+  .asset-pills { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
+  .pill { font-size: 10px; border-radius: 6px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 2px; padding: 3px 4px 3px 8px; }
+  .pill.p-shot   { background: rgba(224,123,84,0.18); color: #e8906a; border: 1px solid rgba(224,123,84,0.32); }
+  .pill.p-render { background: rgba(160,110,200,0.16); color: #c0a0e8; border: 1px solid rgba(160,110,200,0.28); }
+  .pill.p-ai     { background: rgba(110,158,207,0.18); color: #7ab0d8; border: 1px solid rgba(110,158,207,0.32); }
+  .pill-cnt { min-width: 14px; text-align: center; display: inline-block; }
+  .pbtn { cursor: pointer; font-size: 12px; font-weight: 800; opacity: 0.4; line-height: 1; padding: 0 3px; transition: opacity 0.12s; }
+  .pbtn:hover { opacity: 1; }
+  .render-note { font-size: 9px; color: #4a3a5a; font-style: italic; padding: 0 2px; }
+  .add-sel { background: #14141a; border: 1px dashed #2e2c28; color: #444; font-size: 10px; border-radius: 6px; padding: 3px 6px; cursor: pointer; outline: none; }
+  .add-sel:hover { border-color: #555; color: #a0a898; }
+
+  /* Product-dependent column */
+  .prod-cell { text-align: center; }
+  .prod-toggle { display: inline-block; font-size: 10px; padding: 3px 12px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: opacity 0.14s; user-select: none; }
+  .prod-toggle:hover { opacity: 0.72; }
+  .pt-yes { background: rgba(201,169,110,0.16); color: #d4b878; border: 1px solid rgba(201,169,110,0.32); }
+  .pt-no  { background: rgba(60,60,60,0.18);   color: #4a4840; border: 1px solid rgba(60,60,60,0.22); }
+
+  /* Status column */
+  .status-cell { text-align: center; }
+  .sbadge { display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: opacity 0.14s; user-select: none; }
+  .sbadge:hover { opacity: 0.72; }
+  .sb-tbd     { background: rgba(60,60,60,0.14); color: #484840; border: 1px solid rgba(60,60,60,0.2); }
+  .sb-done    { background: rgba(90,180,130,0.18); color: #6dcc9a; border: 1px solid rgba(90,180,130,0.36); }
+  .sb-pending { background: rgba(180,140,60,0.18); color: #d4a040; border: 1px solid rgba(180,140,60,0.36); }
+
+  /* Collections section */
+  .collections-wrap { margin-bottom: 28px; }
+  .coll-section-header { display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; padding: 4px 0 12px; }
+  .coll-section-title { font-size:11px; text-transform:uppercase; letter-spacing:1.6px; color:#6a6058; font-weight:600; }
+  .coll-section-meta { display:flex; gap:8px; align-items:center; }
+  .col-badge { font-size:10px; padding:2px 10px; border-radius:20px; font-weight:700; }
+  .col-badge.golive   { background:rgba(201,169,110,0.16); color:#d4b878; border:1px solid rgba(201,169,110,0.28); }
+  .col-badge.eventual { background:rgba(110,158,207,0.12); color:#6e9ecf; border:1px solid rgba(110,158,207,0.24); }
+  .coll-chevron { color:#444; font-size:15px; transition:transform 0.2s; }
+  .coll-chevron.open { transform:rotate(90deg); }
+  .collections-body.hidden { display:none; }
+  .collections-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
+  .persona-card { background:#1a1a22; border:1px solid #272724; border-radius:10px; overflow:hidden; }
+  .persona-header { padding:10px 14px 8px; border-bottom:1px solid #272724; }
+  .persona-name  { font-size:11px; font-weight:700; color:#f0e6d0; letter-spacing:0.3px; }
+  .persona-count { font-size:9px; color:#6a6058; margin-top:3px; }
+  .collection-list { padding:8px 14px 10px; display:flex; flex-direction:column; gap:6px; }
+  .coll-item { display:flex; align-items:flex-start; gap:7px; }
+  .coll-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:4px; }
+  .coll-dot.gl { background:#c9a96e; }
+  .coll-dot.ev { background:#2e3e58; }
+  .coll-name { font-size:11px; line-height:1.45; }
+  .coll-name.gl-name { color:#c8b890; }
+  .coll-name.ev-name { color:#3e4e68; }
+  .coll-sub  { font-size:10px; color:#4a4840; font-style:italic; margin-top:1px; }
+
+  .widget-rows { display: none; }
+  .widget-rows.open { display: table-row-group; }
+
+  /* Add row / section / column controls */
+  .add-row-tr td { padding: 6px 12px; border-bottom: none; }
+  .add-row-btn { background: none; border: 1px dashed #2a2828; color: #3e3c38; font-size: 11px; border-radius: 6px; padding: 4px 14px; cursor: pointer; font-family: inherit; transition: border-color 0.12s, color 0.12s; }
+  .add-row-btn:hover { border-color: #c9a96e; color: #c9a96e; }
+  .add-section-btn { display: block; width: 100%; background: none; border: 1px dashed #2a2828; color: #3e3c38; font-size: 12px; font-family: inherit; border-radius: 10px; padding: 11px; cursor: pointer; margin-top: 10px; transition: border-color 0.12s, color 0.12s; }
+  .add-section-btn:hover { border-color: #c9a96e; color: #c9a96e; }
+
+  /* Delete buttons */
+  .row-del-cell { width: 22px; text-align: center; }
+  .row-del-th   { width: 22px; }
+  .row-del-btn  { color: #2e2c2a; font-size: 15px; cursor: pointer; transition: color 0.12s; line-height: 1; }
+  .row-del-btn:hover  { color: #e07b54; }
+  .page-del-btn { color: #3a3830; font-size: 16px; cursor: pointer; padding: 2px 4px; line-height: 1; transition: color 0.12s; }
+  .page-del-btn:hover { color: #e07b54; }
+
+  /* Add / custom column */
+  .add-col-th   { width: 28px; text-align: center; }
+  .add-col-th span { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #16161e; border: 1px dashed #2a2828; color: #3e3c38; font-size: 15px; cursor: pointer; transition: border-color 0.12s, color 0.12s; }
+  .add-col-th span:hover { border-color: #c9a96e; color: #c9a96e; }
+  .col-custom   { min-width: 140px; }
+  .col-del-btn  { margin-left: 5px; color: #2e2c2a; font-size: 11px; cursor: pointer; transition: color 0.12s; }
+  .col-del-btn:hover { color: #e07b54; }
+
+  /* Editable page name */
+  .page-header .editable-field { display: inline; cursor: text; }
+
+  /* Editable line items */
+  .editable-field {
+    display: inline;
+    outline: none;
+    border-radius: 4px;
+    padding: 1px 3px;
+    margin: -1px -3px;
+    transition: background 0.12s, box-shadow 0.12s;
+    cursor: text;
+  }
+  .editable-field:hover { background: rgba(255,255,255,0.04); }
+  .editable-field:focus {
+    background: rgba(201,169,110,0.08);
+    box-shadow: 0 0 0 1px rgba(201,169,110,0.3);
+  }
+
+  /* Bottom toolbar */
+  .bottom-toolbar { position: fixed; bottom: 28px; right: 28px; display: flex; align-items: center; gap: 8px; z-index: 9999; }
+  .save-btn { background: #1f1f2a; border: 1px solid #3a3830; color: #c9a96e; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: background 0.15s, border-color 0.15s; }
+  .save-btn:hover { background: #272736; border-color: #c9a96e; }
+  .save-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .ur-btn { background: #1f1f2a; border: 1px solid #3a3830; color: #7a7268; font-size: 15px; padding: 8px 13px; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s; line-height: 1; }
+  .ur-btn:hover:not([disabled]) { background: #272736; border-color: #9a9088; color: #c0b8a8; }
+  .ur-btn[disabled] { opacity: 0.22; cursor: default; pointer-events: none; }
+  .autosave-lbl { font-size: 11px; color: #4a4840; letter-spacing: 0.3px; padding: 0 4px; white-space: nowrap; transition: color 0.3s; }
+  .autosave-lbl.saved { color: #6dcc9a; }
+</style>
+<style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style></head>
+<body>
+
+<h1>Go-Live Marketing Assets</h1>
+<p class="subtitle">Production method · Product dependency · Status</p>
+
+<div class="legend">
+  <div class="legend-item"><div class="dot" style="background:#e07b54"></div>Image Shoot</div>
+  <div class="legend-item"><div class="dot" style="background:#b888e0"></div>Rendered</div>
+  <div class="legend-item"><div class="dot" style="background:#6e9ecf"></div>AI Generated</div>
+  <div class="legend-item" style="margin-left:10px;"><div class="dot" style="background:#6dcc9a"></div>Done</div>
+  <div class="legend-item"><div class="dot" style="background:#d4a040"></div>Pending Renders</div>
+  <div class="legend-item" style="margin-left:10px;"><div class="dot" style="background:#d4b878;border-radius:2px"></div>Product Dependent</div>
+</div>
+
+<!-- Summary Cards -->
+<div class="summary-row">
+  <div class="card c-shot">  <div class="num" id="s-shot">56</div>  <div class="lbl">Image Shoot</div>   </div>
+  <div class="card c-render"><div class="num" id="s-render">0</div><div class="lbl">Rendered</div>      </div>
+  <div class="card c-ai">   <div class="num" id="s-ai">275</div>    <div class="lbl">AI Generated</div>  </div>
+  <div class="card c-vid">  <div class="num" id="s-vid">7</div>   <div class="lbl">Videos</div>        </div>
+  <div class="card c-total"><div class="num" id="s-total">331</div> <div class="lbl">Total (excl. renders)</div></div>
+</div>
+<p class="summary-note">⬡ Rendered assets excluded from total tally</p>
+
+<!-- Collections Reference -->
+<div class="collections-wrap">
+  <div class="coll-section-header" onclick="toggleColls()">
+    <span class="coll-section-title">Collections</span>
+    <div class="coll-section-meta">
+      <span class="col-badge golive">9 Go-Live</span>
+      <span class="col-badge eventual">~96 Eventually (16 × 6 personas)</span>
+      <span class="coll-chevron open" id="coll-chev">›</span>
+    </div>
+  </div>
+  <div class="collections-body" id="coll-body">
+    <div class="collections-grid">
+
+      <!-- Persona 1: Gala Grandeur -->
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-name">Gala Grandeur</div>
+          <div class="persona-count">3 collections · 3 go-live</div>
+        </div>
+        <div class="collection-list">
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Ensemble</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Empress</div><div class="coll-sub">The Maharani</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Lumiere</div><div class="coll-sub">Qween of Eden</div></div></div>
+        </div>
+      </div>
+
+      <!-- Persona 2: Pride -->
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-name">Pride</div>
+          <div class="persona-count">4 collections · 3 go-live</div>
+        </div>
+        <div class="collection-list">
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Pride</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Eleve</div><div class="coll-sub">Stairway to Power</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Wolf</div></div></div>
+          <div class="coll-item"><div class="coll-dot ev"></div><div><div class="coll-name ev-name">Maree</div><div class="coll-sub">Name TBD</div></div></div>
+        </div>
+      </div>
+
+      <!-- Persona 3: Untamed in Love -->
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-name">Untamed in Love</div>
+          <div class="persona-count">1 collection · 1 go-live</div>
+        </div>
+        <div class="collection-list">
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Victorious</div><div class="coll-sub">Victorious Love</div></div></div>
+        </div>
+      </div>
+
+      <!-- Persona 4: Party Girl -->
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-name">Party Girl</div>
+          <div class="persona-count">2 collections · 2 go-live</div>
+        </div>
+        <div class="collection-list">
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Confetti</div><div class="coll-sub">Paris at Midnight</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Discoball</div><div class="coll-sub">Name TBD</div></div></div>
+        </div>
+      </div>
+
+      <!-- Persona 5: Classic Capsules -->
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-name">Classic Capsules</div>
+          <div class="persona-count">4 collections · 4 go-live</div>
+        </div>
+        <div class="collection-list">
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Scallop</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Ombre</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Baguette</div></div></div>
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Paisley</div></div></div>
+        </div>
+      </div>
+
+
+      <!-- Persona 6: Femininity Reclaimed -->
+      <div class="persona-card">
+        <div class="persona-header">
+          <div class="persona-name">Femininity Reclaimed</div>
+          <div class="persona-count">1 collection · 1 go-live</div>
+        </div>
+        <div class="collection-list">
+          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">She</div><div class="coll-sub">Colour Me Committed</div></div></div>
+        </div>
+      </div>
+
+    </div><!-- /grid -->
+  </div><!-- /body -->
+</div><!-- /collections-wrap -->
+
+<div id="pages-container">
+  <div class="page-block" id="page-block-0">
+    <div class="page-header" onclick="toggle(0)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Homepage</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-0"><span class="chip ch-shot">📷 Image Shoot: 24</span><span class="chip ch-ai">✦ AI: 23</span></div>
+        <span class="chevron" id="chev-0">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(0)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-0">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hero Section</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images, 1 video</span></td>
+      <td id="pills-0-0"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">2</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shot&#39;,1)">+</span>
+      </span><span class="pill p-shot">
+        📷 Video Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shotVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shotVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,0)">Yes</span></td>
+      <td class="status-cell" id="status-0-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,0,this)">"a. How many categories we are going live with? - 8 or 9 (Earrings, Rings, Bracelets, Bangles, Pendants, Chain with pendants, neckalces, mangalsutras)b. How many products in each category?c. Which will be the hero products?"</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Category Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 img for each category-Earrings, Rings, Bracelets, Bangles, Pendants, Chain with Pendant, Necklace, Mangalsutra</span></td>
+      <td id="pills-0-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">8</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-1"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,1)">Yes</span></td>
+      <td class="status-cell" id="status-0-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,1,this)">No model</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Gold Shades Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">7 Gold colour asset images</span></td>
+      <td id="pills-0-2"><div class="asset-pills"><select class="add-sel" onchange="addTag(0,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-2"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(0,2)">No</span></td>
+      <td class="status-cell" id="status-0-2"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(0,2)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,2,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,2)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Persona Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images × 5 personas</span></td>
+      <td id="pills-0-3"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">10</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,3,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,3,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,3,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-3"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,3)">Yes</span></td>
+      <td class="status-cell" id="status-0-3"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,3)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,3,this)">"a. Part of Go-Live or not?b. Mapping is to be done as a part of Go-Live?    If Yes, we can show a basic PLP or Hero Banner with PLP    If No, we can show a static persona pagec. Hero products for each persona to be decided."</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,3)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Occasion Widget</span><span class="type-badge tb-custom">Custom</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 images × 3 occasions</span></td>
+      <td id="pills-0-4"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,4,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,4,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,4,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-4"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,4)">Yes</span></td>
+      <td class="status-cell" id="status-0-4"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,4)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,4,this)">"a. Are we doing occassion?    If Yes, then list of all occassion is needed" then tagging?</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,4)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection Widget Var 1</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 images, 12 videos for 3 collection widgets</span></td>
+      <td id="pills-0-5"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,5,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,5,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,5,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-5"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,5)">Yes</span></td>
+      <td class="status-cell" id="status-0-5"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,5)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,5,this)">Could be model/product</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,5)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection Widget Var 2</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image</span></td>
+      <td id="pills-0-6"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shot&#39;,1)">+</span>
+      </span><span class="pill p-shot">
+        📷 Video Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shotVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shotVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,6,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-6"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,6)">Yes</span></td>
+      <td class="status-cell" id="status-0-6"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,6)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,6,this)">Could be model/product</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,6)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection Widget Var 3</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images</span></td>
+      <td id="pills-0-7"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">2</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,7,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,7,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,7,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-7"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,7)">Yes</span></td>
+      <td class="status-cell" id="status-0-7"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,7)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,7,this)">Could be model/product</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,7)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Classics Widget</span><span class="type-badge tb-custom">Custom</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 collection element images (rose, etc)</span></td>
+      <td id="pills-0-8"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,8,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,8,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,8,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-8"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,8)">Yes</span></td>
+      <td class="status-cell" id="status-0-8"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,8)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,8,this)">Product shot</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,8)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,9,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">USPs</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,9,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 images</span></td>
+      <td id="pills-0-9"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,9,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,9,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,9,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-9"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(0,9)">No</span></td>
+      <td class="status-cell" id="status-0-9"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,9)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,9,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,9)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,10,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Widget-Desktop</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,10,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store shoot — images and videos of stores</span></td>
+      <td id="pills-0-10"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,10,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,10,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,10,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-10"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,10)">Yes</span></td>
+      <td class="status-cell" id="status-0-10"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,10)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,10,this)">only 1 store-NOIDA, blr and delhi-coming soon</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,10)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,11,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Services</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,11,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image each for all services</span></td>
+      <td id="pills-0-11"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">5</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,11,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,11,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,11,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-11"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(0,11)">No</span></td>
+      <td class="status-cell" id="status-0-11"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(0,11)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,11,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,11)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,12,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Widget mweb</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,12,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-0-12"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,12,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,12,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,12,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-12"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(0,12)">No</span></td>
+      <td class="status-cell" id="status-0-12"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,12)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,12,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,12)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,13,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection widget mweb</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,13,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-0-13"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,13,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,13,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(0,13,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-0-13"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(0,13)">Yes</span></td>
+      <td class="status-cell" id="status-0-13"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(0,13)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(0,13,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,13)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(0)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-1">
+    <div class="page-header" onclick="toggle(1)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">CLP × 18 (Collection Landing Page)</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-1"><span class="chip ch-shot">📷 Image Shoot: 18</span><span class="chip ch-ai">✦ AI: 162</span></div>
+        <span class="chevron" id="chev-1">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(1)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-1">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hero Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video, 3 images (×18 CLPs)</span></td>
+      <td id="pills-1-0"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">18</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,0,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,0,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,0)">Yes</span></td>
+      <td class="status-cell" id="status-1-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Moodboard</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images (×18 CLPs)</span></td>
+      <td id="pills-1-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">18</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-1"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,1)">Yes</span></td>
+      <td class="status-cell" id="status-1-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,1,this)">to get these particular attriibutes from marketing</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Inspiration Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images, 1 video (×18 CLPs)</span></td>
+      <td id="pills-1-2"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">18</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,2,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,2,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-2"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,2)">Yes</span></td>
+      <td class="status-cell" id="status-1-2"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,2)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,2,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,2)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Craftsmanship Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video (×18 CLPs)</span></td>
+      <td id="pills-1-3"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">18</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,3,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,3,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,3,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-3"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,3)">Yes</span></td>
+      <td class="status-cell" id="status-1-3"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,3)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,3,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,3)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Sketches</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image (×18 CLPs)</span></td>
+      <td id="pills-1-4"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">18</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,4,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,4,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,4,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-4"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,4)">Yes</span></td>
+      <td class="status-cell" id="status-1-4"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,4)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,4,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,4)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Featured Pieces</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image each of all featured pieces (×18 CLPs)</span></td>
+      <td id="pills-1-5"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">18</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,5,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,5,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,5,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-5"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,5)">Yes</span></td>
+      <td class="status-cell" id="status-1-5"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,5)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,5,this)">within collection-hero products mapping</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,5)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Lookbook Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video, 4 images (×18 CLPs)</span></td>
+      <td id="pills-1-6"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">72</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,6,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,6,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(1,6,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-1-6"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(1,6)">Yes</span></td>
+      <td class="status-cell" id="status-1-6"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(1,6)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(1,6,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,6)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(1)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-2">
+    <div class="page-header" onclick="toggle(2)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Persona Page × 5</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-2"></div>
+        <span class="chevron" id="chev-2">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(2)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-2">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hero Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video (×5 personas)</span></td>
+      <td id="pills-2-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(2,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-2-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(2,0)">Yes</span></td>
+      <td class="status-cell" id="status-2-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(2,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(2,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(2,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Traits Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 product sections (×5 personas)</span></td>
+      <td id="pills-2-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(2,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-2-1"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(2,1)">Yes</span></td>
+      <td class="status-cell" id="status-2-1"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(2,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(2,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Occasions Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 lifestyle shots (×5 personas)</span></td>
+      <td id="pills-2-2"><div class="asset-pills"><select class="add-sel" onchange="addTag(2,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-2-2"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(2,2)">No</span></td>
+      <td class="status-cell" id="status-2-2"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(2,2,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(2,2)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(2)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-3">
+    <div class="page-header" onclick="toggle(3)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">PLP (Product Listing Page)</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-3"><span class="chip ch-ai">✦ AI: 19</span></div>
+        <span class="chevron" id="chev-3">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(3)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-3">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(3,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Banner Images</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(3,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3D stylised renders for each category</span></td>
+      <td id="pills-3-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">11</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(3,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-3-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(3,0)">Yes</span></td>
+      <td class="status-cell" id="status-3-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(3,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(3,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(3,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(3,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Style Images</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(3,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">8 imgs x 11 categories</span></td>
+      <td id="pills-3-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">8</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(3,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-3-1"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(3,1)">Yes</span></td>
+      <td class="status-cell" id="status-3-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(3,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(3,1,this)">how many products we should have under each style?</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(3,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(3)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-4">
+    <div class="page-header" onclick="toggle(4)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Search</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-4"><span class="chip ch-ai">✦ AI: 3</span></div>
+        <span class="chevron" id="chev-4">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(4)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-4">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(4,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Shop By Persona</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(4,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images</span></td>
+      <td id="pills-4-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(4,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-4-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(4,0)">No</span></td>
+      <td class="status-cell" id="status-4-0"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(4,0,this)">removing it for go live</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(4,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(4,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Shop By Collection</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(4,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Depends on Collection</span></td>
+      <td id="pills-4-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(4,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(4,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(4,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-4-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(4,1)">No</span></td>
+      <td class="status-cell" id="status-4-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(4,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(4,1,this)">removing it for go live</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(4,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(4)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-5">
+    <div class="page-header" onclick="toggle(5)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">PDP (Product Detail Page)</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-5"><span class="chip ch-ai">✦ AI: 10</span></div>
+        <span class="chevron" id="chev-5">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(5)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-5">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Gallery</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images, 1 video (×1800 products)</span></td>
+      <td id="pills-5-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(5,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(5,0)">Yes</span></td>
+      <td class="status-cell" id="status-5-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(5,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Product locator</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video</span></td>
+      <td id="pills-5-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Video: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,1,&#39;aiVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,1,&#39;aiVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,1)">No</span></td>
+      <td class="status-cell" id="status-5-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(5,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Customisation (MWeb)</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video</span></td>
+      <td id="pills-5-2"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Video: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,2,&#39;aiVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,2,&#39;aiVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-2"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,2)">No</span></td>
+      <td class="status-cell" id="status-5-2"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(5,2)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,2,this)">REDUCE THE SIZE OF THE EXISTING VIDEO</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,2)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Customisation (Desktop)</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image</span></td>
+      <td id="pills-5-3"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,3,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,3,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,3,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-3"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,3)">No</span></td>
+      <td class="status-cell" id="status-5-3"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(5,3)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,3,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,3)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Qween Promises</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 images</span></td>
+      <td id="pills-5-4"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">4</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,4,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,4,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,4,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-4"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,4)">No</span></td>
+      <td class="status-cell" id="status-5-4"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(5,4)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,4,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,4)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Manufacturing / Craftsmanship Video</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video per category (×13)</span></td>
+      <td id="pills-5-5"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Video: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,5,&#39;aiVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,5,&#39;aiVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,5,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-5"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,5)">No</span></td>
+      <td class="status-cell" id="status-5-5"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(5,5)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,5,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,5)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Size Guide</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Size guide asset</span></td>
+      <td id="pills-5-6"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,6,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,6,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,6,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-6"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,6)">No</span></td>
+      <td class="status-cell" id="status-5-6"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(5,6)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,6,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,6)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Packaging</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image for packaging section</span></td>
+      <td id="pills-5-7"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,7,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,7,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(5,7,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-7"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,7)">No</span></td>
+      <td class="status-cell" id="status-5-7"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(5,7)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,7,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,7)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-5-8"><div class="asset-pills"><select class="add-sel" onchange="addTag(5,8,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-5-8"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(5,8)">No</span></td>
+      <td class="status-cell" id="status-5-8"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(5,8,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,8)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(5)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-6">
+    <div class="page-header" onclick="toggle(6)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Cart</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-6"><span class="chip ch-ai">✦ AI: 3</span></div>
+        <span class="chevron open" id="chev-6">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(6)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-6">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(6,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Pickup</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(6,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 images for 3 stores</span></td>
+      <td id="pills-6-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">3</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(6,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(6,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(6,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-6-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(6,0)">No</span></td>
+      <td class="status-cell" id="status-6-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(6,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(6,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(6,0)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(6)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-7">
+    <div class="page-header" onclick="toggle(7)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My Orders</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-7"><span class="chip ch-ai">✦ AI: 5</span></div>
+        <span class="chevron open" id="chev-7">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(7)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-7">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(7,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Order Stage Images</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(7,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Image assets for all stages of order</span></td>
+      <td id="pills-7-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">5</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(7,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(7,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(7,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-7-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(7,0)">No</span></td>
+      <td class="status-cell" id="status-7-0"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(7,0)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(7,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(7,0)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(7)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-8">
+    <div class="page-header" onclick="toggle(8)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Video Consultation</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-8"><span class="chip ch-shot">📷 Image Shoot: 1</span></div>
+        <span class="chevron open" id="chev-8">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(8)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-8">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(8,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Landing Page</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(8,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 explainer video (store &amp; product)</span></td>
+      <td id="pills-8-0"><div class="asset-pills"><span class="pill p-shot">
+        📷 Video Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(8,0,&#39;shotVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(8,0,&#39;shotVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(8,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-8-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(8,0)">Yes</span></td>
+      <td class="status-cell" id="status-8-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(8,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(8,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(8,0)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(8)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-9">
+    <div class="page-header" onclick="toggle(9)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(9,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Page</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-9"><span class="chip ch-shot">📷 Image Shoot: 13</span></div>
+        <span class="chevron open" id="chev-9">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(9)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-9">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Loading Screen</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video</span></td>
+      <td id="pills-9-0"><div class="asset-pills"><span class="pill p-shot">
+        📷 Video Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,0,&#39;shotVid&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,0,&#39;shotVid&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(9,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-9-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(9,0)">No</span></td>
+      <td class="status-cell" id="status-9-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(9,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(9,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Experience Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">6 images (store)</span></td>
+      <td id="pills-9-1"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">6</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,1,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,1,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(9,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-9-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(9,1)">No</span></td>
+      <td class="status-cell" id="status-9-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(9,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(9,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Persona</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images</span></td>
+      <td id="pills-9-2"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">5</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,2,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,2,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(9,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-9-2"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(9,2)">No</span></td>
+      <td class="status-cell" id="status-9-2"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(9,2)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(9,2,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,2)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Product Locator</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images — Store Layout</span></td>
+      <td id="pills-9-3"><div class="asset-pills"><span class="pill p-shot">
+        📷 Image Shoot: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,3,&#39;shot&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,3,&#39;shot&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(9,3,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-9-3"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(9,3)">No</span></td>
+      <td class="status-cell" id="status-9-3"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(9,3)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(9,3,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,3)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(9)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-10">
+    <div class="page-header" onclick="toggle(10)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(10,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">GIP (Gold Investment Plan)</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-10"><span class="chip ch-ai">✦ AI: 1</span></div>
+        <span class="chevron" id="chev-10">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(10)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-10">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(10,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main&nbsp; Asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(10,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Primary explainer/hero video</span></td>
+      <td id="pills-10-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(10,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(10,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(10,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-10-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(10,0)">No</span></td>
+      <td class="status-cell" id="status-10-0"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(10,0)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(10,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(10,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(10,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">How It Works — Icons</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(10,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 icons</span></td>
+      <td id="pills-10-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(10,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-10-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(10,1)">No</span></td>
+      <td class="status-cell" id="status-10-1"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(10,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(10,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(10)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-11">
+    <div class="page-header" onclick="toggle(11)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(11,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">OGE (Old Gold Exchange)</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-11"><span class="chip ch-ai">✦ AI: 1</span></div>
+        <span class="chevron open" id="chev-11">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(11)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-11">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(11,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main Video Asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(11,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Primary OGE video asset</span></td>
+      <td id="pills-11-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(11,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(11,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(11,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-11-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(11,0)">No</span></td>
+      <td class="status-cell" id="status-11-0"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(11,0)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(11,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(11,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(11,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">How It Works — Icons</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(11,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 icons</span></td>
+      <td id="pills-11-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(11,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-11-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(11,1)">No</span></td>
+      <td class="status-cell" id="status-11-1"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(11,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(11,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(11)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-12">
+    <div class="page-header" onclick="toggle(12)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(12,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Exchange</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-12"><span class="chip ch-ai">✦ AI: 1</span></div>
+        <span class="chevron open" id="chev-12">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(12)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-12">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(12,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main Image Asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(12,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Primary exchange page image</span></td>
+      <td id="pills-12-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(12,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(12,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(12,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-12-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(12,0)">No</span></td>
+      <td class="status-cell" id="status-12-0"><span class="sbadge sb-done" onclick="event.stopPropagation();cycleStatus(12,0)">✓ Done</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(12,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(12,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(12,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">What Happens Next — Icons</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(12,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Icon assets</span></td>
+      <td id="pills-12-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(12,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-12-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(12,1)">No</span></td>
+      <td class="status-cell" id="status-12-1"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(12,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(12,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(12)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-13">
+    <div class="page-header" onclick="toggle(13)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(13,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hamburger Menu</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-13"><span class="chip ch-ai">✦ AI: 34</span></div>
+        <span class="chevron open" id="chev-13">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(13)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-13">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Top Style Assets Category</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 top style assets x 8 category</span></td>
+      <td id="pills-13-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">11</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(13,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-13-0"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(13,0)">Yes</span></td>
+      <td class="status-cell" id="status-13-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(13,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(13,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">All Collection Assets</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Top collection hero images</span></td>
+      <td id="pills-13-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">9</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(13,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-13-1"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(13,1)">Yes</span></td>
+      <td class="status-cell" id="status-13-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(13,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(13,1,this)">which top collections to show</div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Solitaire experience</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 categories +all</span></td>
+      <td id="pills-13-2"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">6</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,2,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,2,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(13,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-13-2"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(13,2)">Yes</span></td>
+      <td class="status-cell" id="status-13-2"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(13,2)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(13,2,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,2)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">More jewellery</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 category images + 5 set category images</span></td>
+      <td id="pills-13-3"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">8</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,3,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,3,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(13,3,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-13-3"><span class="prod-toggle pt-yes" onclick="event.stopPropagation();toggleProd(13,3)">Yes</span></td>
+      <td class="status-cell" id="status-13-3"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(13,3)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(13,3,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,3)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(13)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-14">
+    <div class="page-header" onclick="toggle(14)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(14,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Services</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-14"><span class="chip ch-ai">✦ AI: 10</span></div>
+        <span class="chevron open" id="chev-14">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(14)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-14">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Banner img</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 img</span></td>
+      <td id="pills-14-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(14,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-14-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(14,0)">No</span></td>
+      <td class="status-cell" id="status-14-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(14,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(14,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Services</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 images</span></td>
+      <td id="pills-14-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">4</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(14,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-14-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(14,1)">No</span></td>
+      <td class="status-cell" id="status-14-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(14,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(14,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,1)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Warranty</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">0</span></td>
+      <td id="pills-14-2"><div class="asset-pills"><select class="add-sel" onchange="addTag(14,2,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-14-2"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(14,2)">No</span></td>
+      <td class="status-cell" id="status-14-2"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(14,2,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,2)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Care guide</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images</span></td>
+      <td id="pills-14-3"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">5</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,3,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,3,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(14,3,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-14-3"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(14,3)">No</span></td>
+      <td class="status-cell" id="status-14-3"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(14,3)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(14,3,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,3)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(14)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-15">
+    <div class="page-header" onclick="toggle(15)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(15,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Diamond guide-WIP</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-15"></div>
+        <span class="chevron" id="chev-15">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(15)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-15"><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(15)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-16">
+    <div class="page-header" onclick="toggle(16)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(16,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Gemstone guide-WIP</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-16"></div>
+        <span class="chevron open" id="chev-16">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(16)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-16">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(16,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">New Widget</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(16,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-16-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(16,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-16-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(16,0)">No</span></td>
+      <td class="status-cell" id="status-16-0"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(16,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(16,0)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(16)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-17">
+    <div class="page-header" onclick="toggle(17)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(17,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My bookings</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-17"><span class="chip ch-ai">✦ AI: 2</span></div>
+        <span class="chevron open" id="chev-17">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(17)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-17">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(17,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(17,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2x store and video consultation image</span></td>
+      <td id="pills-17-0"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">2</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(17,0,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(17,0,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(17,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-17-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(17,0)">No</span></td>
+      <td class="status-cell" id="status-17-0"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(17,0)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(17,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(17,0)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(17)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-18">
+    <div class="page-header" onclick="toggle(18)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(18,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My credits</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-18"></div>
+        <span class="chevron open" id="chev-18">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(18)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-18"><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(18)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-19">
+    <div class="page-header" onclick="toggle(19)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(19,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My profile</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-19"></div>
+        <span class="chevron open" id="chev-19">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(19)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-19"><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(19)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-20">
+    <div class="page-header" onclick="toggle(20)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(20,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Motion</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-20"><span class="chip ch-ai">✦ AI: 1</span></div>
+        <span class="chevron open" id="chev-20">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(20)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-20">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(20,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main loader</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(20,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-20-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(20,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-20-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(20,0)">No</span></td>
+      <td class="status-cell" id="status-20-0"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(20,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(20,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(20,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Splash screen</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(20,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-20-1"><div class="asset-pills"><span class="pill p-ai">
+        ✦ AI Generated: <span class="pill-cnt">1</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(20,1,&#39;ai&#39;,-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(20,1,&#39;ai&#39;,1)">+</span>
+      </span><select class="add-sel" onchange="addTag(20,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-20-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(20,1)">No</span></td>
+      <td class="status-cell" id="status-20-1"><span class="sbadge sb-tbd" onclick="event.stopPropagation();cycleStatus(20,1)">— TBD</span></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(20,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(20,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(20)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div>
+  <div class="page-block" id="page-block-21">
+    <div class="page-header" onclick="toggle(21)">
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(21,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Error screens</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-21"></div>
+        <span class="chevron open" id="chev-21">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(21)" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows open" id="rows-21">
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(21,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Mention the screens here</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(21,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td id="pills-21-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(21,0,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-21-0"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(21,0)">No</span></td>
+      <td class="status-cell" id="status-21-0"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(21,0,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(21,0)" title="Delete row">×</span></td>
+    </tr>
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(21,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Empty Product image placeholders</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(21,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">High res</span></td>
+      <td id="pills-21-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(21,1,this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
+    </select></div></td>
+      <td class="prod-cell" id="prod-21-1"><span class="prod-toggle pt-no" onclick="event.stopPropagation();toggleProd(21,1)">No</span></td>
+      <td class="status-cell" id="status-21-1"></td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(21,1,this)"></div></td>
+      
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(21,1)" title="Delete row">×</span></td>
+    </tr><tr class="add-row-tr"><td colspan="8"><button class="add-row-btn" onclick="event.stopPropagation();addRow(21)">+ Add row</button></td></tr></tbody>
+    </table>
+  </div></div>
+
+<script>
+/*
+  Widget schema (flat, simplified):
+    shot, shotVid         — to be shot (in tally)
+    render, renderVid     — 3D / product renders (NOT in tally)
+    ai, aiVid             — AI generated (in tally)
+    prodDep               — boolean, product-dependent (clickable Yes/No)
+    status                — '' | 'done' | 'pending renders'  (clickable cycle)
+*/
+
+const pages = [
+  {
+    "name": "Homepage",
+    "widgets": [
+      {
+        "name": "Hero Section",
+        "req": "5 images, 2 video",
+        "type": "Fixed",
+        "shot": 2,
+        "shotVid": 1,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true,
+        "notes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+      },
+      {
+        "name": "Category Widget",
+        "req": "1 image each for all categories",
+        "type": "Fixed",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 9,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+      },
+      {
+        "name": "Gold Shades Widget",
+        "req": "7 Gold colour asset images",
+        "type": "Fixed",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      },
+      {
+        "name": "Persona Widget",
+        "req": "2 images × 5 personas + lifestyle shots",
+        "type": "Fixed",
+        "shot": 10,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Occasion Widget",
+        "req": "3 images × 3 occasions",
+        "type": "Customisable",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      },
+      {
+        "name": "Collection Widget Var 1",
+        "req": "3 images, 12 videos for 3 collection widgets",
+        "type": "Fixed",
+        "shot": 1,
+        "shotVid": 1,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Collection Widget Var 2",
+        "req": "1 image",
+        "type": "Fixed",
+        "shot": 1,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Collection Widget Var 3",
+        "req": "2 images",
+        "type": "Fixed",
+        "shot": 2,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Classics Widget",
+        "req": "3 collection element images (rose, etc)",
+        "type": "Customisable",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 3,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      },
+      {
+        "name": "USPs",
+        "req": "1 video, 2 images",
+        "type": "Fixed",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 2,
+        "aiVid": 1,
+        "prodDep": false
+      },
+      {
+        "name": "Store Widget",
+        "req": "Store shoot — images and videos of stores",
+        "type": "Fixed",
+        "shot": 22,
+        "shotVid": 3,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      },
+      {
+        "name": "Services",
+        "req": "1 image each for all services",
+        "type": "Fixed",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 5,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "CLP × 18 (Collection Landing Page)",
+    "widgets": [
+      {
+        "name": "Hero Section",
+        "req": "1 video, 3 images (×18 CLPs)",
+        "type": "—",
+        "shot": 18,
+        "shotVid": 18,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Moodboard",
+        "req": "2 images (×18 CLPs)",
+        "type": "TBD",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 18,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Inspiration Section",
+        "req": "2 images, 1 video (×18 CLPs)",
+        "type": "TBD",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 18,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Craftsmanship Section",
+        "req": "1 video (×18 CLPs)",
+        "type": "TBD",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 18,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Sketches",
+        "req": "1 image (×18 CLPs)",
+        "type": "TBD",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 18,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Featured Pieces",
+        "req": "1 image each of all featured pieces (×18 CLPs)",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 18,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Lookbook Section",
+        "req": "1 video, 4 images (×18 CLPs)",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 72,
+        "aiVid": 0,
+        "prodDep": true
+      }
+    ]
+  },
+  {
+    "name": "Persona Page × 5",
+    "widgets": [
+      {
+        "name": "Hero Section",
+        "req": "1 video (×5 personas)",
+        "type": "—",
+        "shot": 5,
+        "shotVid": 5,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Traits Section",
+        "req": "3 product sections (×5 personas)",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Occasions Section",
+        "req": "3 lifestyle shots (×5 personas)",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "PLP (Product Listing Page)",
+    "widgets": [
+      {
+        "name": "Banner Images",
+        "req": "3D stylised renders for each category",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 9,
+        "aiVid": 0,
+        "prodDep": true,
+        "status": "pending renders"
+      },
+      {
+        "name": "Style Images",
+        "req": "Style images for each category",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 9,
+        "aiVid": 0,
+        "prodDep": true,
+        "status": "pending renders"
+      }
+    ]
+  },
+  {
+    "name": "Search",
+    "widgets": [
+      {
+        "name": "Shop By Persona",
+        "req": "5 images",
+        "type": "—",
+        "shot": 5,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      },
+      {
+        "name": "Shop By Collection",
+        "req": "Depends on Collection",
+        "type": "—",
+        "shot": 1,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "PDP (Product Detail Page)",
+    "widgets": [
+      {
+        "name": "Gallery",
+        "req": "5 images, 1 video (×1800 products)",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 5,
+        "renderVid": 1,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true
+      },
+      {
+        "name": "Delivery / Store Pickup",
+        "req": "3 images for 3 stores",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      },
+      {
+        "name": "Customisation (MWeb)",
+        "req": "1 video",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      },
+      {
+        "name": "Customisation (Desktop)",
+        "req": "1 3D or 1 image",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": true,
+        "status": "pending renders"
+      },
+      {
+        "name": "Qween Promises",
+        "req": "4 images",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 4,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "Manufacturing / Craftsmanship Video",
+        "req": "1 video per category (×13)",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 1,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "Size Guide",
+        "req": "Size guide asset",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "Packaging",
+        "req": "1 image for packaging section",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "done"
+      }
+    ]
+  },
+  {
+    "name": "Cart",
+    "widgets": [
+      {
+        "name": "Store Pickup",
+        "req": "3 images for 3 stores",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "My Orders",
+    "widgets": [
+      {
+        "name": "Order Stage Images",
+        "req": "Image assets for all stages of order",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 5,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "Stage Icons",
+        "req": "Icons for all stages",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "Video Consultation",
+    "widgets": [
+      {
+        "name": "Landing Page",
+        "req": "1 explainer video (store & product)",
+        "type": "—",
+        "shot": 1,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true,
+        "status": "pending renders"
+      }
+    ]
+  },
+  {
+    "name": "Store Page",
+    "widgets": [
+      {
+        "name": "Loading Screen",
+        "req": "1 video",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 1,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      },
+      {
+        "name": "Experience Section",
+        "req": "6 images (store)",
+        "type": "—",
+        "shot": 6,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      },
+      {
+        "name": "Persona",
+        "req": "5 images",
+        "type": "—",
+        "shot": 5,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      },
+      {
+        "name": "Product Locator",
+        "req": "2 images — Store Layout",
+        "type": "—",
+        "shot": 1,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      }
+    ]
+  },
+  {
+    "name": "GIP (Gold Investment Plan)",
+    "widgets": [
+      {
+        "name": "Main Video Asset",
+        "req": "Primary explainer/hero video",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 1,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "How It Works — Icons",
+        "req": "4 icons",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "OGE (Old Gold Exchange)",
+    "widgets": [
+      {
+        "name": "Main Video Asset",
+        "req": "Primary OGE video asset",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 1,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "How It Works — Icons",
+        "req": "4 icons",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "Exchange",
+    "widgets": [
+      {
+        "name": "Main Image Asset",
+        "req": "Primary exchange page image",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "What Happens Next — Icons",
+        "req": "Icon assets",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false
+      }
+    ]
+  },
+  {
+    "name": "Hamburger Menu",
+    "widgets": [
+      {
+        "name": "Top Style Assets",
+        "req": "5–6 top style assets per category",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 9,
+        "aiVid": 0,
+        "prodDep": true,
+        "status": "pending renders"
+      },
+      {
+        "name": "Top Collection Assets",
+        "req": "Top collection hero images",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 4,
+        "aiVid": 0,
+        "prodDep": false,
+        "status": "pending renders"
+      }
+    ]
+  }
+];
+
+let customCols = [];
+
+// ─── Tag config ────────────────────────────────────────────────────────────────
+const TAGS = [
+  { key:'shot',      label:'📷 Image Shoot',    cls:'p-shot',   tally:true,  vid:false },
+  { key:'shotVid',   label:'📷 Video Shoot',    cls:'p-shot',   tally:true,  vid:true  },
+  { key:'render',    label:'⬡ Rendered',       cls:'p-render', tally:false, vid:false },
+  { key:'renderVid', label:'⬡ Rendered Video', cls:'p-render', tally:false, vid:true  },
+  { key:'ai',        label:'✦ AI Generated',   cls:'p-ai',     tally:true,  vid:false },
+  { key:'aiVid',     label:'✦ AI Video',       cls:'p-ai',     tally:true,  vid:true  },
+];
+
+const S_CYCLE  = ['', 'done', 'pending renders'];
+const S_LABEL  = { '':'— TBD', 'done':'✓ Done', 'pending renders':'⏳ Pending' };
+const S_CLS    = { '':'sb-tbd', 'done':'sb-done', 'pending renders':'sb-pending' };
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+const gw = (pi,wi) => pages[pi].widgets[wi];
+
+// ─── History (undo / redo) ─────────────────────────────────────────────────────
+const MAX_HIST = 60;
+let undoStack = [], redoStack = [];
+function snapshot(){ return JSON.stringify({pages, customCols}); }
+function saveHistory(){
+  undoStack.push(snapshot());
+  if(undoStack.length > MAX_HIST) undoStack.shift();
+  redoStack = [];
+  syncUrBtns();
+}
+function restoreSnapshot(s){
+  const d=JSON.parse(s);
+  pages.splice(0,pages.length,...d.pages);
+  customCols.splice(0,customCols.length,...d.customCols);
+  rebuildPages(); syncUrBtns();
+}
+function undo(){ if(!undoStack.length) return; redoStack.push(snapshot()); restoreSnapshot(undoStack.pop()); }
+function redo(){ if(!redoStack.length) return; undoStack.push(snapshot()); restoreSnapshot(redoStack.pop()); }
+function syncUrBtns(){
+  const u=document.getElementById('undo-btn'), r=document.getElementById('redo-btn');
+  if(u) u.disabled = !undoStack.length;
+  if(r) r.disabled = !redoStack.length;
+}
+
+function typeBadge(t) {
+  if (!t || t === '—') return '';
+  if (t === 'Fixed')       return `<span class="type-badge tb-fixed">Fixed</span>`;
+  if (t === 'Customisable') return `<span class="type-badge tb-custom">Custom</span>`;
+  return '';
+}
+
+function pillsHTML(pi, wi) {
+  const w = gw(pi,wi);
+  let h = '<div class="asset-pills">';
+  let hasRender = false;
+  TAGS.forEach(t => {
+    const v = w[t.key]||0;
+    if (v > 0) {
+      if (!t.tally) hasRender = true;
+      h += `<span class="pill ${t.cls}">
+        ${t.label}: <span class="pill-cnt">${v}</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(${pi},${wi},'${t.key}',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(${pi},${wi},'${t.key}',1)">+</span>
+      </span>`;
+    }
+  });
+  if (hasRender) h += `<span class="render-note">not in tally</span>`;
+  const missing = TAGS.filter(t => !(w[t.key]>0));
+  if (missing.length) {
+    h += `<select class="add-sel" onchange="addTag(${pi},${wi},this)" onclick="event.stopPropagation()">
+      <option value="">+ add</option>
+      ${missing.map(t=>`<option value="${t.key}">${t.label}</option>`).join('')}
+    </select>`;
+  }
+  return h + '</div>';
+}
+
+function prodHTML(pi, wi) {
+  const yes = gw(pi,wi).prodDep;
+  return `<span class="prod-toggle ${yes?'pt-yes':'pt-no'}"
+    onclick="event.stopPropagation();toggleProd(${pi},${wi})">${yes?'Yes':'No'}</span>`;
+}
+
+function statusHTML(pi, wi) {
+  const w = gw(pi,wi);
+  const s = w.status||'';
+  const has = TAGS.some(t=>(w[t.key]||0)>0);
+  if (!has && !s) return '';
+  return `<span class="sbadge ${S_CLS[s]}"
+    onclick="event.stopPropagation();cycleStatus(${pi},${wi})">${S_LABEL[s]}</span>`;
+}
+
+// ─── Interactions ──────────────────────────────────────────────────────────────
+function adj(pi,wi,key,delta){
+  saveHistory();
+  const w=gw(pi,wi); w[key]=Math.max(0,(w[key]||0)+delta);
+  document.getElementById(`pills-${pi}-${wi}`).innerHTML=pillsHTML(pi,wi);
+  refreshChips(pi); updateTally();
+}
+function addTag(pi,wi,sel){
+  if(!sel.value)return; saveHistory(); gw(pi,wi)[sel.value]=1;
+  document.getElementById(`pills-${pi}-${wi}`).innerHTML=pillsHTML(pi,wi);
+  refreshChips(pi); updateTally(); sel.value='';
+}
+function toggleProd(pi,wi){
+  saveHistory();
+  gw(pi,wi).prodDep=!gw(pi,wi).prodDep;
+  document.getElementById(`prod-${pi}-${wi}`).innerHTML=prodHTML(pi,wi);
+}
+function updateNotes(pi,wi,el){
+  const v=el.textContent.trim(); if(v===(gw(pi,wi).notes||'')) return;
+  saveHistory(); gw(pi,wi).notes=v;
+}
+function updateName(pi,wi,el){
+  const v=el.textContent.trim(); if(v===gw(pi,wi).name) return;
+  saveHistory(); gw(pi,wi).name=v;
+}
+function updateReq(pi,wi,el){
+  const v=el.textContent.trim(); if(v===(gw(pi,wi).req||'')) return;
+  saveHistory(); gw(pi,wi).req=v;
+}
+function cycleStatus(pi,wi){
+  saveHistory();
+  const w=gw(pi,wi), idx=S_CYCLE.indexOf(w.status||'');
+  w.status=S_CYCLE[(idx+1)%S_CYCLE.length];
+  document.getElementById(`status-${pi}-${wi}`).innerHTML=statusHTML(pi,wi);
+}
+
+function refreshChips(pi){
+  const ws=pages[pi].widgets;
+  const ts=ws.reduce((s,w)=>s+(w.shot||0)+(w.shotVid||0),0);
+  const tr=ws.reduce((s,w)=>s+(w.render||0)+(w.renderVid||0),0);
+  const ta=ws.reduce((s,w)=>s+(w.ai||0)+(w.aiVid||0),0);
+  const el=document.getElementById(`chips-${pi}`); if(!el)return;
+  let h='';
+  if(ts>0) h+=`<span class="chip ch-shot">📷 Image Shoot: ${ts}</span>`;
+  if(tr>0) h+=`<span class="chip ch-render">⬡ Rendered: ${tr}</span>`;
+  if(ta>0) h+=`<span class="chip ch-ai">✦ AI: ${ta}</span>`;
+  el.innerHTML=h;
+}
+
+function updateTally(){
+  let shot=0,render=0,ai=0,vid=0;
+  pages.forEach(p=>p.widgets&&p.widgets.forEach(w=>{
+    shot  +=(w.shot||0)+(w.shotVid||0);
+    render+=(w.render||0)+(w.renderVid||0);
+    ai    +=(w.ai||0)+(w.aiVid||0);
+    vid   +=(w.shotVid||0)+(w.aiVid||0);
+  }));
+  document.getElementById('s-shot').textContent  =shot;
+  document.getElementById('s-render').textContent=render;
+  document.getElementById('s-ai').textContent    =ai;
+  document.getElementById('s-vid').textContent   =vid;
+  document.getElementById('s-total').textContent =shot+ai;
+}
+
+// ─── Build ─────────────────────────────────────────────────────────────────────
+function buildPage(page, pi){
+  const ws=page.widgets||[];
+  const ts=ws.reduce((s,w)=>s+(w.shot||0)+(w.shotVid||0),0);
+  const tr=ws.reduce((s,w)=>s+(w.render||0)+(w.renderVid||0),0);
+  const ta=ws.reduce((s,w)=>s+(w.ai||0)+(w.aiVid||0),0);
+  let chips='';
+  if(ts>0) chips+=`<span class="chip ch-shot">📷 Image Shoot: ${ts}</span>`;
+  if(tr>0) chips+=`<span class="chip ch-render">⬡ Rendered: ${tr}</span>`;
+  if(ta>0) chips+=`<span class="chip ch-ai">✦ AI: ${ta}</span>`;
+
+  const customColHeaders = customCols.map(col=>`
+    <th class="col-custom">
+      <span class="editable-field" contenteditable="true"
+        onblur="updateColLabel('${col.id}',this)"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"
+      >${col.label}</span>
+      <span class="col-del-btn" onclick="deleteCol('${col.id}')" title="Remove column">×</span>
+    </th>`).join('');
+
+  const rows = ws.map((w,wi)=>{
+    const cd=w.customData||{};
+    const customCells=customCols.map(col=>`
+      <td><div class="notes-field" contenteditable="true" data-ph="…"
+        onblur="updateCustomCell(${pi},${wi},'${col.id}',this)"
+      >${cd[col.id]||''}</div></td>`).join('');
+    return `
+    <tr class="data-row">
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(${pi},${wi},this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${w.name}</span>${typeBadge(w.type)}</td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(${pi},${wi},this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${w.req}</span></td>
+      <td id="pills-${pi}-${wi}">${pillsHTML(pi,wi)}</td>
+      <td class="prod-cell" id="prod-${pi}-${wi}">${prodHTML(pi,wi)}</td>
+      <td class="status-cell" id="status-${pi}-${wi}">${statusHTML(pi,wi)}</td>
+      <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(${pi},${wi},this)">${w.notes||''}</div></td>
+      ${customCells}
+      <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(${pi},${wi})" title="Delete row">×</span></td>
+    </tr>`;
+  }).join('');
+
+  const colspan = 7 + customCols.length + 1;
+  const addRowTr = `<tr class="add-row-tr"><td colspan="${colspan}"><button class="add-row-btn" onclick="event.stopPropagation();addRow(${pi})">+ Add row</button></td></tr>`;
+
+  return `
+  <div class="page-block" id="page-block-${pi}">
+    <div class="page-header" onclick="toggle(${pi})">
+      <span class="page-name editable-field" contenteditable="true"
+        onclick="event.stopPropagation()"
+        onblur="updatePageName(${pi},this)"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"
+      >${page.name||''}</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="page-chips" id="chips-${pi}">${chips}</div>
+        <span class="chevron" id="chev-${pi}">›</span>
+        <span class="page-del-btn" onclick="event.stopPropagation();deletePage(${pi})" title="Delete section">×</span>
+      </div>
+    </div>
+    <table class="widgets-table">
+      <thead><tr>
+        <th class="col-name">Widget</th>
+        <th class="col-req">Requirements</th>
+        <th class="col-assets">Asset Type</th>
+        <th class="col-prod">Product Dep.</th>
+        <th class="col-status">Status</th>
+        <th class="col-notes">Notes / Concerns</th>
+        ${customColHeaders}
+        <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
+        <th class="row-del-th"></th>
+      </tr></thead>
+      <tbody class="widget-rows" id="rows-${pi}">${rows}${addRowTr}</tbody>
+    </table>
+  </div>`;
+}
+
+// ─── Structural edits ──────────────────────────────────────────────────────────
+function updatePageName(pi,el){
+  const v=el.textContent.trim(); if(v===pages[pi].name) return;
+  saveHistory(); pages[pi].name=v;
+}
+function updateColLabel(colId,el){
+  const c=customCols.find(c=>c.id===colId); if(!c) return;
+  const v=el.textContent.trim(); if(v===c.label) return;
+  saveHistory(); c.label=v;
+}
+function updateCustomCell(pi,wi,colId,el){
+  const w=gw(pi,wi); if(!w.customData) w.customData={};
+  const v=el.textContent.trim(); if(v===(w.customData[colId]||'')) return;
+  saveHistory(); w.customData[colId]=v;
+}
+function addRow(pi){
+  saveHistory();
+  pages[pi].widgets.push({name:'New Widget',req:'',type:'—',shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,prodDep:false,notes:'',customData:{}});
+  rebuildPages(); refreshChips(pi); updateTally();
+}
+function deleteRow(pi,wi){
+  saveHistory();
+  pages[pi].widgets.splice(wi,1);
+  rebuildPages(); refreshChips(pi); updateTally();
+}
+function addPage(){
+  saveHistory();
+  const pi=pages.length;
+  pages.push({name:'New Section',widgets:[]});
+  rebuildPages(pi);
+}
+function deletePage(pi){
+  if(!confirm(`Delete section "${pages[pi].name}"?`)) return;
+  saveHistory();
+  pages.splice(pi,1); rebuildPages(); updateTally();
+}
+function addCol(){
+  saveHistory();
+  customCols.push({id:'col_'+Date.now(),label:'New Column'});
+  rebuildPages();
+}
+function deleteCol(colId){
+  saveHistory();
+  customCols=customCols.filter(c=>c.id!==colId);
+  rebuildPages();
+}
+
+function rebuildPages(newOpenIdx){
+  const openState=pages.map((_,i)=>{const el=document.getElementById(`rows-${i}`); return el&&el.classList.contains('open');});
+  document.getElementById('pages-container').innerHTML=pages.map((p,i)=>buildPage(p,i)).join('');
+  openState.forEach((isOpen,i)=>{
+    if(isOpen){
+      const r=document.getElementById(`rows-${i}`),c=document.getElementById(`chev-${i}`);
+      if(r) r.classList.add('open'); if(c) c.classList.add('open');
+    }
+  });
+  if(newOpenIdx!=null){
+    const r=document.getElementById(`rows-${newOpenIdx}`),c=document.getElementById(`chev-${newOpenIdx}`);
+    if(r) r.classList.add('open'); if(c) c.classList.add('open');
+  }
+  updateTally();
+}
+
+function toggle(idx){
+  const r=document.getElementById(`rows-${idx}`),c=document.getElementById(`chev-${idx}`);
+  if(r){r.classList.toggle('open');} if(c){c.classList.toggle('open');}
+}
+
+function toggleColls(){
+  const b=document.getElementById('coll-body'), c=document.getElementById('coll-chev');
+  b.classList.toggle('hidden'); c.classList.toggle('open');
+}
+
+rebuildPages(0);
+syncUrBtns();
+
+// ─── Autosave ──────────────────────────────────────────────────────────────────
+let _asCountdown = 300, _asInterval = null;
+function _asTick(){
+  _asCountdown--;
+  const lbl = document.getElementById('autosave-lbl');
+  if(_asCountdown <= 0){
+    saveFile();
+    _asCountdown = 300;
+    if(lbl){ lbl.textContent='Autosaved ✓'; lbl.classList.add('saved');
+      setTimeout(()=>{ lbl.classList.remove('saved'); _asUpdateLbl(); }, 2500); }
+  } else { _asUpdateLbl(); }
+}
+function _asUpdateLbl(){
+  const lbl=document.getElementById('autosave-lbl'); if(!lbl) return;
+  const m=Math.floor(_asCountdown/60), s=_asCountdown%60;
+  lbl.textContent=`Autosave ${m}:${String(s).padStart(2,'0')}`;
+}
+function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
+_asInterval = setInterval(_asTick, 1000);
+
+document.addEventListener('paste', function(e){
+  if(!(document.activeElement && document.activeElement.isContentEditable)) return;
+  e.preventDefault();
+  const text = e.clipboardData.getData('text/plain');
+  document.execCommand('insertText', false, text);
+});
+
+document.addEventListener('keydown', function(e){
+  const inEdit = document.activeElement && document.activeElement.isContentEditable;
+  if(inEdit) return;
+  if((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='z'){ e.preventDefault(); undo(); }
+  if((e.ctrlKey||e.metaKey) && (e.key==='y' || (e.shiftKey&&e.key==='z'))){ e.preventDefault(); redo(); }
+});
+
+function saveFile() {
+  // Serialise current pages state back into the script block
+  const script = document.querySelector('script');
+  const html = document.documentElement.cloneNode(true);
+
+  // Remove browser extension artifacts
+  const canvas = html.querySelector('#__fb_c');
+  const toolbar = html.querySelector('#__fb_tb');
+  if (canvas) canvas.remove();
+  if (toolbar) toolbar.remove();
+
+  // Patch pages + customCols data inside the script tag
+  const scripts = html.querySelectorAll('script');
+  scripts.forEach(s => {
+    if (s.textContent.includes('const pages = [')) {
+      s.textContent = s.textContent
+        .replace(/const pages = \[[\s\S]*?\];/, 'const pages = ' + JSON.stringify(pages, null, 2) + ';')
+        .replace(/let customCols = \[.*?\];/, 'let customCols = ' + JSON.stringify(customCols) + ';');
+    }
+  });
+
+  _asReset();
+  const blob = new Blob(['<!DOCTYPE html>' + html.outerHTML], { type: 'text/html' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const now = new Date();
+  const ts = now.getFullYear() + '-' +
+    String(now.getMonth()+1).padStart(2,'0') + '-' +
+    String(now.getDate()).padStart(2,'0') + '_' +
+    String(now.getHours()).padStart(2,'0') + String(now.getMinutes()).padStart(2,'0');
+  a.download = 'marketing-assets-guide_' + ts + '.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+</script>
+
+
+
+<button class="add-section-btn" onclick="addPage()">+ Add Section</button>
+
+<div class="bottom-toolbar">
+  <span class="autosave-lbl" id="autosave-lbl">Autosave 2:52</span>
+  <button class="ur-btn" id="undo-btn" onclick="undo()" title="Undo (Ctrl+Z)">↩</button>
+  <button class="ur-btn" id="redo-btn" onclick="redo()" title="Redo (Ctrl+Y)" disabled="">↪</button>
+  <button class="save-btn" onclick="saveFile()" title="Save your current version as HTML">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline>
+    </svg>
+    Save Version
+  </button>
+</div>
+
+<canvas id="__fb_c" width="1920" height="958" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 2147483646; pointer-events: none;"></canvas><div id="__fb_tb"><div id="__fb_dot"></div><span class="lbl" id="__fb_mlbl">ARROWS</span><div class="sep"></div><span class="tip" id="__fb_tip">Click &amp; drag to draw</span><div class="sep"></div><button id="__fb_undo">↩ Undo</button></div></body></html>
