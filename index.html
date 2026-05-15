@@ -211,6 +211,7 @@
   .jb-clear:hover { opacity: 1; }
   .autosave-lbl { font-size: 11px; color: #9ca3af; letter-spacing: 0.2px; padding: 0 4px; white-space: nowrap; transition: color 0.3s; }
   .autosave-lbl.saved { color: #16a34a; }
+  .build-badge { position: fixed; bottom: 14px; left: 20px; font-size: 10px; color: #c4c4d4; letter-spacing: 0.3px; z-index: 9999; pointer-events: none; }
 </style>
 <style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style></head>
 <body>
@@ -1906,6 +1907,8 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
+const BUILD = '2026-05-15 18:00';
+
 const pages = [
   {
     "name": "Homepage",
@@ -3169,7 +3172,7 @@ function _sbSetLbl(text, cls, reset){
   lbl.style.color = '';
   lbl.classList.remove('saved');
   if(cls === 'saved') lbl.classList.add('saved');
-  if(cls === 'err') lbl.style.color = '#e07b54';
+  if(cls === 'err') lbl.style.color = '#ef4444';
   if(reset) setTimeout(()=>{ lbl.style.color=''; lbl.classList.remove('saved'); _asUpdateLbl(); }, reset);
 }
 
@@ -3267,6 +3270,7 @@ function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
 _asInterval = setInterval(_asTick, 1000);
 _sbUpdateBtn();
 sbLoad();
+document.getElementById('build-badge').textContent = 'build ' + BUILD;
 
 document.addEventListener('paste', function(e){
   if(!(document.activeElement && document.activeElement.isContentEditable)) return;
@@ -3298,9 +3302,15 @@ function saveFile() {
   const scripts = html.querySelectorAll('script');
   scripts.forEach(s => {
     if (s.textContent.includes('const pages = [')) {
+      const buildStamp = now.getFullYear() + '-' +
+        String(now.getMonth()+1).padStart(2,'0') + '-' +
+        String(now.getDate()).padStart(2,'0') + ' ' +
+        String(now.getHours()).padStart(2,'0') + ':' +
+        String(now.getMinutes()).padStart(2,'0');
       s.textContent = s.textContent
         .replace(/const pages = \[[\s\S]*?\];/, 'const pages = ' + JSON.stringify(pages, null, 2) + ';')
-        .replace(/let customCols = \[.*?\];/, 'let customCols = ' + JSON.stringify(customCols) + ';');
+        .replace(/let customCols = \[.*?\];/, 'let customCols = ' + JSON.stringify(customCols) + ';')
+        .replace(/const BUILD = '.*?';/, "const BUILD = '" + buildStamp + "';");
     }
   });
 
@@ -3352,6 +3362,8 @@ create policy "anon all" on marketing_state
     </div>
   </div>
 </div>
+
+<div class="build-badge" id="build-badge"></div>
 
 <div class="bottom-toolbar">
   <span class="autosave-lbl" id="autosave-lbl">Autosave 5:00</span>
