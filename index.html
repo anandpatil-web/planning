@@ -212,11 +212,69 @@
   .autosave-lbl { font-size: 11px; color: #9ca3af; letter-spacing: 0.2px; padding: 0 4px; white-space: nowrap; transition: color 0.3s; }
   .autosave-lbl.saved { color: #16a34a; }
   .build-badge { position: fixed; bottom: 14px; left: 20px; font-size: 10px; color: #c4c4d4; letter-spacing: 0.3px; z-index: 9999; pointer-events: none; }
+
+  /* Settings button */
+  .settings-btn { position: fixed; top: 22px; right: 24px; background: #fff; border: 1px solid #e5e7eb; border-radius: 50%; width: 36px; height: 36px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(100,100,160,0.1); z-index: 100; transition: border-color 0.15s; }
+  .settings-btn:hover { border-color: #7c5cfc; }
+
+  /* Avatars */
+  .avatar { width: 22px; height: 22px; border-radius: 50%; font-size: 9px; font-weight: 700; color: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1.5px solid #fff; margin-left: -4px; }
+  .avatar:first-child { margin-left: 0; }
+  .avatar-stack { display: flex; align-items: center; cursor: pointer; padding: 2px 0; }
+  .assign-add { width: 22px; height: 22px; border-radius: 50%; border: 1.5px dashed #d1d5db; font-size: 13px; color: #d1d5db; display: inline-flex; align-items: center; justify-content: center; margin-left: 4px; transition: border-color 0.12s, color 0.12s; line-height: 1; }
+  .avatar-stack:hover .assign-add { border-color: #7c5cfc; color: #7c5cfc; }
+  .col-assign { width: 110px; }
+
+  /* Assign dropdown */
+  .assign-dropdown { position: fixed; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px; box-shadow: 0 8px 24px rgba(100,100,160,0.15); z-index: 9998; min-width: 160px; }
+  .assign-opt { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 7px; cursor: pointer; font-size: 12px; color: #374151; transition: background 0.1s; }
+  .assign-opt:hover { background: #f5f3ff; }
+  .assign-opt.active { background: #f5f3ff; color: #7c5cfc; font-weight: 600; }
+  .assign-opt .avatar { margin-left: 0; }
+  .assign-empty { font-size: 11px; color: #9ca3af; padding: 8px; text-align: center; }
+
+  /* Settings modal */
+  .settings-overlay { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.4); backdrop-filter: blur(4px); z-index: 99998; align-items: center; justify-content: center; }
+  .settings-modal { background: #fff; border-radius: 16px; padding: 24px; width: 380px; max-width: calc(100vw - 40px); box-shadow: 0 20px 60px rgba(100,100,160,0.18); }
+  .settings-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+  .settings-header h2 { font-size: 15px; font-weight: 700; color: #111827; }
+  .settings-close { background: none; border: none; font-size: 20px; color: #9ca3af; cursor: pointer; line-height: 1; }
+  .settings-close:hover { color: #374151; }
+  .person-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f5f5fb; }
+  .person-row:last-child { border-bottom: none; }
+  .person-name-lbl { font-size: 13px; color: #374151; flex: 1; }
+  .person-del { background: none; border: none; color: #fca5a5; font-size: 14px; cursor: pointer; padding: 2px 6px; border-radius: 6px; }
+  .person-del:hover { background: #fef2f2; color: #ef4444; }
+  .add-person-row { display: flex; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid #f0f0f8; }
+  .add-person-row input { flex: 1; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 12px; font-size: 12px; outline: none; font-family: inherit; }
+  .add-person-row input:focus { border-color: #7c5cfc; }
+  .add-person-row button { background: #7c5cfc; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
+  .add-person-row button:hover { background: #6d4fe8; }
+
+  /* Detail drawer */
+  .drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.3); z-index: 9990; }
+  .detail-drawer { position: fixed; top: 0; right: -440px; width: 420px; height: 100vh; background: #fff; box-shadow: -4px 0 30px rgba(100,100,160,0.15); z-index: 9991; transition: right 0.28s cubic-bezier(.4,0,.2,1); overflow-y: auto; display: flex; flex-direction: column; }
+  .detail-drawer.open { right: 0; }
+  .drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px 16px; border-bottom: 1px solid #f0f0f8; position: sticky; top: 0; background: #fff; z-index: 1; }
+  .drawer-header h2 { font-size: 16px; font-weight: 700; color: #111827; }
+  .drawer-close { background: none; border: none; font-size: 22px; color: #9ca3af; cursor: pointer; line-height: 1; }
+  .drawer-body { padding: 20px 24px; flex: 1; }
+  .drawer-section { margin-bottom: 22px; }
+  .drawer-section-title { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #9ca3af; font-weight: 700; margin-bottom: 10px; }
+  .drawer-avatar-row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .drawer-avatar-chip { display: flex; align-items: center; gap: 6px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 20px; padding: 4px 10px 4px 6px; font-size: 11px; color: #7c5cfc; font-weight: 600; cursor: pointer; transition: background 0.12s; }
+  .drawer-avatar-chip:hover { background: #ede9fe; }
+  .drawer-avatar-chip.unassigned { background: #f9fafb; border-color: #e5e7eb; color: #9ca3af; }
+  .drawer-avatar-chip.unassigned:hover { border-color: #7c5cfc; color: #7c5cfc; background: #f5f3ff; }
+  .drawer-coll-item { background: #fafafa; border: 1px solid #f0f0f8; border-radius: 10px; padding: 12px 14px; margin-bottom: 8px; }
+  .drawer-coll-name { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 8px; }
+  .drawer-coll-sub { font-size: 11px; color: #9ca3af; margin-bottom: 8px; font-style: italic; }
 </style>
 <style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style></head>
 <body>
 
 <h1>Go-Live Marketing Assets</h1>
+<button class="settings-btn" onclick="openSettings()" title="Team settings">⚙</button>
 <p class="subtitle">Production method · Product dependency · Status</p>
 
 <div class="legend">
@@ -2856,6 +2914,10 @@ const pages = [
 ];
 
 let customCols = [];
+let people = []; // [{id, name, initials, color}]
+let collAssignees = {}; // {'Collection Name': ['pid1',...]}
+let personaAssignees = {}; // {'Persona Name': ['pid1',...]}
+const AVATAR_COLORS = ['#7c5cfc','#f97316','#14b8a6','#e11d48','#3b82f6','#16a34a','#d97706','#9333ea','#0ea5e9'];
 
 // ─── Tag config ────────────────────────────────────────────────────────────────
 const TAGS = [
@@ -2877,7 +2939,7 @@ const gw = (pi,wi) => pages[pi].widgets[wi];
 // ─── History (undo / redo) ─────────────────────────────────────────────────────
 const MAX_HIST = 60;
 let undoStack = [], redoStack = [];
-function snapshot(){ return JSON.stringify({pages, customCols}); }
+function snapshot(){ return JSON.stringify({pages, customCols, people, collAssignees, personaAssignees}); }
 function saveHistory(){
   undoStack.push(snapshot());
   if(undoStack.length > MAX_HIST) undoStack.shift();
@@ -2887,8 +2949,11 @@ function saveHistory(){
 function restoreSnapshot(s){
   const d=JSON.parse(s);
   pages.splice(0,pages.length,...d.pages);
-  customCols.splice(0,customCols.length,...d.customCols);
-  rebuildPages(); syncUrBtns();
+  customCols.splice(0,customCols.length,...(d.customCols||[]));
+  people.splice(0,people.length,...(d.people||[]));
+  collAssignees = d.collAssignees || {};
+  personaAssignees = d.personaAssignees || {};
+  rebuildPages(); syncUrBtns(); initCollectionClicks();
 }
 function undo(){ if(!undoStack.length) return; redoStack.push(snapshot()); restoreSnapshot(undoStack.pop()); }
 function redo(){ if(!redoStack.length) return; undoStack.push(snapshot()); restoreSnapshot(redoStack.pop()); }
@@ -3044,12 +3109,13 @@ function buildPage(page, pi){
       <td class="prod-cell" id="prod-${pi}-${wi}">${prodHTML(pi,wi)}</td>
       <td class="status-cell" id="status-${pi}-${wi}">${statusHTML(pi,wi)}</td>
       <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(${pi},${wi},this)">${w.notes||''}</div></td>
+      <td class="assign-cell" id="assign-${pi}-${wi}">${assignHTML(pi,wi)}</td>
       ${customCells}
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(${pi},${wi})" title="Delete row">×</span></td>
     </tr>`;
   }).join('');
 
-  const colspan = 7 + customCols.length + 1;
+  const colspan = 8 + customCols.length + 1;
   const addRowTr = `<tr class="add-row-tr"><td colspan="${colspan}"><button class="add-row-btn" onclick="event.stopPropagation();addRow(${pi})">+ Add row</button></td></tr>`;
 
   return `
@@ -3074,6 +3140,7 @@ function buildPage(page, pi){
         <th class="col-prod">Product Dep.</th>
         <th class="col-status">Status</th>
         <th class="col-notes">Notes / Concerns</th>
+        <th class="col-assign">Assigned</th>
         ${customColHeaders}
         <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
         <th class="row-del-th"></th>
@@ -3158,6 +3225,87 @@ function toggleColls(){
 
 rebuildPages(0);
 syncUrBtns();
+initCollectionClicks();
+
+// ─── Assignees ─────────────────────────────────────────────────────────────────
+function assignHTML(pi, wi){
+  const w = gw(pi,wi);
+  const ids = w.assignees || [];
+  const avatars = ids.map(id => {
+    const p = people.find(p=>p.id===id);
+    if(!p) return '';
+    return `<span class="avatar" style="background:${p.color}" title="${p.name}">${p.initials}</span>`;
+  }).join('');
+  return `<div class="avatar-stack" onclick="event.stopPropagation();openAssignDropdown(${pi},${wi},this)">${avatars}<span class="assign-add">+</span></div>`;
+}
+
+function updateAssignees(pi, wi){
+  saveHistory();
+  const cell = document.getElementById(`assign-${pi}-${wi}`);
+  if(cell) cell.innerHTML = assignHTML(pi, wi);
+}
+
+function openAssignDropdown(pi, wi, el){
+  document.querySelectorAll('.assign-dropdown').forEach(d=>d.remove());
+  if(!people.length){
+    const tip = document.createElement('div');
+    tip.className = 'assign-dropdown';
+    tip.innerHTML = '<div class="assign-empty">No team members yet.<br>Add people in ⚙ Settings.</div>';
+    document.body.appendChild(tip);
+    const r = el.getBoundingClientRect();
+    tip.style.top = (r.bottom + 6 + window.scrollY) + 'px';
+    tip.style.left = r.left + 'px';
+    setTimeout(()=>document.addEventListener('click', ()=>tip.remove(), {once:true}), 0);
+    return;
+  }
+  const w = gw(pi, wi);
+  if(!w.assignees) w.assignees = [];
+  const dd = document.createElement('div');
+  dd.className = 'assign-dropdown';
+  dd.innerHTML = people.map(p => {
+    const active = w.assignees.includes(p.id);
+    return `<div class="assign-opt${active?' active':''}" onclick="toggleWidgetAssignee(${pi},${wi},'${p.id}',this)">
+      <span class="avatar" style="background:${p.color}">${p.initials}</span>${p.name}
+    </div>`;
+  }).join('');
+  document.body.appendChild(dd);
+  const r = el.getBoundingClientRect();
+  dd.style.top = (r.bottom + 6 + window.scrollY) + 'px';
+  dd.style.left = r.left + 'px';
+  setTimeout(()=>document.addEventListener('click', ()=>dd.remove(), {once:true}), 0);
+}
+
+function toggleWidgetAssignee(pi, wi, personId, optEl){
+  const w = gw(pi, wi);
+  if(!w.assignees) w.assignees = [];
+  const idx = w.assignees.indexOf(personId);
+  if(idx === -1) w.assignees.push(personId);
+  else w.assignees.splice(idx, 1);
+  optEl.classList.toggle('active', w.assignees.includes(personId));
+  const cell = document.getElementById(`assign-${pi}-${wi}`);
+  if(cell) cell.innerHTML = assignHTML(pi, wi);
+  saveHistory();
+}
+
+// ─── PERSONA_MAP ───────────────────────────────────────────────────────────────
+const PERSONA_MAP = [
+  { name:'Gala Grandeur', collections:[{name:'Ensemble'},{name:'Empress',sub:'The Maharani'},{name:'Lumiere',sub:'Qween of Eden'}] },
+  { name:'Pride', collections:[{name:'Pride'},{name:'Eleve',sub:'Stairway to Power'},{name:'Wolf'},{name:'Maree',sub:'Name TBD'}] },
+  { name:'Untamed in Love', collections:[{name:'Victorious',sub:'Victorious Love'}] },
+  { name:'Party Girl', collections:[{name:'Confetti',sub:'Paris at Midnight'},{name:'Discoball',sub:'Name TBD'}] },
+  { name:'Classic Capsules', collections:[{name:'Scallop'},{name:'Nana'},{name:'Lotus'},{name:'Shaded Leaves',sub:'Lush'}] },
+  { name:'On The Go', collections:[{name:'Canyon'},{name:'Bold'}] },
+];
+
+function initCollectionClicks(){
+  document.querySelectorAll('.persona-header').forEach(el => {
+    const nameEl = el.querySelector('.persona-name');
+    if(!nameEl) return;
+    const name = nameEl.textContent.trim();
+    el.style.cursor = 'pointer';
+    el.onclick = () => openPersonaDrawer(name);
+  });
+}
 
 // ─── Supabase sync ─────────────────────────────────────────────────────────────
 const SB_TABLE = 'marketing_state';
@@ -3189,7 +3337,7 @@ async function sbSync(){
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates'
       },
-      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols }, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees }, updated_at: new Date().toISOString() })
     });
     if(!r.ok) throw new Error(await r.text());
     _asReset();
@@ -3210,11 +3358,16 @@ async function sbLoad(){
     if(!r.ok) return;
     const rows = await r.json();
     if(rows.length && rows[0].data){
-      const { pages: p, customCols: c } = rows[0].data;
+      const rec = rows[0].data;
+      const { pages: p, customCols: c } = rec;
       if(Array.isArray(p)){
         pages.length = 0; pages.push(...p);
         customCols = c || [];
+        people = rec.people || [];
+        collAssignees = rec.collAssignees || {};
+        personaAssignees = rec.personaAssignees || {};
         rebuildPages(0); updateTally();
+        _sbUpdateBtn(); initCollectionClicks();
         _sbSetLbl('Loaded ✓', 'saved', 2500);
       }
     }
@@ -3284,6 +3437,139 @@ document.addEventListener('keydown', function(e){
   if((e.ctrlKey||e.metaKey) && (e.key==='y' || (e.shiftKey&&e.key==='z'))){ e.preventDefault(); redo(); }
 });
 
+// ─── Settings (Team Members) ───────────────────────────────────────────────────
+function openSettings(){
+  renderPeopleList();
+  const m = document.getElementById('settings-modal');
+  m.style.display = 'flex';
+}
+function closeSettings(){
+  document.getElementById('settings-modal').style.display = 'none';
+}
+function addPerson(){
+  const inp = document.getElementById('new-person-inp');
+  const name = inp.value.trim();
+  if(!name) return;
+  const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const color = AVATAR_COLORS[people.length % AVATAR_COLORS.length];
+  people.push({id:'p_'+Date.now(), name, initials, color});
+  inp.value = '';
+  renderPeopleList();
+  saveHistory();
+}
+function deletePerson(id){
+  people = people.filter(p=>p.id!==id);
+  // Remove from all widget assignees
+  pages.forEach(page => page.widgets.forEach(w => {
+    if(w.assignees) w.assignees = w.assignees.filter(a=>a!==id);
+  }));
+  // Remove from collAssignees and personaAssignees
+  Object.keys(collAssignees).forEach(k => { collAssignees[k] = collAssignees[k].filter(a=>a!==id); });
+  Object.keys(personaAssignees).forEach(k => { personaAssignees[k] = personaAssignees[k].filter(a=>a!==id); });
+  renderPeopleList();
+  rebuildPages();
+  saveHistory();
+}
+function renderPeopleList(){
+  const el = document.getElementById('people-list');
+  if(!el) return;
+  if(!people.length){
+    el.innerHTML = '<div style="font-size:12px;color:#9ca3af;padding:8px 0;">No team members yet.</div>';
+    return;
+  }
+  el.innerHTML = people.map(p => `
+    <div class="person-row">
+      <span class="avatar" style="background:${p.color}">${p.initials}</span>
+      <span class="person-name-lbl">${p.name}</span>
+      <button class="person-del" onclick="deletePerson('${p.id}')" title="Remove">×</button>
+    </div>`).join('');
+}
+
+// ─── Detail Drawer ─────────────────────────────────────────────────────────────
+function closeDrawer(){
+  document.getElementById('detail-drawer').classList.remove('open');
+  document.getElementById('drawer-overlay').style.display = 'none';
+}
+
+function _openDrawer(title, bodyHTML){
+  document.getElementById('drawer-title').textContent = title;
+  document.getElementById('drawer-body').innerHTML = bodyHTML;
+  document.getElementById('drawer-overlay').style.display = 'block';
+  document.getElementById('detail-drawer').classList.add('open');
+}
+
+function _personaBodyHTML(name){
+  const persona = PERSONA_MAP.find(p=>p.name===name);
+  const assigned = (personaAssignees[name]||[]);
+  const allPeopleChips = people.map(p => {
+    const active = assigned.includes(p.id);
+    return `<span class="drawer-avatar-chip${active?'':' unassigned'}" onclick="togglePersonaAssignee('${name}','${p.id}')">
+      <span class="avatar" style="background:${p.color}">${p.initials}</span>${p.name}
+    </span>`;
+  }).join('');
+  const assignedChips = assigned.map(id => {
+    const p = people.find(p=>p.id===id);
+    if(!p) return '';
+    return `<span class="drawer-avatar-chip" onclick="togglePersonaAssignee('${name}','${p.id}')">
+      <span class="avatar" style="background:${p.color}">${p.initials}</span>${p.name}
+    </span>`;
+  }).join('') || '<span style="font-size:12px;color:#9ca3af">None assigned</span>';
+
+  const collsHTML = persona ? persona.collections.map(c => {
+    const ca = (collAssignees[c.name]||[]);
+    const collChips = people.map(p => {
+      const act = ca.includes(p.id);
+      return `<span class="drawer-avatar-chip${act?'':' unassigned'}" onclick="toggleCollAssignee('${c.name}','${p.id}')">
+        <span class="avatar" style="background:${p.color}">${p.initials}</span>${p.name}
+      </span>`;
+    }).join('');
+    const collAssigned = ca.map(id=>{const p=people.find(p=>p.id===id);return p?`<span class="avatar" style="background:${p.color};margin-left:2px" title="${p.name}">${p.initials}</span>`:''}).join('');
+    return `<div class="drawer-coll-item">
+      <div class="drawer-coll-name">${c.name}${collAssigned?` <span style="margin-left:4px">${collAssigned}</span>`:''}</div>
+      ${c.sub?`<div class="drawer-coll-sub">${c.sub}</div>`:''}
+      <div class="drawer-avatar-row">${collChips||'<span style="font-size:11px;color:#9ca3af">Add people first</span>'}</div>
+    </div>`;
+  }).join('') : '';
+
+  return `
+    <div class="drawer-section">
+      <div class="drawer-section-title">Assigned to persona</div>
+      <div class="drawer-avatar-row">${assignedChips}</div>
+    </div>
+    ${people.length ? `<div class="drawer-section">
+      <div class="drawer-section-title">Toggle assignees</div>
+      <div class="drawer-avatar-row">${allPeopleChips}</div>
+    </div>` : ''}
+    ${collsHTML ? `<div class="drawer-section">
+      <div class="drawer-section-title">Collections</div>
+      ${collsHTML}
+    </div>` : ''}`;
+}
+
+function openPersonaDrawer(name){
+  _openDrawer(name, _personaBodyHTML(name));
+}
+
+function togglePersonaAssignee(personaName, personId){
+  if(!personaAssignees[personaName]) personaAssignees[personaName] = [];
+  const idx = personaAssignees[personaName].indexOf(personId);
+  if(idx===-1) personaAssignees[personaName].push(personId);
+  else personaAssignees[personaName].splice(idx,1);
+  document.getElementById('drawer-body').innerHTML = _personaBodyHTML(personaName);
+  saveHistory();
+}
+
+function toggleCollAssignee(collName, personId){
+  if(!collAssignees[collName]) collAssignees[collName] = [];
+  const idx = collAssignees[collName].indexOf(personId);
+  if(idx===-1) collAssignees[collName].push(personId);
+  else collAssignees[collName].splice(idx,1);
+  // Re-render the current drawer (find the persona containing this collection)
+  const persona = PERSONA_MAP.find(p=>p.collections.some(c=>c.name===collName));
+  if(persona) document.getElementById('drawer-body').innerHTML = _personaBodyHTML(persona.name);
+  saveHistory();
+}
+
 function saveFile() {
   // Serialise current pages state back into the script block
   const script = document.querySelector('script');
@@ -3307,6 +3593,9 @@ function saveFile() {
       s.textContent = s.textContent
         .replace(/const pages = \[[\s\S]*?\];/, 'const pages = ' + JSON.stringify(pages, null, 2) + ';')
         .replace(/let customCols = \[.*?\];/, 'let customCols = ' + JSON.stringify(customCols) + ';')
+        .replace(/let people = \[.*?\];/, 'let people = ' + JSON.stringify(people) + ';')
+        .replace(/let collAssignees = \{.*?\};/, 'let collAssignees = ' + JSON.stringify(collAssignees) + ';')
+        .replace(/let personaAssignees = \{.*?\};/, 'let personaAssignees = ' + JSON.stringify(personaAssignees) + ';')
         .replace(/const BUILD = '.*?';/, "const BUILD = '" + buildStamp + "';");
     }
   });
@@ -3330,6 +3619,31 @@ function saveFile() {
 
 
 <button class="add-section-btn" onclick="addPage()">+ Add Section</button>
+
+<!-- Settings modal -->
+<div class="settings-overlay" id="settings-modal">
+  <div class="settings-modal">
+    <div class="settings-header">
+      <h2>Team Members</h2>
+      <button class="settings-close" onclick="closeSettings()">×</button>
+    </div>
+    <div id="people-list"></div>
+    <div class="add-person-row">
+      <input id="new-person-inp" placeholder="Name…" onkeydown="if(event.key==='Enter')addPerson()">
+      <button onclick="addPerson()">Add</button>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+<div class="detail-drawer" id="detail-drawer">
+  <div class="drawer-header">
+    <h2 id="drawer-title"></h2>
+    <button class="drawer-close" onclick="closeDrawer()">×</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
 
 <!-- Supabase setup modal -->
 <div class="jb-overlay" id="jb-modal">
