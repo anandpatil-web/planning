@@ -3252,13 +3252,10 @@ document.getElementById('jb-modal').addEventListener('click', function(e){ if(e.
 let _asCountdown = 300, _asInterval = null;
 function _asTick(){
   _asCountdown--;
-  const lbl = document.getElementById('autosave-lbl');
   if(_asCountdown <= 0){
-    const { url, key } = sbCfg();
-    if(url && key) sbSync(); else saveFile();
     _asCountdown = 300;
-    if(!(url && key) && lbl){ lbl.textContent='Autosaved ✓'; lbl.classList.add('saved');
-      setTimeout(()=>{ lbl.classList.remove('saved'); _asUpdateLbl(); }, 2500); }
+    const { url, key } = sbCfg();
+    if(url && key) sbSync();
   } else { _asUpdateLbl(); }
 }
 function _asUpdateLbl(){
