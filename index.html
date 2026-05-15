@@ -1,52 +1,50 @@
-<!DOCTYPE html>
-<!-- saved from url=(0078)file:///Users/anandpatil/Downloads/marketing-assets-guide_2026-05-13_1749.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Go-Live Marketing Assets — Visual Guide</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Segoe UI', sans-serif; background: #0f0f14; color: #e8e0d8; min-height: 100vh; padding: 32px 24px; }
+  body { font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif; background: #f0f0f8; color: #1a1a2e; min-height: 100vh; padding: 32px 28px; }
 
-  h1 { font-size: 22px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #f5e6c8; margin-bottom: 4px; }
-  .subtitle { font-size: 13px; color: #6a6058; margin-bottom: 28px; letter-spacing: 0.4px; }
+  h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: #111827; margin-bottom: 3px; }
+  .subtitle { font-size: 12px; color: #9ca3af; margin-bottom: 24px; }
 
   /* Legend */
-  .legend { display: flex; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
-  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: #9a9088; }
-  .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11.5px; color: #6b7280; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  /* Summary */
-  .summary-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 8px; }
-  .card { background: #1a1a22; border: 1px solid #272724; border-radius: 10px; padding: 16px 18px; }
-  .card .num   { font-size: 30px; font-weight: 800; line-height: 1; }
-  .card .lbl   { font-size: 10px; color: #6a6058; margin-top: 5px; text-transform: uppercase; letter-spacing: 0.9px; }
-  .card.c-shot   .num { color: #e07b54; }
-  .card.c-render .num { color: #b888e0; }
-  .card.c-ai     .num { color: #6e9ecf; }
-  .card.c-vid    .num { color: #9ab0d0; }
-  .card.c-total  .num { color: #c9a96e; }
-  .summary-note { font-size: 11px; color: #3e3c38; margin-bottom: 26px; padding-left: 2px; }
+  /* Summary cards */
+  .summary-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-bottom: 6px; }
+  .card { background: #fff; border: 1px solid #ebebf5; border-radius: 14px; padding: 16px 20px; box-shadow: 0 1px 4px rgba(100,100,160,0.06); }
+  .card .num   { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+  .card .lbl   { font-size: 10px; color: #9ca3af; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; }
+  .card.c-shot   .num { color: #f97316; }
+  .card.c-render .num { color: #a855f7; }
+  .card.c-ai     .num { color: #3b82f6; }
+  .card.c-vid    .num { color: #14b8a6; }
+  .card.c-total  .num { color: #7c5cfc; }
+  .summary-note { font-size: 11px; color: #c4c4d4; margin-bottom: 24px; padding-left: 2px; }
 
   /* Page blocks */
-  .page-block { background: #1a1a22; border: 1px solid #272724; border-radius: 10px; margin-bottom: 10px; overflow: hidden; }
-  .page-header { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; background: #1d1d26; border-bottom: 1px solid #272724; cursor: pointer; user-select: none; }
-  .page-name { font-size: 13px; font-weight: 600; color: #f0e6d0; }
+  .page-block { background: #fff; border: 1px solid #ebebf5; border-radius: 14px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 1px 4px rgba(100,100,160,0.06); }
+  .page-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 18px; background: #fff; border-bottom: 1px solid #f0f0f8; cursor: pointer; user-select: none; }
+  .page-name { font-size: 13px; font-weight: 700; color: #111827; }
   .page-chips { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
   .chip { font-size: 10px; padding: 2px 9px; border-radius: 20px; font-weight: 600; }
-  .chip.ch-shot   { background: rgba(224,123,84,0.14); color: #e07b54; border: 1px solid rgba(224,123,84,0.28); }
-  .chip.ch-render { background: rgba(160,110,200,0.14); color: #b888e0; border: 1px solid rgba(160,110,200,0.28); }
-  .chip.ch-ai     { background: rgba(110,158,207,0.14); color: #6e9ecf; border: 1px solid rgba(110,158,207,0.28); }
-  .chip.ch-done   { background: rgba(90,122,90,0.18);   color: #7db87d; border: 1px solid rgba(90,122,90,0.28); }
-  .chevron { color: #444; font-size: 16px; transition: transform 0.2s; margin-left: 6px; }
+  .chip.ch-shot   { background: #fff7ed; color: #ea6c20; border: 1px solid #fed7aa; }
+  .chip.ch-render { background: #faf5ff; color: #9333ea; border: 1px solid #e9d5ff; }
+  .chip.ch-ai     { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+  .chip.ch-done   { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+  .chevron { color: #c4c4d4; font-size: 16px; transition: transform 0.2s; margin-left: 6px; }
   .chevron.open { transform: rotate(90deg); }
 
   /* Table */
   .widgets-table { width: 100%; border-collapse: collapse; font-size: 12px; table-layout: fixed; }
-  .widgets-table th { padding: 7px 12px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.9px; color: #555048; background: #141418; border-bottom: 1px solid #272724; }
-  .widgets-table td { padding: 9px 12px; border-bottom: 1px solid #1c1c24; vertical-align: middle; }
+  .widgets-table th { padding: 8px 14px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #9ca3af; background: #fafafa; border-bottom: 1px solid #f0f0f8; font-weight: 700; }
+  .widgets-table td { padding: 10px 14px; border-bottom: 1px solid #f5f5fb; vertical-align: middle; }
   .widgets-table tr:last-child td { border-bottom: none; }
-  .widgets-table tr:hover td { background: #1c1c26; }
+  .widgets-table tr:hover td { background: #fafaff; }
   .col-name   { width: 190px; }
   .col-req    { width: 140px; }
   .col-assets { width: 200px; }
@@ -61,106 +59,106 @@
     width: 100%;
     min-height: 18px;
     outline: none;
-    border-radius: 5px;
+    border-radius: 6px;
     padding: 3px 6px;
     margin: -3px -6px;
     font-size: 11px;
     line-height: 1.5;
-    color: #8a8278;
+    color: #9ca3af;
     transition: background 0.12s, box-shadow 0.12s, color 0.12s;
     cursor: text;
     white-space: pre-wrap;
     word-break: break-word;
   }
-  .notes-field:empty::before { content: attr(data-ph); color: #3a3830; pointer-events: none; }
-  .notes-field:hover { background: rgba(255,255,255,0.03); }
-  .notes-field:focus { background: rgba(201,169,110,0.07); box-shadow: 0 0 0 1px rgba(201,169,110,0.25); color: #c0b8a8; }
+  .notes-field:empty::before { content: attr(data-ph); color: #d1d5db; pointer-events: none; }
+  .notes-field:hover { background: rgba(124,92,252,0.04); }
+  .notes-field:focus { background: rgba(124,92,252,0.06); box-shadow: 0 0 0 1.5px rgba(124,92,252,0.25); color: #374151; }
 
-  .w-name { color: #d0c8bc; font-size: 12px; line-height: 1.4; }
-  .w-req  { color: #6a6058; font-size: 11px; line-height: 1.5; }
+  .w-name { color: #111827; font-size: 12px; line-height: 1.4; font-weight: 500; }
+  .w-req  { color: #6b7280; font-size: 11px; line-height: 1.5; }
   .type-badge { display: inline-block; font-size: 9px; padding: 1px 6px; border-radius: 8px; font-weight: 700; text-transform: uppercase; margin-left: 5px; vertical-align: middle; }
-  .tb-fixed  { background: rgba(90,100,140,0.22); color: #9ab0d0; }
-  .tb-custom { background: rgba(160,120,60,0.18);  color: #c0904a; }
+  .tb-fixed  { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+  .tb-custom { background: #fff7ed; color: #ea6c20; border: 1px solid #fed7aa; }
 
   /* Asset pills */
   .asset-pills { display: flex; gap: 5px; flex-wrap: wrap; align-items: center; }
-  .pill { font-size: 10px; border-radius: 6px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 2px; padding: 3px 4px 3px 8px; }
-  .pill.p-shot   { background: rgba(224,123,84,0.18); color: #e8906a; border: 1px solid rgba(224,123,84,0.32); }
-  .pill.p-render { background: rgba(160,110,200,0.16); color: #c0a0e8; border: 1px solid rgba(160,110,200,0.28); }
-  .pill.p-ai     { background: rgba(110,158,207,0.18); color: #7ab0d8; border: 1px solid rgba(110,158,207,0.32); }
+  .pill { font-size: 10px; border-radius: 7px; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: 2px; padding: 3px 4px 3px 8px; }
+  .pill.p-shot   { background: #fff7ed; color: #ea6c20; border: 1px solid #fed7aa; }
+  .pill.p-render { background: #faf5ff; color: #9333ea; border: 1px solid #e9d5ff; }
+  .pill.p-ai     { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
   .pill-cnt { min-width: 14px; text-align: center; display: inline-block; }
-  .pbtn { cursor: pointer; font-size: 12px; font-weight: 800; opacity: 0.4; line-height: 1; padding: 0 3px; transition: opacity 0.12s; }
+  .pbtn { cursor: pointer; font-size: 12px; font-weight: 800; opacity: 0.35; line-height: 1; padding: 0 3px; transition: opacity 0.12s; }
   .pbtn:hover { opacity: 1; }
-  .render-note { font-size: 9px; color: #4a3a5a; font-style: italic; padding: 0 2px; }
-  .add-sel { background: #14141a; border: 1px dashed #2e2c28; color: #444; font-size: 10px; border-radius: 6px; padding: 3px 6px; cursor: pointer; outline: none; }
-  .add-sel:hover { border-color: #555; color: #a0a898; }
+  .render-note { font-size: 9px; color: #c4c4d4; font-style: italic; padding: 0 2px; }
+  .add-sel { background: #fafafa; border: 1px dashed #d1d5db; color: #9ca3af; font-size: 10px; border-radius: 7px; padding: 3px 6px; cursor: pointer; outline: none; }
+  .add-sel:hover { border-color: #7c5cfc; color: #7c5cfc; }
 
   /* Product-dependent column */
   .prod-cell { text-align: center; }
   .prod-toggle { display: inline-block; font-size: 10px; padding: 3px 12px; border-radius: 20px; font-weight: 700; cursor: pointer; transition: opacity 0.14s; user-select: none; }
   .prod-toggle:hover { opacity: 0.72; }
-  .pt-yes { background: rgba(201,169,110,0.16); color: #d4b878; border: 1px solid rgba(201,169,110,0.32); }
-  .pt-no  { background: rgba(60,60,60,0.18);   color: #4a4840; border: 1px solid rgba(60,60,60,0.22); }
+  .pt-yes { background: #f5f3ff; color: #7c5cfc; border: 1px solid #ddd6fe; }
+  .pt-no  { background: #f9fafb; color: #d1d5db; border: 1px solid #e5e7eb; }
 
   /* Status column */
   .status-cell { text-align: center; }
   .sbadge { display: inline-block; font-size: 10px; padding: 3px 10px; border-radius: 20px; font-weight: 700; white-space: nowrap; cursor: pointer; transition: opacity 0.14s; user-select: none; }
   .sbadge:hover { opacity: 0.72; }
-  .sb-tbd     { background: rgba(60,60,60,0.14); color: #484840; border: 1px solid rgba(60,60,60,0.2); }
-  .sb-done    { background: rgba(90,180,130,0.18); color: #6dcc9a; border: 1px solid rgba(90,180,130,0.36); }
-  .sb-pending { background: rgba(180,140,60,0.18); color: #d4a040; border: 1px solid rgba(180,140,60,0.36); }
+  .sb-tbd     { background: #f9fafb; color: #9ca3af; border: 1px solid #e5e7eb; }
+  .sb-done    { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+  .sb-pending { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
 
   /* Collections section */
-  .collections-wrap { margin-bottom: 28px; }
+  .collections-wrap { margin-bottom: 26px; }
   .coll-section-header { display:flex; align-items:center; justify-content:space-between; cursor:pointer; user-select:none; padding: 4px 0 12px; }
-  .coll-section-title { font-size:11px; text-transform:uppercase; letter-spacing:1.6px; color:#6a6058; font-weight:600; }
+  .coll-section-title { font-size:10.5px; text-transform:uppercase; letter-spacing:1.4px; color:#9ca3af; font-weight:700; }
   .coll-section-meta { display:flex; gap:8px; align-items:center; }
   .col-badge { font-size:10px; padding:2px 10px; border-radius:20px; font-weight:700; }
-  .col-badge.golive   { background:rgba(201,169,110,0.16); color:#d4b878; border:1px solid rgba(201,169,110,0.28); }
-  .col-badge.eventual { background:rgba(110,158,207,0.12); color:#6e9ecf; border:1px solid rgba(110,158,207,0.24); }
-  .coll-chevron { color:#444; font-size:15px; transition:transform 0.2s; }
+  .col-badge.golive   { background: #f5f3ff; color: #7c5cfc; border: 1px solid #ddd6fe; }
+  .col-badge.eventual { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+  .coll-chevron { color:#d1d5db; font-size:15px; transition:transform 0.2s; }
   .coll-chevron.open { transform:rotate(90deg); }
   .collections-body.hidden { display:none; }
   .collections-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
-  .persona-card { background:#1a1a22; border:1px solid #272724; border-radius:10px; overflow:hidden; }
-  .persona-header { padding:10px 14px 8px; border-bottom:1px solid #272724; }
-  .persona-name  { font-size:11px; font-weight:700; color:#f0e6d0; letter-spacing:0.3px; }
-  .persona-count { font-size:9px; color:#6a6058; margin-top:3px; }
+  .persona-card { background:#fff; border:1px solid #ebebf5; border-radius:12px; overflow:hidden; box-shadow: 0 1px 3px rgba(100,100,160,0.05); }
+  .persona-header { padding:10px 14px 8px; border-bottom:1px solid #f5f5fb; }
+  .persona-name  { font-size:11px; font-weight:700; color:#111827; letter-spacing:0.1px; }
+  .persona-count { font-size:9px; color:#9ca3af; margin-top:2px; }
   .collection-list { padding:8px 14px 10px; display:flex; flex-direction:column; gap:6px; }
   .coll-item { display:flex; align-items:flex-start; gap:7px; }
   .coll-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; margin-top:4px; }
-  .coll-dot.gl { background:#c9a96e; }
-  .coll-dot.ev { background:#2e3e58; }
+  .coll-dot.gl { background:#7c5cfc; }
+  .coll-dot.ev { background:#d1d5db; }
   .coll-name { font-size:11px; line-height:1.45; }
-  .coll-name.gl-name { color:#c8b890; }
-  .coll-name.ev-name { color:#3e4e68; }
-  .coll-sub  { font-size:10px; color:#4a4840; font-style:italic; margin-top:1px; }
+  .coll-name.gl-name { color:#374151; font-weight:500; }
+  .coll-name.ev-name { color:#c4c4d4; }
+  .coll-sub  { font-size:10px; color:#9ca3af; font-style:italic; margin-top:1px; }
 
   .widget-rows { display: none; }
   .widget-rows.open { display: table-row-group; }
 
   /* Add row / section / column controls */
-  .add-row-tr td { padding: 6px 12px; border-bottom: none; }
-  .add-row-btn { background: none; border: 1px dashed #2a2828; color: #3e3c38; font-size: 11px; border-radius: 6px; padding: 4px 14px; cursor: pointer; font-family: inherit; transition: border-color 0.12s, color 0.12s; }
-  .add-row-btn:hover { border-color: #c9a96e; color: #c9a96e; }
-  .add-section-btn { display: block; width: 100%; background: none; border: 1px dashed #2a2828; color: #3e3c38; font-size: 12px; font-family: inherit; border-radius: 10px; padding: 11px; cursor: pointer; margin-top: 10px; transition: border-color 0.12s, color 0.12s; }
-  .add-section-btn:hover { border-color: #c9a96e; color: #c9a96e; }
+  .add-row-tr td { padding: 6px 14px; border-bottom: none; }
+  .add-row-btn { background: none; border: 1px dashed #e5e7eb; color: #c4c4d4; font-size: 11px; border-radius: 7px; padding: 4px 14px; cursor: pointer; font-family: inherit; transition: border-color 0.12s, color 0.12s; }
+  .add-row-btn:hover { border-color: #7c5cfc; color: #7c5cfc; }
+  .add-section-btn { display: block; width: 100%; background: none; border: 1px dashed #e5e7eb; color: #c4c4d4; font-size: 12px; font-family: inherit; border-radius: 14px; padding: 12px; cursor: pointer; margin-top: 10px; transition: border-color 0.12s, color 0.12s; }
+  .add-section-btn:hover { border-color: #7c5cfc; color: #7c5cfc; }
 
   /* Delete buttons */
   .row-del-cell { width: 22px; text-align: center; }
   .row-del-th   { width: 22px; }
-  .row-del-btn  { color: #2e2c2a; font-size: 15px; cursor: pointer; transition: color 0.12s; line-height: 1; }
-  .row-del-btn:hover  { color: #e07b54; }
-  .page-del-btn { color: #3a3830; font-size: 16px; cursor: pointer; padding: 2px 4px; line-height: 1; transition: color 0.12s; }
-  .page-del-btn:hover { color: #e07b54; }
+  .row-del-btn  { color: #e5e7eb; font-size: 15px; cursor: pointer; transition: color 0.12s; line-height: 1; }
+  .row-del-btn:hover  { color: #ef4444; }
+  .page-del-btn { color: #d1d5db; font-size: 16px; cursor: pointer; padding: 2px 4px; line-height: 1; transition: color 0.12s; }
+  .page-del-btn:hover { color: #ef4444; }
 
   /* Add / custom column */
   .add-col-th   { width: 28px; text-align: center; }
-  .add-col-th span { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #16161e; border: 1px dashed #2a2828; color: #3e3c38; font-size: 15px; cursor: pointer; transition: border-color 0.12s, color 0.12s; }
-  .add-col-th span:hover { border-color: #c9a96e; color: #c9a96e; }
+  .add-col-th span { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 50%; background: #fafafa; border: 1px dashed #e5e7eb; color: #d1d5db; font-size: 15px; cursor: pointer; transition: border-color 0.12s, color 0.12s; }
+  .add-col-th span:hover { border-color: #7c5cfc; color: #7c5cfc; }
   .col-custom   { min-width: 140px; }
-  .col-del-btn  { margin-left: 5px; color: #2e2c2a; font-size: 11px; cursor: pointer; transition: color 0.12s; }
-  .col-del-btn:hover { color: #e07b54; }
+  .col-del-btn  { margin-left: 5px; color: #d1d5db; font-size: 11px; cursor: pointer; transition: color 0.12s; }
+  .col-del-btn:hover { color: #ef4444; }
 
   /* Editable page name */
   .page-header .editable-field { display: inline; cursor: text; }
@@ -175,22 +173,44 @@
     transition: background 0.12s, box-shadow 0.12s;
     cursor: text;
   }
-  .editable-field:hover { background: rgba(255,255,255,0.04); }
+  .editable-field:hover { background: rgba(124,92,252,0.05); }
   .editable-field:focus {
-    background: rgba(201,169,110,0.08);
-    box-shadow: 0 0 0 1px rgba(201,169,110,0.3);
+    background: rgba(124,92,252,0.07);
+    box-shadow: 0 0 0 1.5px rgba(124,92,252,0.25);
   }
 
   /* Bottom toolbar */
   .bottom-toolbar { position: fixed; bottom: 28px; right: 28px; display: flex; align-items: center; gap: 8px; z-index: 9999; }
-  .save-btn { background: #1f1f2a; border: 1px solid #3a3830; color: #c9a96e; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: background 0.15s, border-color 0.15s; }
-  .save-btn:hover { background: #272736; border-color: #c9a96e; }
+  .save-btn { background: #7c5cfc; border: none; color: #fff; font-size: 12px; font-weight: 600; padding: 10px 20px; border-radius: 30px; cursor: pointer; display: flex; align-items: center; gap: 8px; letter-spacing: 0.2px; box-shadow: 0 4px 16px rgba(124,92,252,0.35); transition: background 0.15s, box-shadow 0.15s; }
+  .save-btn:hover { background: #6d4fe8; box-shadow: 0 6px 20px rgba(124,92,252,0.45); }
   .save-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
-  .ur-btn { background: #1f1f2a; border: 1px solid #3a3830; color: #7a7268; font-size: 15px; padding: 8px 13px; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.4); transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s; line-height: 1; }
-  .ur-btn:hover:not([disabled]) { background: #272736; border-color: #9a9088; color: #c0b8a8; }
-  .ur-btn[disabled] { opacity: 0.22; cursor: default; pointer-events: none; }
-  .autosave-lbl { font-size: 11px; color: #4a4840; letter-spacing: 0.3px; padding: 0 4px; white-space: nowrap; transition: color 0.3s; }
-  .autosave-lbl.saved { color: #6dcc9a; }
+  .ur-btn { background: #fff; border: 1px solid #e5e7eb; color: #9ca3af; font-size: 15px; padding: 8px 13px; border-radius: 30px; cursor: pointer; box-shadow: 0 2px 8px rgba(100,100,160,0.1); transition: background 0.15s, border-color 0.15s, color 0.15s, opacity 0.15s; line-height: 1; }
+  .ur-btn:hover:not([disabled]) { background: #fafafa; border-color: #7c5cfc; color: #7c5cfc; }
+  .ur-btn[disabled] { opacity: 0.25; cursor: default; pointer-events: none; }
+  .jb-btn { background: #fff; border: 1px solid #e5e7eb; color: #9ca3af; font-size: 12px; padding: 8px 14px; border-radius: 30px; cursor: pointer; box-shadow: 0 2px 8px rgba(100,100,160,0.1); transition: background 0.15s, border-color 0.15s, color 0.15s; letter-spacing: 0.2px; }
+  .jb-btn:hover { background: #fafafa; border-color: #7c5cfc; color: #7c5cfc; }
+  .jb-btn.connected { border-color: #7c5cfc; color: #7c5cfc; background: #f5f3ff; }
+
+  /* Supabase modal */
+  .jb-overlay { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.45); backdrop-filter: blur(4px); z-index: 99999; align-items: center; justify-content: center; }
+  .jb-modal { background: #fff; border: 1px solid #ebebf5; border-radius: 18px; padding: 28px 28px 22px; width: 440px; max-width: calc(100vw - 40px); box-shadow: 0 20px 60px rgba(100,100,160,0.18); }
+  .jb-modal h2 { font-size: 15px; font-weight: 700; color: #111827; margin-bottom: 5px; }
+  .jb-modal p { font-size: 11.5px; color: #6b7280; margin-bottom: 18px; line-height: 1.65; }
+  .jb-modal p a { color: #7c5cfc; text-decoration: none; }
+  .jb-field { margin-bottom: 14px; }
+  .jb-field label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.9px; color: #9ca3af; margin-bottom: 6px; font-weight: 700; }
+  .jb-field input { width: 100%; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 10px; padding: 9px 12px; font-size: 12px; color: #374151; outline: none; font-family: monospace; transition: border-color 0.15s, box-shadow 0.15s; }
+  .jb-field input:focus { border-color: #7c5cfc; box-shadow: 0 0 0 3px rgba(124,92,252,0.12); }
+  .jb-field input::placeholder { color: #d1d5db; }
+  .jb-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+  .jb-cancel { background: none; border: 1px solid #e5e7eb; color: #6b7280; font-size: 12px; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: border-color 0.12s; }
+  .jb-cancel:hover { border-color: #9ca3af; }
+  .jb-save { background: #7c5cfc; border: none; color: #fff; font-size: 12px; font-weight: 600; padding: 8px 20px; border-radius: 20px; cursor: pointer; box-shadow: 0 2px 8px rgba(124,92,252,0.3); transition: background 0.15s; }
+  .jb-save:hover { background: #6d4fe8; }
+  .jb-clear { background: none; border: none; color: #f87171; font-size: 11px; cursor: pointer; padding: 8px 4px; margin-right: auto; opacity: 0.6; }
+  .jb-clear:hover { opacity: 1; }
+  .autosave-lbl { font-size: 11px; color: #9ca3af; letter-spacing: 0.2px; padding: 0 4px; white-space: nowrap; transition: color 0.3s; }
+  .autosave-lbl.saved { color: #16a34a; }
 </style>
 <style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style><style>@keyframes fbp{0%,100%{opacity:1}50%{opacity:.2}}#__fb_tb{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:rgba(250,250,248,.97);border:1px solid #e8e6e3;border-radius:40px;padding:8px 18px;display:none;align-items:center;gap:10px;z-index:2147483647;box-shadow:0 4px 20px rgba(0,0,0,.12);font-family:system-ui,sans-serif;}#__fb_tb .lbl{font-size:9px;font-weight:700;color:#aaa;letter-spacing:1px;}#__fb_tb .sep{width:1px;height:14px;background:#e8e6e3;}#__fb_tb .tip{font-size:11px;color:#666;font-weight:500;}#__fb_dot{width:7px;height:7px;background:#ef4444;border-radius:50%;animation:fbp 1.4s infinite;flex-shrink:0;}#__fb_undo{font-size:12px;cursor:pointer;background:#f5f3f0;border:none;border-radius:8px;padding:5px 9px;color:#666;font-family:inherit;font-weight:600;}#__fb_undo:hover{background:#ece9e5;color:#333;}</style></head>
 <body>
@@ -313,7 +333,7 @@
 <div id="pages-container">
   <div class="page-block" id="page-block-0">
     <div class="page-header" onclick="toggle(0)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Homepage</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Homepage</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-0"><span class="chip ch-shot">📷 Image Shoot: 24</span><span class="chip ch-ai">✦ AI: 23</span></div>
         <span class="chevron open" id="chev-0">›</span>
@@ -334,16 +354,16 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-0">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hero Section</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images, 1 video</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Hero Section</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2 images, 1 video</span></td>
       <td id="pills-0-0"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">2</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,'shot',1)">+</span>
       </span><span class="pill p-shot">
         📷 Video Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shotVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,&#39;shotVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,'shotVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,0,'shotVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -355,12 +375,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Category Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 img for each category-Earrings, Rings, Bracelets, Bangles, Pendants, Chain with Pendant, Necklace, Mangalsutra</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Category Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 img for each category-Earrings, Rings, Bracelets, Bangles, Pendants, Chain with Pendant, Necklace, Mangalsutra</span></td>
       <td id="pills-0-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">8</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -372,8 +392,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Gold Shades Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">7 Gold colour asset images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Gold Shades Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">7 Gold colour asset images</span></td>
       <td id="pills-0-2"><div class="asset-pills"><select class="add-sel" onchange="addTag(0,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -385,12 +405,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,2)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Persona Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images × 5 personas</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Persona Widget</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2 images × 5 personas</span></td>
       <td id="pills-0-3"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">10</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,3,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,3,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,3,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,3,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,3,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -402,12 +422,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,3)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Occasion Widget</span><span class="type-badge tb-custom">Custom</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 images × 3 occasions</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Occasion Widget</span><span class="type-badge tb-custom">Custom</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 images × 3 occasions</span></td>
       <td id="pills-0-4"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,4,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,4,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,4,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,4,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,4,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -419,12 +439,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,4)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection Widget Var 1</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 images, 12 videos for 3 collection widgets</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Collection Widget Var 1</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 images, 12 videos for 3 collection widgets</span></td>
       <td id="pills-0-5"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,5,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,5,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,5,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,5,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,5,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -436,16 +456,16 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,5)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection Widget Var 2</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Collection Widget Var 2</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 image</span></td>
       <td id="pills-0-6"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,'shot',1)">+</span>
       </span><span class="pill p-shot">
         📷 Video Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shotVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,&#39;shotVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,'shotVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,6,'shotVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,6,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -457,12 +477,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,6)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection Widget Var 3</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,7,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Collection Widget Var 3</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,7,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2 images</span></td>
       <td id="pills-0-7"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">2</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,7,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,7,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,7,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,7,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,7,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -474,12 +494,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,7)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Classics Widget</span><span class="type-badge tb-custom">Custom</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 collection element images (rose, etc)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,8,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Classics Widget</span><span class="type-badge tb-custom">Custom</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,8,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 collection element images (rose, etc)</span></td>
       <td id="pills-0-8"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,8,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,8,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,8,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,8,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,8,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -491,12 +511,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,8)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,9,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">USPs</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,9,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,9,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">USPs</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,9,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 images</span></td>
       <td id="pills-0-9"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,9,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,9,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,9,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,9,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,9,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -508,12 +528,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,9)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,10,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Widget-Desktop</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,10,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store shoot — images and videos of stores</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,10,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Store Widget-Desktop</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,10,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Store shoot — images and videos of stores</span></td>
       <td id="pills-0-10"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,10,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,10,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,10,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,10,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,10,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -525,12 +545,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,10)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,11,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Services</span><span class="type-badge tb-fixed">Fixed</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,11,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image each for all services</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,11,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Services</span><span class="type-badge tb-fixed">Fixed</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,11,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 image each for all services</span></td>
       <td id="pills-0-11"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">5</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,11,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,11,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,11,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,11,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,11,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -542,12 +562,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,11)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,12,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Widget mweb</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,12,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,12,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Store Widget mweb</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,12,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-0-12"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,12,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,12,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,12,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,12,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,12,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -559,12 +579,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(0,12)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,13,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Collection widget mweb</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,13,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(0,13,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Collection widget mweb</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(0,13,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-0-13"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,13,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(0,13,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,13,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(0,13,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(0,13,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -579,7 +599,7 @@
   </div>
   <div class="page-block" id="page-block-1">
     <div class="page-header" onclick="toggle(1)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">CLP × 18 (Collection Landing Page)</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">CLP × 18 (Collection Landing Page)</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-1"><span class="chip ch-shot">📷 Image Shoot: 18</span><span class="chip ch-ai">✦ AI: 162</span></div>
         <span class="chevron open" id="chev-1">›</span>
@@ -600,12 +620,12 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-1">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hero Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video, 3 images (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Hero Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video, 3 images (×18 CLPs)</span></td>
       <td id="pills-1-0"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">18</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,0,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,0,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,0,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,0,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -617,12 +637,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Moodboard</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Moodboard</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2 images (×18 CLPs)</span></td>
       <td id="pills-1-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">18</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -634,12 +654,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Inspiration Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images, 1 video (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Inspiration Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2 images, 1 video (×18 CLPs)</span></td>
       <td id="pills-1-2"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">18</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,2,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,2,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,2,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,2,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -651,12 +671,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,2)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Craftsmanship Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Craftsmanship Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video (×18 CLPs)</span></td>
       <td id="pills-1-3"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">18</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,3,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,3,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,3,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,3,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,3,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -668,12 +688,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,3)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Sketches</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Sketches</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 image (×18 CLPs)</span></td>
       <td id="pills-1-4"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">18</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,4,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,4,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,4,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,4,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,4,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -685,12 +705,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,4)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Featured Pieces</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image each of all featured pieces (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Featured Pieces</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 image each of all featured pieces (×18 CLPs)</span></td>
       <td id="pills-1-5"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">18</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,5,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,5,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,5,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,5,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,5,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -702,12 +722,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(1,5)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Lookbook Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video, 4 images (×18 CLPs)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(1,6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Lookbook Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(1,6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video, 4 images (×18 CLPs)</span></td>
       <td id="pills-1-6"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">72</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,6,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(1,6,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,6,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(1,6,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(1,6,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -722,7 +742,7 @@
   </div>
   <div class="page-block" id="page-block-2">
     <div class="page-header" onclick="toggle(2)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Persona Page × 5</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Persona Page × 5</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-2"></div>
         <span class="chevron open" id="chev-2">›</span>
@@ -743,8 +763,8 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-2">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hero Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video (×5 personas)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Hero Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video (×5 personas)</span></td>
       <td id="pills-2-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(2,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -756,8 +776,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(2,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Traits Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 product sections (×5 personas)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Traits Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 product sections (×5 personas)</span></td>
       <td id="pills-2-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(2,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -769,8 +789,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(2,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Occasions Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 lifestyle shots (×5 personas)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(2,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Occasions Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(2,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 lifestyle shots (×5 personas)</span></td>
       <td id="pills-2-2"><div class="asset-pills"><select class="add-sel" onchange="addTag(2,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -785,7 +805,7 @@
   </div>
   <div class="page-block" id="page-block-3">
     <div class="page-header" onclick="toggle(3)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">PLP (Product Listing Page)</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">PLP (Product Listing Page)</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-3"><span class="chip ch-ai">✦ AI: 19</span></div>
         <span class="chevron open" id="chev-3">›</span>
@@ -806,12 +826,12 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-3">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(3,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Banner Images</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(3,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3D stylised renders for each category</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(3,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Banner Images</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(3,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3D stylised renders for each category</span></td>
       <td id="pills-3-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">11</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(3,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(3,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(3,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -823,12 +843,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(3,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(3,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Style Images</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(3,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">8 imgs x 11 categories</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(3,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Style Images</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(3,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">8 imgs x 11 categories</span></td>
       <td id="pills-3-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">8</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(3,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(3,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(3,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(3,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -843,7 +863,7 @@
   </div>
   <div class="page-block" id="page-block-4">
     <div class="page-header" onclick="toggle(4)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Search</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Search</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-4"><span class="chip ch-ai">✦ AI: 3</span></div>
         <span class="chevron open" id="chev-4">›</span>
@@ -864,8 +884,8 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-4">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(4,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Shop By Persona</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(4,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(4,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Shop By Persona</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(4,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5 images</span></td>
       <td id="pills-4-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(4,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -877,12 +897,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(4,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(4,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Shop By Collection</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(4,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Depends on Collection</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(4,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Shop By Collection</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(4,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Depends on Collection</span></td>
       <td id="pills-4-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(4,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(4,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(4,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(4,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(4,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -897,7 +917,7 @@
   </div>
   <div class="page-block" id="page-block-5">
     <div class="page-header" onclick="toggle(5)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">PDP (Product Detail Page)</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">PDP (Product Detail Page)</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-5"><span class="chip ch-ai">✦ AI: 10</span></div>
         <span class="chevron open" id="chev-5">›</span>
@@ -918,8 +938,8 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-5">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Gallery</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images, 1 video (×1800 products)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Gallery</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5 images, 1 video (×1800 products)</span></td>
       <td id="pills-5-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(5,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -931,12 +951,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Product locator</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Product locator</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video</span></td>
       <td id="pills-5-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Video: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,1,&#39;aiVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,1,&#39;aiVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,1,'aiVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,1,'aiVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option>
@@ -948,12 +968,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Customisation (MWeb)</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Customisation (MWeb)</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video</span></td>
       <td id="pills-5-2"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Video: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,2,&#39;aiVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,2,&#39;aiVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,2,'aiVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,2,'aiVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option>
@@ -965,12 +985,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,2)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Customisation (Desktop)</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Customisation (Desktop)</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 image</span></td>
       <td id="pills-5-3"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,3,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,3,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,3,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,3,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,3,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -982,12 +1002,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,3)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Qween Promises</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,4,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Qween Promises</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,4,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4 images</span></td>
       <td id="pills-5-4"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">4</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,4,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,4,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,4,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,4,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,4,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -999,12 +1019,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,4)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Manufacturing / Craftsmanship Video</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,5,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video per category (×13)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Manufacturing / Craftsmanship Video</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,5,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video per category (×13)</span></td>
       <td id="pills-5-5"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Video: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,5,&#39;aiVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,5,&#39;aiVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,5,'aiVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,5,'aiVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,5,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option>
@@ -1016,12 +1036,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,5)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Size Guide</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Size guide asset</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Size Guide</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Size guide asset</span></td>
       <td id="pills-5-6"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,6,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,6,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,6,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,6,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,6,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1033,12 +1053,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,6)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Packaging</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 image for packaging section</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,7,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Packaging</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,7,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 image for packaging section</span></td>
       <td id="pills-5-7"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,7,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(5,7,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,7,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(5,7,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(5,7,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1050,8 +1070,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(5,7)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(5,8,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(5,8,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-5-8"><div class="asset-pills"><select class="add-sel" onchange="addTag(5,8,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1066,7 +1086,7 @@
   </div>
   <div class="page-block" id="page-block-6">
     <div class="page-header" onclick="toggle(6)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(6,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Cart</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(6,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Cart</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-6"><span class="chip ch-ai">✦ AI: 3</span></div>
         <span class="chevron open" id="chev-6">›</span>
@@ -1087,12 +1107,12 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-6">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(6,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Pickup</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(6,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 images for 3 stores</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(6,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Store Pickup</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(6,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 images for 3 stores</span></td>
       <td id="pills-6-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">3</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(6,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(6,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(6,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(6,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(6,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1107,7 +1127,7 @@
   </div>
   <div class="page-block" id="page-block-7">
     <div class="page-header" onclick="toggle(7)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(7,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My Orders</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(7,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">My Orders</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-7"><span class="chip ch-ai">✦ AI: 5</span></div>
         <span class="chevron open" id="chev-7">›</span>
@@ -1128,12 +1148,12 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-7">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(7,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Order Stage Images</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(7,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Image assets for all stages of order</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(7,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Order Stage Images</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(7,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Image assets for all stages of order</span></td>
       <td id="pills-7-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">5</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(7,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(7,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(7,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(7,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(7,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1148,7 +1168,7 @@
   </div>
   <div class="page-block" id="page-block-8">
     <div class="page-header" onclick="toggle(8)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(8,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Video Consultation</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(8,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Video Consultation</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-8"><span class="chip ch-shot">📷 Image Shoot: 1</span></div>
         <span class="chevron open" id="chev-8">›</span>
@@ -1169,12 +1189,12 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-8">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(8,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Landing Page</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(8,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 explainer video (store &amp; product)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(8,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Landing Page</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(8,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 explainer video (store &amp; product)</span></td>
       <td id="pills-8-0"><div class="asset-pills"><span class="pill p-shot">
         📷 Video Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(8,0,&#39;shotVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(8,0,&#39;shotVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(8,0,'shotVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(8,0,'shotVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(8,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1189,7 +1209,7 @@
   </div>
   <div class="page-block" id="page-block-9">
     <div class="page-header" onclick="toggle(9)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(9,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Store Page</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(9,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Store Page</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-9"><span class="chip ch-shot">📷 Image Shoot: 13</span></div>
         <span class="chevron" id="chev-9">›</span>
@@ -1210,12 +1230,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-9">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Loading Screen</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 video</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Loading Screen</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 video</span></td>
       <td id="pills-9-0"><div class="asset-pills"><span class="pill p-shot">
         📷 Video Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,0,&#39;shotVid&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,0,&#39;shotVid&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,0,'shotVid',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,0,'shotVid',1)">+</span>
       </span><select class="add-sel" onchange="addTag(9,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1227,12 +1247,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Experience Section</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">6 images (store)</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Experience Section</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">6 images (store)</span></td>
       <td id="pills-9-1"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">6</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,1,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,1,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,1,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,1,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(9,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1244,12 +1264,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Persona</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Persona</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5 images</span></td>
       <td id="pills-9-2"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">5</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,2,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,2,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,2,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,2,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(9,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1261,12 +1281,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(9,2)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Product Locator</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2 images — Store Layout</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(9,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Product Locator</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(9,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2 images — Store Layout</span></td>
       <td id="pills-9-3"><div class="asset-pills"><span class="pill p-shot">
         📷 Image Shoot: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,3,&#39;shot&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(9,3,&#39;shot&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,3,'shot',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(9,3,'shot',1)">+</span>
       </span><select class="add-sel" onchange="addTag(9,3,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1281,7 +1301,7 @@
   </div>
   <div class="page-block" id="page-block-10">
     <div class="page-header" onclick="toggle(10)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(10,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">GIP (Gold Investment Plan)</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(10,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">GIP (Gold Investment Plan)</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-10"><span class="chip ch-ai">✦ AI: 1</span></div>
         <span class="chevron" id="chev-10">›</span>
@@ -1302,12 +1322,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-10">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(10,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main&nbsp; Asset</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(10,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Primary explainer/hero video</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(10,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Main&nbsp; Asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(10,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Primary explainer/hero video</span></td>
       <td id="pills-10-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(10,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(10,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(10,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(10,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(10,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1319,8 +1339,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(10,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(10,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">How It Works — Icons</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(10,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 icons</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(10,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">How It Works — Icons</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(10,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4 icons</span></td>
       <td id="pills-10-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(10,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1335,7 +1355,7 @@
   </div>
   <div class="page-block" id="page-block-11">
     <div class="page-header" onclick="toggle(11)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(11,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">OGE (Old Gold Exchange)</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(11,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">OGE (Old Gold Exchange)</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-11"><span class="chip ch-ai">✦ AI: 1</span></div>
         <span class="chevron" id="chev-11">›</span>
@@ -1356,12 +1376,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-11">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(11,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main Video Asset</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(11,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Primary OGE video asset</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(11,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Main Video Asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(11,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Primary OGE video asset</span></td>
       <td id="pills-11-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(11,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(11,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(11,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(11,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(11,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1373,8 +1393,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(11,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(11,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">How It Works — Icons</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(11,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 icons</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(11,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">How It Works — Icons</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(11,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4 icons</span></td>
       <td id="pills-11-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(11,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1389,7 +1409,7 @@
   </div>
   <div class="page-block" id="page-block-12">
     <div class="page-header" onclick="toggle(12)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(12,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Exchange</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(12,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Exchange</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-12"><span class="chip ch-ai">✦ AI: 1</span></div>
         <span class="chevron" id="chev-12">›</span>
@@ -1410,12 +1430,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-12">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(12,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main Image Asset</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(12,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Primary exchange page image</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(12,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Main Image Asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(12,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Primary exchange page image</span></td>
       <td id="pills-12-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(12,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(12,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(12,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(12,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(12,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1427,8 +1447,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(12,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(12,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">What Happens Next — Icons</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(12,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Icon assets</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(12,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">What Happens Next — Icons</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(12,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Icon assets</span></td>
       <td id="pills-12-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(12,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1443,7 +1463,7 @@
   </div>
   <div class="page-block" id="page-block-13">
     <div class="page-header" onclick="toggle(13)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(13,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Hamburger Menu</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(13,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Hamburger Menu</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-13"><span class="chip ch-ai">✦ AI: 34</span></div>
         <span class="chevron" id="chev-13">›</span>
@@ -1464,12 +1484,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-13">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Top Style Assets Category</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 top style assets x 8 category</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top Style Assets Category</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5 top style assets x 8 category</span></td>
       <td id="pills-13-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">11</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(13,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1481,12 +1501,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">All Collection Assets</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Top collection hero images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">All Collection Assets</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Top collection hero images</span></td>
       <td id="pills-13-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">9</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(13,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1498,12 +1518,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Solitaire experience</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 categories +all</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Solitaire experience</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5 categories +all</span></td>
       <td id="pills-13-2"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">6</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,2,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,2,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,2,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,2,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(13,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1515,12 +1535,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(13,2)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">More jewellery</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">3 category images + 5 set category images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(13,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">More jewellery</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(13,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">3 category images + 5 set category images</span></td>
       <td id="pills-13-3"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">8</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,3,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(13,3,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,3,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(13,3,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(13,3,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1535,7 +1555,7 @@
   </div>
   <div class="page-block" id="page-block-14">
     <div class="page-header" onclick="toggle(14)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(14,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Services</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(14,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Services</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-14"><span class="chip ch-ai">✦ AI: 10</span></div>
         <span class="chevron" id="chev-14">›</span>
@@ -1556,12 +1576,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-14">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Banner img</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">1 img</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Banner img</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">1 img</span></td>
       <td id="pills-14-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(14,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(14,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(14,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1573,12 +1593,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Services</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">4 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Services</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">4 images</span></td>
       <td id="pills-14-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">4</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(14,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(14,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(14,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1590,8 +1610,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,1)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Warranty</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,2,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">0</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Warranty</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,2,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">0</span></td>
       <td id="pills-14-2"><div class="asset-pills"><select class="add-sel" onchange="addTag(14,2,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1603,12 +1623,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(14,2)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Care guide</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,3,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">5 images</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(14,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Care guide</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(14,3,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">5 images</span></td>
       <td id="pills-14-3"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">5</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(14,3,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(14,3,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,3,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(14,3,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(14,3,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1623,7 +1643,7 @@
   </div>
   <div class="page-block" id="page-block-15">
     <div class="page-header" onclick="toggle(15)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(15,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Diamond guide-WIP</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(15,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Diamond guide-WIP</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-15"></div>
         <span class="chevron" id="chev-15">›</span>
@@ -1647,7 +1667,7 @@
   </div>
   <div class="page-block" id="page-block-16">
     <div class="page-header" onclick="toggle(16)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(16,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Gemstone guide-WIP</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(16,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Gemstone guide-WIP</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-16"></div>
         <span class="chevron open" id="chev-16">›</span>
@@ -1668,8 +1688,8 @@
       </tr></thead>
       <tbody class="widget-rows open" id="rows-16">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(16,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">New Widget</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(16,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(16,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">New Widget</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(16,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-16-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(16,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1684,7 +1704,7 @@
   </div>
   <div class="page-block" id="page-block-17">
     <div class="page-header" onclick="toggle(17)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(17,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My bookings</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(17,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">My bookings</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-17"><span class="chip ch-ai">✦ AI: 2</span></div>
         <span class="chevron" id="chev-17">›</span>
@@ -1705,12 +1725,12 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-17">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(17,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main asset</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(17,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">2x store and video consultation image</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(17,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Main asset</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(17,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">2x store and video consultation image</span></td>
       <td id="pills-17-0"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">2</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(17,0,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(17,0,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(17,0,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(17,0,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(17,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1725,7 +1745,7 @@
   </div>
   <div class="page-block" id="page-block-18">
     <div class="page-header" onclick="toggle(18)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(18,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My credits</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(18,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">My credits</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-18"></div>
         <span class="chevron open" id="chev-18">›</span>
@@ -1749,7 +1769,7 @@
   </div>
   <div class="page-block" id="page-block-19">
     <div class="page-header" onclick="toggle(19)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(19,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">My profile</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(19,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">My profile</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-19"></div>
         <span class="chevron open" id="chev-19">›</span>
@@ -1773,7 +1793,7 @@
   </div>
   <div class="page-block" id="page-block-20">
     <div class="page-header" onclick="toggle(20)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(20,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Motion</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(20,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Motion</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-20"><span class="chip ch-ai">✦ AI: 1</span></div>
         <span class="chevron" id="chev-20">›</span>
@@ -1794,8 +1814,8 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-20">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(20,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Main loader</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(20,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(20,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Main loader</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(20,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-20-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(20,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1807,12 +1827,12 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(20,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(20,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Splash screen</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(20,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(20,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Splash screen</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(20,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-20-1"><div class="asset-pills"><span class="pill p-ai">
         ✦ AI Generated: <span class="pill-cnt">1</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(20,1,&#39;ai&#39;,-1)">−</span>
-        <span class="pbtn" onclick="event.stopPropagation();adj(20,1,&#39;ai&#39;,1)">+</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(20,1,'ai',-1)">−</span>
+        <span class="pbtn" onclick="event.stopPropagation();adj(20,1,'ai',1)">+</span>
       </span><select class="add-sel" onchange="addTag(20,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="aiVid">✦ AI Video</option>
@@ -1827,7 +1847,7 @@
   </div>
   <div class="page-block" id="page-block-21">
     <div class="page-header" onclick="toggle(21)">
-      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(21,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Error screens</span>
+      <span class="page-name editable-field" contenteditable="true" onclick="event.stopPropagation()" onblur="updatePageName(21,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Error screens</span>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-21"></div>
         <span class="chevron" id="chev-21">›</span>
@@ -1848,8 +1868,8 @@
       </tr></thead>
       <tbody class="widget-rows" id="rows-21">
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(21,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Mention the screens here</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(21,0,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}"></span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(21,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Mention the screens here</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(21,0,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"></span></td>
       <td id="pills-21-0"><div class="asset-pills"><select class="add-sel" onchange="addTag(21,0,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1861,8 +1881,8 @@
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(21,0)" title="Delete row">×</span></td>
     </tr>
     <tr class="data-row">
-      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(21,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">Empty Product image placeholders</span></td>
-      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(21,1,this)" onkeydown="if(event.key===&#39;Enter&#39;){event.preventDefault();this.blur()}">High res</span></td>
+      <td class="w-name"><span class="editable-field" contenteditable="true" onblur="updateName(21,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">Empty Product image placeholders</span></td>
+      <td class="w-req"><span class="editable-field" contenteditable="true" onblur="updateReq(21,1,this)" onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">High res</span></td>
       <td id="pills-21-1"><div class="asset-pills"><select class="add-sel" onchange="addTag(21,1,this)" onclick="event.stopPropagation()">
       <option value="">+ add</option>
       <option value="shot">📷 Image Shoot</option><option value="shotVid">📷 Video Shoot</option><option value="render">⬡ Rendered</option><option value="renderVid">⬡ Rendered Video</option><option value="ai">✦ AI Generated</option><option value="aiVid">✦ AI Video</option>
@@ -1892,7 +1912,7 @@ const pages = [
     "widgets": [
       {
         "name": "Hero Section",
-        "req": "5 images, 2 video",
+        "req": "2 images, 1 video",
         "type": "Fixed",
         "shot": 2,
         "shotVid": 1,
@@ -1901,20 +1921,20 @@ const pages = [
         "ai": 0,
         "aiVid": 0,
         "prodDep": true,
-        "notes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        "notes": "\"a. How many categories we are going live with? - 8 or 9 (Earrings, Rings, Bracelets, Bangles, Pendants, Chain with pendants, neckalces, mangalsutras)b. How many products in each category?c. Which will be the hero products?\""
       },
       {
         "name": "Category Widget",
-        "req": "1 image each for all categories",
+        "req": "1 img for each category-Earrings, Rings, Bracelets, Bangles, Pendants, Chain with Pendant, Necklace, Mangalsutra",
         "type": "Fixed",
         "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 9,
+        "ai": 8,
         "aiVid": 0,
-        "prodDep": false,
-        "notes": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+        "prodDep": true,
+        "notes": "No model"
       },
       {
         "name": "Gold Shades Widget",
@@ -1926,11 +1946,12 @@ const pages = [
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
-        "prodDep": false
+        "prodDep": false,
+        "status": "done"
       },
       {
         "name": "Persona Widget",
-        "req": "2 images × 5 personas + lifestyle shots",
+        "req": "2 images × 5 personas",
         "type": "Fixed",
         "shot": 10,
         "shotVid": 0,
@@ -1938,23 +1959,38 @@ const pages = [
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
-        "prodDep": true
+        "prodDep": true,
+        "notes": "\"a. Part of Go-Live or not?b. Mapping is to be done as a part of Go-Live?    If Yes, we can show a basic PLP or Hero Banner with PLP    If No, we can show a static persona pagec. Hero products for each persona to be decided.\""
       },
       {
         "name": "Occasion Widget",
-        "req": "3 images × 3 occasions",
+        "req": "1 images × 3 occasions",
         "type": "Customisable",
         "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 0,
+        "ai": 3,
         "aiVid": 0,
-        "prodDep": false
+        "prodDep": true,
+        "notes": "\"a. Are we doing occassion?    If Yes, then list of all occassion is needed\" then tagging?"
       },
       {
         "name": "Collection Widget Var 1",
         "req": "3 images, 12 videos for 3 collection widgets",
+        "type": "Fixed",
+        "shot": 1,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": true,
+        "notes": "Could be model/product"
+      },
+      {
+        "name": "Collection Widget Var 2",
+        "req": "1 image",
         "type": "Fixed",
         "shot": 1,
         "shotVid": 1,
@@ -1962,19 +1998,8 @@ const pages = [
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
-        "prodDep": true
-      },
-      {
-        "name": "Collection Widget Var 2",
-        "req": "1 image",
-        "type": "Fixed",
-        "shot": 1,
-        "shotVid": 0,
-        "render": 0,
-        "renderVid": 0,
-        "ai": 0,
-        "aiVid": 0,
-        "prodDep": true
+        "prodDep": true,
+        "notes": "Could be model/product"
       },
       {
         "name": "Collection Widget Var 3",
@@ -1986,7 +2011,8 @@ const pages = [
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
-        "prodDep": true
+        "prodDep": true,
+        "notes": "Could be model/product"
       },
       {
         "name": "Classics Widget",
@@ -1998,32 +2024,34 @@ const pages = [
         "renderVid": 0,
         "ai": 3,
         "aiVid": 0,
-        "prodDep": false,
-        "status": "pending renders"
+        "prodDep": true,
+        "status": "",
+        "notes": "Product shot"
       },
       {
         "name": "USPs",
-        "req": "1 video, 2 images",
+        "req": "3 images",
         "type": "Fixed",
         "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 2,
-        "aiVid": 1,
+        "ai": 3,
+        "aiVid": 0,
         "prodDep": false
       },
       {
-        "name": "Store Widget",
+        "name": "Store Widget-Desktop",
         "req": "Store shoot — images and videos of stores",
         "type": "Fixed",
-        "shot": 22,
-        "shotVid": 3,
+        "shot": 3,
+        "shotVid": 0,
         "render": 0,
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
-        "prodDep": false
+        "prodDep": true,
+        "notes": "only 1 store-NOIDA, blr and delhi-coming soon"
       },
       {
         "name": "Services",
@@ -2035,7 +2063,36 @@ const pages = [
         "renderVid": 0,
         "ai": 5,
         "aiVid": 0,
-        "prodDep": false
+        "prodDep": false,
+        "status": "done"
+      },
+      {
+        "name": "Store Widget mweb",
+        "req": "",
+        "type": "—",
+        "shot": 3,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "Collection widget mweb",
+        "req": "",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": true,
+        "notes": "",
+        "customData": {}
       }
     ]
   },
@@ -2047,7 +2104,7 @@ const pages = [
         "req": "1 video, 3 images (×18 CLPs)",
         "type": "—",
         "shot": 18,
-        "shotVid": 18,
+        "shotVid": 0,
         "render": 0,
         "renderVid": 0,
         "ai": 0,
@@ -2064,7 +2121,8 @@ const pages = [
         "renderVid": 0,
         "ai": 18,
         "aiVid": 0,
-        "prodDep": true
+        "prodDep": true,
+        "notes": "to get these particular attriibutes from marketing"
       },
       {
         "name": "Inspiration Section",
@@ -2112,7 +2170,8 @@ const pages = [
         "renderVid": 0,
         "ai": 18,
         "aiVid": 0,
-        "prodDep": true
+        "prodDep": true,
+        "notes": "within collection-hero products mapping"
       },
       {
         "name": "Lookbook Section",
@@ -2135,8 +2194,8 @@ const pages = [
         "name": "Hero Section",
         "req": "1 video (×5 personas)",
         "type": "—",
-        "shot": 5,
-        "shotVid": 5,
+        "shot": 0,
+        "shotVid": 0,
         "render": 0,
         "renderVid": 0,
         "ai": 0,
@@ -2180,23 +2239,24 @@ const pages = [
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 9,
+        "ai": 11,
         "aiVid": 0,
         "prodDep": true,
-        "status": "pending renders"
+        "status": ""
       },
       {
         "name": "Style Images",
-        "req": "Style images for each category",
+        "req": "8 imgs x 11 categories",
         "type": "—",
         "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 9,
+        "ai": 8,
         "aiVid": 0,
         "prodDep": true,
-        "status": "pending renders"
+        "status": "",
+        "notes": "how many products we should have under each style?"
       }
     ]
   },
@@ -2207,25 +2267,27 @@ const pages = [
         "name": "Shop By Persona",
         "req": "5 images",
         "type": "—",
-        "shot": 5,
+        "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
-        "prodDep": false
+        "prodDep": false,
+        "notes": "removing it for go live"
       },
       {
         "name": "Shop By Collection",
         "req": "Depends on Collection",
         "type": "—",
-        "shot": 1,
+        "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 0,
+        "ai": 3,
         "aiVid": 0,
-        "prodDep": false
+        "prodDep": false,
+        "notes": "removing it for go live"
       }
     ]
   },
@@ -2238,22 +2300,22 @@ const pages = [
         "type": "—",
         "shot": 0,
         "shotVid": 0,
-        "render": 5,
-        "renderVid": 1,
+        "render": 0,
+        "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
         "prodDep": true
       },
       {
-        "name": "Delivery / Store Pickup",
-        "req": "3 images for 3 stores",
+        "name": "Product locator",
+        "req": "1 video",
         "type": "—",
         "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
         "ai": 0,
-        "aiVid": 0,
+        "aiVid": 1,
         "prodDep": false
       },
       {
@@ -2265,13 +2327,14 @@ const pages = [
         "render": 0,
         "renderVid": 0,
         "ai": 0,
-        "aiVid": 0,
+        "aiVid": 1,
         "prodDep": false,
-        "status": "pending renders"
+        "status": "",
+        "notes": "REDUCE THE SIZE OF THE EXISTING VIDEO"
       },
       {
         "name": "Customisation (Desktop)",
-        "req": "1 3D or 1 image",
+        "req": "1 image",
         "type": "—",
         "shot": 0,
         "shotVid": 0,
@@ -2279,8 +2342,8 @@ const pages = [
         "renderVid": 0,
         "ai": 1,
         "aiVid": 0,
-        "prodDep": true,
-        "status": "pending renders"
+        "prodDep": false,
+        "status": ""
       },
       {
         "name": "Qween Promises",
@@ -2333,6 +2396,20 @@ const pages = [
         "aiVid": 0,
         "prodDep": false,
         "status": "done"
+      },
+      {
+        "name": "",
+        "req": "",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
       }
     ]
   },
@@ -2347,7 +2424,7 @@ const pages = [
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 0,
+        "ai": 3,
         "aiVid": 0,
         "prodDep": false
       }
@@ -2368,18 +2445,6 @@ const pages = [
         "aiVid": 0,
         "prodDep": false,
         "status": "done"
-      },
-      {
-        "name": "Stage Icons",
-        "req": "Icons for all stages",
-        "type": "—",
-        "shot": 0,
-        "shotVid": 0,
-        "render": 0,
-        "renderVid": 0,
-        "ai": 0,
-        "aiVid": 0,
-        "prodDep": false
       }
     ]
   },
@@ -2390,14 +2455,14 @@ const pages = [
         "name": "Landing Page",
         "req": "1 explainer video (store & product)",
         "type": "—",
-        "shot": 1,
-        "shotVid": 0,
+        "shot": 0,
+        "shotVid": 1,
         "render": 0,
         "renderVid": 0,
         "ai": 0,
         "aiVid": 0,
         "prodDep": true,
-        "status": "pending renders"
+        "status": ""
       }
     ]
   },
@@ -2415,7 +2480,7 @@ const pages = [
         "ai": 0,
         "aiVid": 0,
         "prodDep": false,
-        "status": "pending renders"
+        "status": ""
       },
       {
         "name": "Experience Section",
@@ -2428,7 +2493,7 @@ const pages = [
         "ai": 0,
         "aiVid": 0,
         "prodDep": false,
-        "status": "pending renders"
+        "status": ""
       },
       {
         "name": "Persona",
@@ -2441,7 +2506,7 @@ const pages = [
         "ai": 0,
         "aiVid": 0,
         "prodDep": false,
-        "status": "pending renders"
+        "status": ""
       },
       {
         "name": "Product Locator",
@@ -2454,7 +2519,7 @@ const pages = [
         "ai": 0,
         "aiVid": 0,
         "prodDep": false,
-        "status": "pending renders"
+        "status": ""
       }
     ]
   },
@@ -2462,15 +2527,15 @@ const pages = [
     "name": "GIP (Gold Investment Plan)",
     "widgets": [
       {
-        "name": "Main Video Asset",
+        "name": "Main  Asset",
         "req": "Primary explainer/hero video",
         "type": "—",
         "shot": 0,
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 0,
-        "aiVid": 1,
+        "ai": 1,
+        "aiVid": 0,
         "prodDep": false,
         "status": "done"
       },
@@ -2499,8 +2564,8 @@ const pages = [
         "shotVid": 0,
         "render": 0,
         "renderVid": 0,
-        "ai": 0,
-        "aiVid": 1,
+        "ai": 1,
+        "aiVid": 0,
         "prodDep": false,
         "status": "done"
       },
@@ -2552,8 +2617,21 @@ const pages = [
     "name": "Hamburger Menu",
     "widgets": [
       {
-        "name": "Top Style Assets",
-        "req": "5–6 top style assets per category",
+        "name": "Top Style Assets Category",
+        "req": "5 top style assets x 8 category",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 11,
+        "aiVid": 0,
+        "prodDep": true,
+        "status": ""
+      },
+      {
+        "name": "All Collection Assets",
+        "req": "Top collection hero images",
         "type": "—",
         "shot": 0,
         "shotVid": 0,
@@ -2562,11 +2640,59 @@ const pages = [
         "ai": 9,
         "aiVid": 0,
         "prodDep": true,
-        "status": "pending renders"
+        "status": "",
+        "notes": "which top collections to show"
       },
       {
-        "name": "Top Collection Assets",
-        "req": "Top collection hero images",
+        "name": "Solitaire experience",
+        "req": "5 categories +all",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 6,
+        "aiVid": 0,
+        "prodDep": true,
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "More jewellery",
+        "req": "3 category images + 5 set category images",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 8,
+        "aiVid": 0,
+        "prodDep": true,
+        "notes": "",
+        "customData": {}
+      }
+    ]
+  },
+  {
+    "name": "Services",
+    "widgets": [
+      {
+        "name": "Banner img",
+        "req": "1 img",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "Services",
+        "req": "4 images",
         "type": "—",
         "shot": 0,
         "shotVid": 0,
@@ -2575,7 +2701,152 @@ const pages = [
         "ai": 4,
         "aiVid": 0,
         "prodDep": false,
-        "status": "pending renders"
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "Warranty",
+        "req": "0",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "Care guide",
+        "req": "5 images",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 5,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      }
+    ]
+  },
+  {
+    "name": "Diamond guide-WIP",
+    "widgets": []
+  },
+  {
+    "name": "Gemstone guide-WIP",
+    "widgets": [
+      {
+        "name": "New Widget",
+        "req": "",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      }
+    ]
+  },
+  {
+    "name": "My bookings",
+    "widgets": [
+      {
+        "name": "Main asset",
+        "req": "2x store and video consultation image",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 2,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      }
+    ]
+  },
+  {
+    "name": "My credits",
+    "widgets": []
+  },
+  {
+    "name": "My profile",
+    "widgets": []
+  },
+  {
+    "name": "Motion",
+    "widgets": [
+      {
+        "name": "Main loader",
+        "req": "",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "Splash screen",
+        "req": "",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 1,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      }
+    ]
+  },
+  {
+    "name": "Error screens",
+    "widgets": [
+      {
+        "name": "Mention the screens here",
+        "req": "",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
+      },
+      {
+        "name": "Empty Product image placeholders",
+        "req": "High res",
+        "type": "—",
+        "shot": 0,
+        "shotVid": 0,
+        "render": 0,
+        "renderVid": 0,
+        "ai": 0,
+        "aiVid": 0,
+        "prodDep": false,
+        "notes": "",
+        "customData": {}
       }
     ]
   }
@@ -2885,15 +3156,105 @@ function toggleColls(){
 rebuildPages(0);
 syncUrBtns();
 
+// ─── Supabase sync ─────────────────────────────────────────────────────────────
+const SB_TABLE = 'marketing_state';
+const SB_ROW   = 'main';
+
+function sbCfg(){ return { url: localStorage.getItem('sb_url')||'', key: localStorage.getItem('sb_key')||'' }; }
+
+function _sbSetLbl(text, cls, reset){
+  const lbl = document.getElementById('autosave-lbl');
+  if(!lbl) return;
+  lbl.textContent = text;
+  lbl.style.color = '';
+  lbl.classList.remove('saved');
+  if(cls === 'saved') lbl.classList.add('saved');
+  if(cls === 'err') lbl.style.color = '#e07b54';
+  if(reset) setTimeout(()=>{ lbl.style.color=''; lbl.classList.remove('saved'); _asUpdateLbl(); }, reset);
+}
+
+async function sbSync(){
+  const { url, key } = sbCfg();
+  if(!url || !key){ showSbSetup(); return; }
+  _sbSetLbl('Syncing…', '');
+  try {
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
+      method: 'POST',
+      headers:{
+        'apikey': key,
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates'
+      },
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols }, updated_at: new Date().toISOString() })
+    });
+    if(!r.ok) throw new Error(await r.text());
+    _asReset();
+    _sbSetLbl('Synced ✓', 'saved', 2500);
+  } catch(err){
+    console.error('Supabase sync failed:', err);
+    _sbSetLbl('Sync failed ✗', 'err', 3000);
+  }
+}
+
+async function sbLoad(){
+  const { url, key } = sbCfg();
+  if(!url || !key) return;
+  try {
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data`, {
+      headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
+    });
+    if(!r.ok) return;
+    const rows = await r.json();
+    if(rows.length && rows[0].data){
+      const { pages: p, customCols: c } = rows[0].data;
+      if(Array.isArray(p)){
+        pages.length = 0; pages.push(...p);
+        customCols = c || [];
+        rebuildPages(0); updateTally();
+        _sbSetLbl('Loaded ✓', 'saved', 2500);
+      }
+    }
+  } catch(err){ console.error('Supabase load failed:', err); }
+}
+
+function _sbUpdateBtn(){
+  const btn = document.getElementById('jb-btn');
+  if(!btn) return;
+  btn.classList.toggle('connected', !!(sbCfg().url && sbCfg().key));
+}
+
+function showSbSetup(){
+  const cfg = sbCfg();
+  document.getElementById('jb-key-inp').value = cfg.key;
+  document.getElementById('jb-binid-inp').value = cfg.url;
+  document.getElementById('jb-modal').style.display = 'flex';
+}
+function closeJbSetup(){ document.getElementById('jb-modal').style.display = 'none'; }
+function saveJbSetup(){
+  localStorage.setItem('sb_url', document.getElementById('jb-binid-inp').value.trim().replace(/\/$/, ''));
+  localStorage.setItem('sb_key', document.getElementById('jb-key-inp').value.trim());
+  closeJbSetup(); _sbUpdateBtn(); sbSync();
+}
+function jbClear(){
+  if(!confirm('Disconnect Supabase? Your local data stays intact.')) return;
+  localStorage.removeItem('sb_url'); localStorage.removeItem('sb_key');
+  closeJbSetup(); _sbUpdateBtn();
+}
+
+// Close modal on overlay click
+document.getElementById('jb-modal').addEventListener('click', function(e){ if(e.target===this) closeJbSetup(); });
+
 // ─── Autosave ──────────────────────────────────────────────────────────────────
 let _asCountdown = 300, _asInterval = null;
 function _asTick(){
   _asCountdown--;
   const lbl = document.getElementById('autosave-lbl');
   if(_asCountdown <= 0){
-    saveFile();
+    const { url, key } = sbCfg();
+    if(url && key) sbSync(); else saveFile();
     _asCountdown = 300;
-    if(lbl){ lbl.textContent='Autosaved ✓'; lbl.classList.add('saved');
+    if(!(url && key) && lbl){ lbl.textContent='Autosaved ✓'; lbl.classList.add('saved');
       setTimeout(()=>{ lbl.classList.remove('saved'); _asUpdateLbl(); }, 2500); }
   } else { _asUpdateLbl(); }
 }
@@ -2904,6 +3265,8 @@ function _asUpdateLbl(){
 }
 function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
 _asInterval = setInterval(_asTick, 1000);
+_sbUpdateBtn();
+sbLoad();
 
 document.addEventListener('paste', function(e){
   if(!(document.activeElement && document.activeElement.isContentEditable)) return;
@@ -2913,6 +3276,7 @@ document.addEventListener('paste', function(e){
 });
 
 document.addEventListener('keydown', function(e){
+  if((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='s'){ e.preventDefault(); const c=sbCfg(); (c.url&&c.key) ? sbSync() : saveFile(); return; }
   const inEdit = document.activeElement && document.activeElement.isContentEditable;
   if(inEdit) return;
   if((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='z'){ e.preventDefault(); undo(); }
@@ -2960,16 +3324,46 @@ function saveFile() {
 
 <button class="add-section-btn" onclick="addPage()">+ Add Section</button>
 
+<!-- Supabase setup modal -->
+<div class="jb-overlay" id="jb-modal">
+  <div class="jb-modal">
+    <h2>Supabase Sync</h2>
+    <p>Connect to your <a href="https://supabase.com/" target="_blank">Supabase</a> project. You'll need to create a table first — run this in your project's SQL editor:</p>
+    <pre style="background:#0d0d14;border:1px solid #2e2c38;border-radius:7px;padding:10px 12px;font-size:10px;color:#7ab0d8;margin-bottom:16px;overflow-x:auto;line-height:1.7">create table marketing_state (
+  id text primary key,
+  data jsonb,
+  updated_at timestamptz default now()
+);
+alter table marketing_state enable row level security;
+create policy "anon all" on marketing_state
+  for all using (true) with check (true);</pre>
+    <div class="jb-field">
+      <label>Project URL</label>
+      <input id="jb-binid-inp" type="text" placeholder="https://xxxxxxxxxxxx.supabase.co" autocomplete="off">
+    </div>
+    <div class="jb-field">
+      <label>Anon Key</label>
+      <input id="jb-key-inp" type="password" placeholder="eyJhbGciOiJIUzI1NiIs…" autocomplete="off">
+    </div>
+    <div class="jb-actions">
+      <button class="jb-clear" onclick="jbClear()">Disconnect</button>
+      <button class="jb-cancel" onclick="closeJbSetup()">Cancel</button>
+      <button class="jb-save" onclick="saveJbSetup()">Save &amp; Sync</button>
+    </div>
+  </div>
+</div>
+
 <div class="bottom-toolbar">
-  <span class="autosave-lbl" id="autosave-lbl">Autosave 2:19</span>
+  <span class="autosave-lbl" id="autosave-lbl">Autosave 5:00</span>
   <button class="ur-btn" id="undo-btn" onclick="undo()" title="Undo (Ctrl+Z)">↩</button>
   <button class="ur-btn" id="redo-btn" onclick="redo()" title="Redo (Ctrl+Y)" disabled="">↪</button>
-  <button class="save-btn" onclick="saveFile()" title="Save your current version as HTML">
+  <button class="jb-btn" id="jb-btn" onclick="showSbSetup()" title="Supabase sync settings">⚡ Supabase</button>
+  <button class="save-btn" onclick="saveFile()" title="Download a local HTML backup">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline>
     </svg>
-    Save Version
+    Backup HTML
   </button>
 </div>
 
-<canvas id="__fb_c" width="1719" height="841" style="position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; z-index: 2147483646; pointer-events: none;"></canvas><div id="__fb_tb"><div id="__fb_dot"></div><span class="lbl" id="__fb_mlbl">ARROWS</span><div class="sep"></div><span class="tip" id="__fb_tip">Click &amp; drag to draw</span><div class="sep"></div><button id="__fb_undo">↩ Undo</button></div></body></html>
+</body></html>
