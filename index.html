@@ -220,18 +220,23 @@
   /* Avatars */
   .avatar { width: 22px; height: 22px; border-radius: 50%; font-size: 9px; font-weight: 700; color: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1.5px solid #fff; margin-left: -4px; }
   .avatar:first-child { margin-left: 0; }
-  .avatar-stack { display: flex; align-items: center; cursor: pointer; padding: 2px 0; }
-  .assign-add { width: 22px; height: 22px; border-radius: 50%; border: 1.5px dashed #d1d5db; font-size: 13px; color: #d1d5db; display: inline-flex; align-items: center; justify-content: center; margin-left: 4px; transition: border-color 0.12s, color 0.12s; line-height: 1; }
-  .avatar-stack:hover .assign-add { border-color: #7c5cfc; color: #7c5cfc; }
-  .col-assign { width: 110px; }
+  .avatar-stack { display: flex; align-items: center; }
+  .col-assign { width: 130px; }
+
+  /* Assign trigger button */
+  .assign-trigger { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px 3px 6px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fafafa; cursor: pointer; font-size: 11px; color: #6b7280; transition: border-color 0.12s, background 0.12s; user-select: none; white-space: nowrap; }
+  .assign-trigger:hover { border-color: #7c5cfc; background: #f5f3ff; color: #7c5cfc; }
+  .assign-trigger.unassigned { border-style: dashed; }
+  .assign-trigger-icon { font-size: 11px; opacity: 0.5; }
+  .assign-trigger-lbl { font-size: 11px; }
+  .assign-caret { font-size: 9px; opacity: 0.5; margin-left: 1px; }
 
   /* Assign dropdown */
-  .assign-dropdown { position: fixed; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 6px; box-shadow: 0 8px 24px rgba(100,100,160,0.15); z-index: 9998; min-width: 160px; }
-  .assign-opt { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 7px; cursor: pointer; font-size: 12px; color: #374151; transition: background 0.1s; }
+  .assign-dropdown { position: fixed; background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 5px; box-shadow: 0 8px 24px rgba(100,100,160,0.18); z-index: 9998; min-width: 175px; max-height: 280px; overflow-y: auto; }
+  .assign-opt { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 7px; cursor: pointer; font-size: 12px; color: #374151; transition: background 0.1s; }
   .assign-opt:hover { background: #f5f3ff; }
   .assign-opt.active { background: #f5f3ff; color: #7c5cfc; font-weight: 600; }
-  .assign-opt .avatar { margin-left: 0; }
-  .assign-empty { font-size: 11px; color: #9ca3af; padding: 8px; text-align: center; }
+  .assign-empty { font-size: 11px; color: #9ca3af; padding: 10px 8px; text-align: center; line-height: 1.6; }
 
   /* Settings modal */
   .settings-overlay { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.4); backdrop-filter: blur(4px); z-index: 99998; align-items: center; justify-content: center; }
@@ -3231,59 +3236,95 @@ initCollectionClicks();
 function assignHTML(pi, wi){
   const w = gw(pi,wi);
   const ids = w.assignees || [];
+  if(ids.length === 0){
+    return `<div class="assign-trigger unassigned" onclick="event.stopPropagation();openAssignDropdown(${pi},${wi},this)">
+      <span class="assign-trigger-icon">👤</span><span class="assign-trigger-lbl">Assign</span><span class="assign-caret">▾</span>
+    </div>`;
+  }
   const avatars = ids.map(id => {
     const p = people.find(p=>p.id===id);
     if(!p) return '';
     return `<span class="avatar" style="background:${p.color}" title="${p.name}">${p.initials}</span>`;
   }).join('');
-  return `<div class="avatar-stack" onclick="event.stopPropagation();openAssignDropdown(${pi},${wi},this)">${avatars}<span class="assign-add">+</span></div>`;
-}
-
-function updateAssignees(pi, wi){
-  saveHistory();
-  const cell = document.getElementById(`assign-${pi}-${wi}`);
-  if(cell) cell.innerHTML = assignHTML(pi, wi);
+  return `<div class="assign-trigger" onclick="event.stopPropagation();openAssignDropdown(${pi},${wi},this)">
+    <div class="avatar-stack">${avatars}</div><span class="assign-caret">▾</span>
+  </div>`;
 }
 
 function openAssignDropdown(pi, wi, el){
+  // close any open dropdown first
   document.querySelectorAll('.assign-dropdown').forEach(d=>d.remove());
-  if(!people.length){
-    const tip = document.createElement('div');
-    tip.className = 'assign-dropdown';
-    tip.innerHTML = '<div class="assign-empty">No team members yet.<br>Add people in ⚙ Settings.</div>';
-    document.body.appendChild(tip);
-    const r = el.getBoundingClientRect();
-    tip.style.top = (r.bottom + 6 + window.scrollY) + 'px';
-    tip.style.left = r.left + 'px';
-    setTimeout(()=>document.addEventListener('click', ()=>tip.remove(), {once:true}), 0);
-    return;
-  }
-  const w = gw(pi, wi);
-  if(!w.assignees) w.assignees = [];
+  if(window._assignCloseHandler){ document.removeEventListener('mousedown', window._assignCloseHandler); }
+
   const dd = document.createElement('div');
   dd.className = 'assign-dropdown';
-  dd.innerHTML = people.map(p => {
-    const active = w.assignees.includes(p.id);
-    return `<div class="assign-opt${active?' active':''}" onclick="toggleWidgetAssignee(${pi},${wi},'${p.id}',this)">
-      <span class="avatar" style="background:${p.color}">${p.initials}</span>${p.name}
-    </div>`;
-  }).join('');
+
+  if(!people.length){
+    dd.innerHTML = '<div class="assign-empty">No team members yet.<br>Add people via ⚙ Settings.</div>';
+  } else {
+    const w = gw(pi, wi);
+    if(!w.assignees) w.assignees = [];
+    const renderOpts = () => {
+      dd.innerHTML = people.map(p => {
+        const active = w.assignees.includes(p.id);
+        return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();toggleWidgetAssignee(${pi},${wi},'${p.id}')">
+          <span class="avatar" style="background:${p.color};margin-left:0">${p.initials}</span>
+          <span style="flex:1">${p.name}</span>
+          ${active ? '<span style="color:#7c5cfc;font-size:13px">✓</span>' : ''}
+        </div>`;
+      }).join('');
+    };
+    renderOpts();
+    // re-render opts when assignees change
+    dd._pi = pi; dd._wi = wi;
+  }
+
   document.body.appendChild(dd);
   const r = el.getBoundingClientRect();
-  dd.style.top = (r.bottom + 6 + window.scrollY) + 'px';
-  dd.style.left = r.left + 'px';
-  setTimeout(()=>document.addEventListener('click', ()=>dd.remove(), {once:true}), 0);
+  const ddH = Math.min(people.length * 38 + 12, 300);
+  const spaceBelow = window.innerHeight - r.bottom;
+  if(spaceBelow < ddH + 8 && r.top > ddH + 8){
+    dd.style.bottom = (window.innerHeight - r.top + 4) + 'px';
+    dd.style.top = 'auto';
+  } else {
+    dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
+  }
+  // align left but keep on screen
+  let left = r.left + window.scrollX;
+  if(left + 180 > window.innerWidth) left = window.innerWidth - 188;
+  dd.style.left = left + 'px';
+
+  window._assignCloseHandler = (e) => {
+    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
+      dd.remove();
+      document.removeEventListener('mousedown', window._assignCloseHandler);
+      window._assignCloseHandler = null;
+    }
+  };
+  setTimeout(()=>document.addEventListener('mousedown', window._assignCloseHandler), 0);
 }
 
-function toggleWidgetAssignee(pi, wi, personId, optEl){
+function toggleWidgetAssignee(pi, wi, personId){
   const w = gw(pi, wi);
   if(!w.assignees) w.assignees = [];
   const idx = w.assignees.indexOf(personId);
-  if(idx === -1) w.assignees.push(personId);
-  else w.assignees.splice(idx, 1);
-  optEl.classList.toggle('active', w.assignees.includes(personId));
+  if(idx === -1) w.assignees.push(personId); else w.assignees.splice(idx, 1);
+  // update cell
   const cell = document.getElementById(`assign-${pi}-${wi}`);
   if(cell) cell.innerHTML = assignHTML(pi, wi);
+  // re-render open dropdown options in place
+  const dd = document.querySelector('.assign-dropdown');
+  if(dd && dd._pi === pi && dd._wi === wi){
+    dd.innerHTML = people.map(p => {
+      const active = w.assignees.includes(p.id);
+      return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();toggleWidgetAssignee(${pi},${wi},'${p.id}')">
+        <span class="avatar" style="background:${p.color};margin-left:0">${p.initials}</span>
+        <span style="flex:1">${p.name}</span>
+        ${active ? '<span style="color:#7c5cfc;font-size:13px">✓</span>' : ''}
+      </div>`;
+    }).join('');
+    dd._pi = pi; dd._wi = wi;
+  }
   saveHistory();
 }
 
