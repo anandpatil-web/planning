@@ -3355,6 +3355,7 @@ function toggleWidgetAssignee(pi, wi, personId){
     dd._pi = pi; dd._wi = wi;
   }
   saveHistory();
+  sbSync();
 }
 
 // ─── Timeline ─────────────────────────────────────────────────────────────────
@@ -3443,11 +3444,15 @@ function openTimelineDropdown(pi, wi, el){
   setTimeout(()=>document.addEventListener('mousedown', window._tlCloseHandler), 0);
 }
 
+let _tlSyncTimer = null;
 function updateTimeline(pi, wi, field, value){
   saveHistory();
   gw(pi, wi)[field] = value || null;
   const cell = document.getElementById(`tl-${pi}-${wi}`);
   if(cell) cell.innerHTML = timelineHTML(pi, wi);
+  // debounce so start+end changes only fire one sync
+  clearTimeout(_tlSyncTimer);
+  _tlSyncTimer = setTimeout(sbSync, 800);
 }
 
 function clearTimeline(pi, wi){
@@ -3457,6 +3462,7 @@ function clearTimeline(pi, wi){
   const cell = document.getElementById(`tl-${pi}-${wi}`);
   if(cell) cell.innerHTML = timelineHTML(pi, wi);
   document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
+  sbSync();
 }
 
 // ─── PERSONA_MAP ───────────────────────────────────────────────────────────────
@@ -3628,19 +3634,19 @@ function addPerson(){
   inp.value = '';
   renderPeopleList();
   saveHistory();
+  sbSync();
 }
 function deletePerson(id){
   people = people.filter(p=>p.id!==id);
-  // Remove from all widget assignees
   pages.forEach(page => page.widgets.forEach(w => {
     if(w.assignees) w.assignees = w.assignees.filter(a=>a!==id);
   }));
-  // Remove from collAssignees and personaAssignees
   Object.keys(collAssignees).forEach(k => { collAssignees[k] = collAssignees[k].filter(a=>a!==id); });
   Object.keys(personaAssignees).forEach(k => { personaAssignees[k] = personaAssignees[k].filter(a=>a!==id); });
   renderPeopleList();
   rebuildPages();
   saveHistory();
+  sbSync();
 }
 function renderPeopleList(){
   const el = document.getElementById('people-list');
@@ -3729,6 +3735,7 @@ function togglePersonaAssignee(personaName, personId){
   else personaAssignees[personaName].splice(idx,1);
   document.getElementById('drawer-body').innerHTML = _personaBodyHTML(personaName);
   saveHistory();
+  sbSync();
 }
 
 function toggleCollAssignee(collName, personId){
@@ -3736,10 +3743,10 @@ function toggleCollAssignee(collName, personId){
   const idx = collAssignees[collName].indexOf(personId);
   if(idx===-1) collAssignees[collName].push(personId);
   else collAssignees[collName].splice(idx,1);
-  // Re-render the current drawer (find the persona containing this collection)
   const persona = PERSONA_MAP.find(p=>p.collections.some(c=>c.name===collName));
   if(persona) document.getElementById('drawer-body').innerHTML = _personaBodyHTML(persona.name);
   saveHistory();
+  sbSync();
 }
 
 function saveFile() {
