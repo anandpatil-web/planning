@@ -221,7 +221,34 @@
   .avatar { width: 22px; height: 22px; border-radius: 50%; font-size: 9px; font-weight: 700; color: #fff; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1.5px solid #fff; margin-left: -4px; }
   .avatar:first-child { margin-left: 0; }
   .avatar-stack { display: flex; align-items: center; }
-  .col-assign { width: 130px; }
+  .col-assign { width: 120px; }
+  .col-timeline { width: 155px; }
+
+  /* Timeline cell */
+  .tl-trigger { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px 3px 7px; border-radius: 8px; border: 1px dashed #e5e7eb; background: #fafafa; cursor: pointer; font-size: 11px; color: #9ca3af; transition: border-color 0.12s, background 0.12s, color 0.12s; user-select: none; white-space: nowrap; }
+  .tl-trigger:hover { border-color: #7c5cfc; background: #f5f3ff; color: #7c5cfc; border-style: solid; }
+  .tl-trigger.has-dates { border-style: solid; background: #fff; flex-direction: column; align-items: flex-start; gap: 3px; padding: 4px 8px; }
+  .tl-dates-row { display: flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; }
+  .tl-date { color: #374151; }
+  .tl-arrow { color: #d1d5db; font-size: 10px; }
+  .tl-bar-wrap { width: 100%; height: 3px; background: #f0f0f8; border-radius: 2px; overflow: hidden; }
+  .tl-bar { height: 100%; border-radius: 2px; transition: width 0.3s; }
+  .tl-bar.upcoming  { background: #a78bfa; }
+  .tl-bar.active    { background: #7c5cfc; }
+  .tl-bar.overdue   { background: #f87171; }
+  .tl-bar.done      { background: #34d399; }
+  .tl-status-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+  /* Timeline dropdown */
+  .tl-dropdown { position: fixed; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; box-shadow: 0 8px 28px rgba(100,100,160,0.18); z-index: 9998; width: 220px; }
+  .tl-dropdown label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #9ca3af; font-weight: 700; margin-bottom: 5px; }
+  .tl-dropdown input[type=date] { width: 100%; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 7px 10px; font-size: 12px; color: #374151; outline: none; font-family: inherit; margin-bottom: 12px; }
+  .tl-dropdown input[type=date]:focus { border-color: #7c5cfc; box-shadow: 0 0 0 3px rgba(124,92,252,0.1); }
+  .tl-dd-actions { display: flex; gap: 6px; }
+  .tl-dd-clear { background: none; border: 1px solid #f3f4f6; color: #9ca3af; font-size: 11px; padding: 6px 10px; border-radius: 7px; cursor: pointer; font-family: inherit; flex: 1; }
+  .tl-dd-clear:hover { border-color: #f87171; color: #f87171; }
+  .tl-dd-done { background: #7c5cfc; color: #fff; border: none; font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 7px; cursor: pointer; font-family: inherit; flex: 1; }
+  .tl-dd-done:hover { background: #6d4fe8; }
 
   /* Assign trigger button */
   .assign-trigger { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px 3px 6px; border-radius: 8px; border: 1px solid #e5e7eb; background: #fafafa; cursor: pointer; font-size: 11px; color: #6b7280; transition: border-color 0.12s, background 0.12s; user-select: none; white-space: nowrap; }
@@ -3115,12 +3142,13 @@ function buildPage(page, pi){
       <td class="status-cell" id="status-${pi}-${wi}">${statusHTML(pi,wi)}</td>
       <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(${pi},${wi},this)">${w.notes||''}</div></td>
       <td class="assign-cell" id="assign-${pi}-${wi}">${assignHTML(pi,wi)}</td>
+      <td class="timeline-cell" id="tl-${pi}-${wi}">${timelineHTML(pi,wi)}</td>
       ${customCells}
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(${pi},${wi})" title="Delete row">×</span></td>
     </tr>`;
   }).join('');
 
-  const colspan = 8 + customCols.length + 1;
+  const colspan = 9 + customCols.length + 1;
   const addRowTr = `<tr class="add-row-tr"><td colspan="${colspan}"><button class="add-row-btn" onclick="event.stopPropagation();addRow(${pi})">+ Add row</button></td></tr>`;
 
   return `
@@ -3146,6 +3174,7 @@ function buildPage(page, pi){
         <th class="col-status">Status</th>
         <th class="col-notes">Notes / Concerns</th>
         <th class="col-assign">Assigned</th>
+        <th class="col-timeline">Timeline</th>
         ${customColHeaders}
         <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
         <th class="row-del-th"></th>
@@ -3326,6 +3355,108 @@ function toggleWidgetAssignee(pi, wi, personId){
     dd._pi = pi; dd._wi = wi;
   }
   saveHistory();
+}
+
+// ─── Timeline ─────────────────────────────────────────────────────────────────
+function _fmtDate(iso){
+  if(!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+}
+
+function _tlState(w){
+  const s = w.startDate, e = w.endDate, today = new Date().toISOString().slice(0,10);
+  if(w.status === 'done') return 'done';
+  if(e && e < today) return 'overdue';
+  if(s && s > today) return 'upcoming';
+  if((s && s <= today) || (e && e >= today)) return 'active';
+  return 'upcoming';
+}
+
+function _tlProgress(w){
+  const s = w.startDate, e = w.endDate;
+  if(!s || !e) return 100;
+  const today = new Date().toISOString().slice(0,10);
+  if(today <= s) return 0;
+  if(today >= e) return 100;
+  const total = new Date(e) - new Date(s);
+  const elapsed = new Date(today) - new Date(s);
+  return Math.round((elapsed / total) * 100);
+}
+
+function timelineHTML(pi, wi){
+  const w = gw(pi, wi);
+  const s = w.startDate, e = w.endDate;
+  if(!s && !e){
+    return `<div class="tl-trigger" onclick="event.stopPropagation();openTimelineDropdown(${pi},${wi},this)">
+      📅 <span>Set dates</span> <span class="assign-caret">▾</span>
+    </div>`;
+  }
+  const state = _tlState(w);
+  const pct = _tlProgress(w);
+  const dotColor = {done:'#34d399', overdue:'#f87171', active:'#7c5cfc', upcoming:'#a78bfa'}[state];
+  return `<div class="tl-trigger has-dates" onclick="event.stopPropagation();openTimelineDropdown(${pi},${wi},this)">
+    <div class="tl-dates-row">
+      <span class="tl-status-dot" style="background:${dotColor}"></span>
+      <span class="tl-date">${s ? _fmtDate(s) : '—'}</span>
+      <span class="tl-arrow">→</span>
+      <span class="tl-date">${e ? _fmtDate(e) : '—'}</span>
+    </div>
+    ${(s && e) ? `<div class="tl-bar-wrap"><div class="tl-bar ${state}" style="width:${pct}%"></div></div>` : ''}
+  </div>`;
+}
+
+function openTimelineDropdown(pi, wi, el){
+  document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
+  if(window._tlCloseHandler){ document.removeEventListener('mousedown', window._tlCloseHandler); }
+  const w = gw(pi, wi);
+  const dd = document.createElement('div');
+  dd.className = 'tl-dropdown';
+  dd.innerHTML = `
+    <label>Start Date</label>
+    <input type="date" id="tl-start-${pi}-${wi}" value="${w.startDate||''}" onchange="updateTimeline(${pi},${wi},'startDate',this.value)">
+    <label>End Date</label>
+    <input type="date" id="tl-end-${pi}-${wi}" value="${w.endDate||''}" onchange="updateTimeline(${pi},${wi},'endDate',this.value)">
+    <div class="tl-dd-actions">
+      <button class="tl-dd-clear" onclick="clearTimeline(${pi},${wi})">Clear</button>
+      <button class="tl-dd-done" onclick="document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove())">Done</button>
+    </div>`;
+  document.body.appendChild(dd);
+  const r = el.getBoundingClientRect();
+  const spaceBelow = window.innerHeight - r.bottom;
+  if(spaceBelow < 200 && r.top > 200){
+    dd.style.bottom = (window.innerHeight - r.top + 4) + 'px';
+    dd.style.top = 'auto';
+  } else {
+    dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
+  }
+  let left = r.left + window.scrollX;
+  if(left + 230 > window.innerWidth) left = window.innerWidth - 238;
+  dd.style.left = left + 'px';
+  window._tlCloseHandler = (e) => {
+    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
+      dd.remove();
+      document.removeEventListener('mousedown', window._tlCloseHandler);
+      window._tlCloseHandler = null;
+    }
+  };
+  setTimeout(()=>document.addEventListener('mousedown', window._tlCloseHandler), 0);
+}
+
+function updateTimeline(pi, wi, field, value){
+  saveHistory();
+  gw(pi, wi)[field] = value || null;
+  const cell = document.getElementById(`tl-${pi}-${wi}`);
+  if(cell) cell.innerHTML = timelineHTML(pi, wi);
+}
+
+function clearTimeline(pi, wi){
+  saveHistory();
+  const w = gw(pi, wi);
+  w.startDate = null; w.endDate = null;
+  const cell = document.getElementById(`tl-${pi}-${wi}`);
+  if(cell) cell.innerHTML = timelineHTML(pi, wi);
+  document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
 }
 
 // ─── PERSONA_MAP ───────────────────────────────────────────────────────────────
