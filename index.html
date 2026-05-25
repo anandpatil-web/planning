@@ -223,6 +223,39 @@
   .avatar-stack { display: flex; align-items: center; }
   .col-assign { width: 120px; }
   .col-timeline { width: 155px; }
+  .col-figma { width: 95px; }
+
+  /* Figma cell */
+  .figma-trigger { display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 8px; border: 1px dashed #e5e7eb; background: #fafafa; cursor: pointer; font-size: 11px; color: #9ca3af; transition: all 0.12s; user-select: none; white-space: nowrap; }
+  .figma-trigger:hover { border-color: #f24e1e; background: #fff1ed; color: #f24e1e; border-style: solid; }
+  .figma-trigger.has-link { border-style: solid; background: #fff1ed; color: #f24e1e; border-color: #fed7c5; }
+  .figma-trigger.has-link:hover { background: #ffe4d6; border-color: #f24e1e; }
+  .figma-logo { font-weight: 800; font-size: 10px; font-family: 'Inter',sans-serif; letter-spacing: -0.5px; }
+  .figma-edit { opacity: 0.5; font-size: 9px; margin-left: 2px; }
+  .figma-trigger:hover .figma-edit { opacity: 1; }
+  .page-figma-icon { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; border-radius: 50%; background: transparent; color: #d1d5db; cursor: pointer; font-size: 10px; font-weight: 800; transition: all 0.12s; border: 1px solid transparent; margin-left: 4px; }
+  .page-figma-icon:hover { background: #fff1ed; color: #f24e1e; border-color: #fed7c5; }
+  .page-figma-icon.has-link { color: #f24e1e; background: #fff1ed; border-color: #fed7c5; }
+
+  /* Figma dropdown */
+  .figma-dropdown { position: fixed; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; box-shadow: 0 8px 28px rgba(100,100,160,0.18); z-index: 9998; width: 280px; }
+  .figma-dropdown label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.8px; color: #9ca3af; font-weight: 700; margin-bottom: 6px; }
+  .figma-dropdown input { width: 100%; background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 8px 11px; font-size: 12px; color: #374151; outline: none; font-family: inherit; margin-bottom: 12px; }
+  .figma-dropdown input:focus { border-color: #f24e1e; box-shadow: 0 0 0 3px rgba(242,78,30,0.1); }
+  .figma-actions { display: flex; gap: 6px; }
+  .figma-actions .open-btn { flex: 1; background: none; border: 1px solid #fed7c5; color: #f24e1e; font-size: 11px; padding: 6px 10px; border-radius: 7px; cursor: pointer; font-family: inherit; font-weight: 600; text-decoration: none; text-align: center; }
+  .figma-actions .open-btn:hover { background: #fff1ed; }
+  .figma-actions .save-btn-mini { flex: 1; background: #7c5cfc; color: #fff; border: none; font-size: 11px; font-weight: 600; padding: 6px 12px; border-radius: 7px; cursor: pointer; font-family: inherit; }
+  .figma-actions .save-btn-mini:hover { background: #6d4fe8; }
+
+  /* Collections page section */
+  .section-divider { margin-top: 36px; margin-bottom: 14px; display: flex; align-items: center; gap: 14px; }
+  .section-divider-title { font-size: 11px; text-transform: uppercase; letter-spacing: 1.6px; color: #6b7280; font-weight: 700; }
+  .section-divider-line { flex: 1; height: 1px; background: linear-gradient(to right, #d1d5db, transparent); }
+  .persona-group { margin-bottom: 22px; }
+  .persona-group-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; padding: 0 2px; }
+  .persona-group-name { font-size: 12px; font-weight: 700; color: #374151; letter-spacing: 0.2px; }
+  .persona-group-count { font-size: 10px; color: #9ca3af; background: #f3f4f6; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
 
   /* Timeline cell */
   .tl-trigger { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px 3px 7px; border-radius: 8px; border: 1px dashed #e5e7eb; background: #fafafa; cursor: pointer; font-size: 11px; color: #9ca3af; transition: border-color 0.12s, background 0.12s, color 0.12s; user-select: none; white-space: nowrap; }
@@ -3143,22 +3176,28 @@ function buildPage(page, pi){
       <td><div class="notes-field" contenteditable="true" data-ph="Add note…" onblur="updateNotes(${pi},${wi},this)">${w.notes||''}</div></td>
       <td class="assign-cell" id="assign-${pi}-${wi}">${assignHTML(pi,wi)}</td>
       <td class="timeline-cell" id="tl-${pi}-${wi}">${timelineHTML(pi,wi)}</td>
+      <td class="figma-cell" id="figma-${pi}-${wi}">${figmaHTML(pi,wi)}</td>
       ${customCells}
       <td class="row-del-cell"><span class="row-del-btn" onclick="deleteRow(${pi},${wi})" title="Delete row">×</span></td>
     </tr>`;
   }).join('');
 
-  const colspan = 9 + customCols.length + 1;
+  const colspan = 10 + customCols.length + 1;
   const addRowTr = `<tr class="add-row-tr"><td colspan="${colspan}"><button class="add-row-btn" onclick="event.stopPropagation();addRow(${pi})">+ Add row</button></td></tr>`;
 
   return `
   <div class="page-block" id="page-block-${pi}">
     <div class="page-header" onclick="toggle(${pi})">
-      <span class="page-name editable-field" contenteditable="true"
-        onclick="event.stopPropagation()"
-        onblur="updatePageName(${pi},this)"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"
-      >${page.name||''}</span>
+      <div style="display:flex;align-items:center;gap:4px">
+        <span class="page-name editable-field" contenteditable="true"
+          onclick="event.stopPropagation()"
+          onblur="updatePageName(${pi},this)"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}"
+        >${page.name||''}</span>
+        <span class="page-figma-icon${page.figma?' has-link':''}" id="pfigma-${pi}"
+          onclick="event.stopPropagation();openPageFigmaDropdown(${pi},this)"
+          title="${page.figma ? 'Figma: ' + page.figma : 'Add Figma link'}">F</span>
+      </div>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-${pi}">${chips}</div>
         <span class="chevron" id="chev-${pi}">›</span>
@@ -3175,6 +3214,7 @@ function buildPage(page, pi){
         <th class="col-notes">Notes / Concerns</th>
         <th class="col-assign">Assigned</th>
         <th class="col-timeline">Timeline</th>
+        <th class="col-figma">Figma</th>
         ${customColHeaders}
         <th class="add-col-th"><span onclick="addCol()" title="Add column">+</span></th>
         <th class="row-del-th"></th>
@@ -3233,7 +3273,26 @@ function deleteCol(colId){
 
 function rebuildPages(newOpenIdx){
   const openState=pages.map((_,i)=>{const el=document.getElementById(`rows-${i}`); return el&&el.classList.contains('open');});
-  document.getElementById('pages-container').innerHTML=pages.map((p,i)=>buildPage(p,i)).join('');
+  // Regular pages
+  const regular = pages.map((p,i)=>p.collection ? null : buildPage(p,i)).filter(Boolean).join('');
+  document.getElementById('pages-container').innerHTML = regular;
+  // Collection pages grouped by persona
+  const collCont = document.getElementById('collections-container');
+  if(collCont && window._personaMapReady){
+    let html = '';
+    PERSONA_MAP.forEach(persona => {
+      const collPages = pages.map((p,i)=>({p,i})).filter(({p})=>p.collection && p.persona===persona.name);
+      if(!collPages.length) return;
+      html += `<div class="persona-group">
+        <div class="persona-group-header">
+          <span class="persona-group-name">${persona.name}</span>
+          <span class="persona-group-count">${collPages.length} collection${collPages.length>1?'s':''}</span>
+        </div>
+        ${collPages.map(({p,i})=>buildPage(p,i)).join('')}
+      </div>`;
+    });
+    collCont.innerHTML = html;
+  }
   openState.forEach((isOpen,i)=>{
     if(isOpen){
       const r=document.getElementById(`rows-${i}`),c=document.getElementById(`chev-${i}`);
@@ -3465,6 +3524,133 @@ function clearTimeline(pi, wi){
   sbSync(true);
 }
 
+// ─── Figma links ──────────────────────────────────────────────────────────────
+function figmaHTML(pi, wi){
+  const w = gw(pi, wi);
+  const url = w.figma || '';
+  if(!url) return `<div class="figma-trigger" onclick="event.stopPropagation();openFigmaDropdown(${pi},${wi},this)">
+    <span class="figma-logo">F</span><span>Add link</span>
+  </div>`;
+  return `<div class="figma-trigger has-link" onclick="event.stopPropagation();openFigmaDropdown(${pi},${wi},this)" title="${url}">
+    <span class="figma-logo">F</span><span>Open</span><span class="figma-edit">✎</span>
+  </div>`;
+}
+
+function openFigmaDropdown(pi, wi, el){
+  document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
+  if(window._figmaCloseHandler){ document.removeEventListener('mousedown', window._figmaCloseHandler); }
+  const w = gw(pi, wi);
+  const dd = document.createElement('div');
+  dd.className = 'figma-dropdown';
+  dd.innerHTML = `
+    <label>Figma URL</label>
+    <input type="url" id="figma-inp-${pi}-${wi}" placeholder="https://figma.com/file/…" value="${w.figma||''}" />
+    <div class="figma-actions">
+      ${w.figma ? `<a class="open-btn" href="${w.figma}" target="_blank" rel="noopener">Open ↗</a>` : ''}
+      <button class="save-btn-mini" onclick="saveFigmaLink(${pi},${wi})">Save</button>
+    </div>`;
+  document.body.appendChild(dd);
+  const r = el.getBoundingClientRect();
+  const spaceBelow = window.innerHeight - r.bottom;
+  if(spaceBelow < 180 && r.top > 180){ dd.style.bottom = (window.innerHeight - r.top + 4) + 'px'; dd.style.top='auto'; }
+  else dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
+  let left = r.left + window.scrollX;
+  if(left + 290 > window.innerWidth) left = window.innerWidth - 298;
+  dd.style.left = left + 'px';
+  setTimeout(()=>document.getElementById(`figma-inp-${pi}-${wi}`).focus(), 50);
+  window._figmaCloseHandler = (e) => {
+    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
+      dd.remove(); document.removeEventListener('mousedown', window._figmaCloseHandler); window._figmaCloseHandler = null;
+    }
+  };
+  setTimeout(()=>document.addEventListener('mousedown', window._figmaCloseHandler), 0);
+}
+
+function saveFigmaLink(pi, wi){
+  const url = document.getElementById(`figma-inp-${pi}-${wi}`).value.trim();
+  saveHistory();
+  gw(pi, wi).figma = url;
+  const cell = document.getElementById(`figma-${pi}-${wi}`);
+  if(cell) cell.innerHTML = figmaHTML(pi, wi);
+  document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
+  sbSync(true);
+}
+
+function openPageFigmaDropdown(pi, el){
+  document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
+  if(window._figmaCloseHandler){ document.removeEventListener('mousedown', window._figmaCloseHandler); }
+  const p = pages[pi];
+  const dd = document.createElement('div');
+  dd.className = 'figma-dropdown';
+  dd.innerHTML = `
+    <label>Section Figma URL</label>
+    <input type="url" id="pfigma-inp-${pi}" placeholder="https://figma.com/file/…" value="${p.figma||''}" />
+    <div class="figma-actions">
+      ${p.figma ? `<a class="open-btn" href="${p.figma}" target="_blank" rel="noopener">Open ↗</a>` : ''}
+      <button class="save-btn-mini" onclick="savePageFigma(${pi})">Save</button>
+    </div>`;
+  document.body.appendChild(dd);
+  const r = el.getBoundingClientRect();
+  dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
+  let left = r.left + window.scrollX;
+  if(left + 290 > window.innerWidth) left = window.innerWidth - 298;
+  dd.style.left = left + 'px';
+  setTimeout(()=>document.getElementById(`pfigma-inp-${pi}`).focus(), 50);
+  window._figmaCloseHandler = (e) => {
+    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
+      dd.remove(); document.removeEventListener('mousedown', window._figmaCloseHandler); window._figmaCloseHandler = null;
+    }
+  };
+  setTimeout(()=>document.addEventListener('mousedown', window._figmaCloseHandler), 0);
+}
+
+function savePageFigma(pi){
+  const url = document.getElementById(`pfigma-inp-${pi}`).value.trim();
+  saveHistory();
+  pages[pi].figma = url;
+  const icon = document.getElementById(`pfigma-${pi}`);
+  if(icon){ icon.classList.toggle('has-link', !!url); icon.title = url ? 'Figma: ' + url : 'Add Figma link'; }
+  document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
+  sbSync(true);
+}
+
+// ─── CLP Template & Collection Pages ──────────────────────────────────────────
+const CLP_TEMPLATE = [
+  { name:'Hero Section',         req:'1 video, 3 images', type:'—' },
+  { name:'Moodboard',            req:'2 images',          type:'TBD' },
+  { name:'Inspiration Section',  req:'2 images, 1 video', type:'TBD' },
+  { name:'Craftsmanship Section',req:'1 video',           type:'TBD' },
+  { name:'Sketches',             req:'1 image',           type:'TBD' },
+  { name:'Featured Pieces',      req:'1 image each piece',type:'—' },
+  { name:'Lookbook Section',     req:'1 video, 4 images', type:'—' },
+];
+
+function _newCLPWidget(t){
+  return { name:t.name, req:t.req, type:t.type, shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,
+    prodDep:true, status:'', notes:'', customData:{}, assignees:[], figma:'', startDate:null, endDate:null };
+}
+
+function initCollectionPages(){
+  // Only seed collection pages that don't yet exist
+  const existing = new Set(pages.filter(p=>p.collection).map(p=>p.collection));
+  let added = false;
+  PERSONA_MAP.forEach(persona => {
+    persona.collections.forEach(coll => {
+      if(existing.has(coll.name)) return;
+      pages.push({
+        name: coll.name,
+        persona: persona.name,
+        collection: coll.name,
+        sub: coll.sub || '',
+        figma: '',
+        widgets: CLP_TEMPLATE.map(_newCLPWidget)
+      });
+      added = true;
+    });
+  });
+  return added;
+}
+
 // ─── PERSONA_MAP ───────────────────────────────────────────────────────────────
 const PERSONA_MAP = [
   { name:'Gala Grandeur', collections:[{name:'Ensemble'},{name:'Empress',sub:'The Maharani'},{name:'Lumiere',sub:'Qween of Eden'}] },
@@ -3474,6 +3660,11 @@ const PERSONA_MAP = [
   { name:'Classic Capsules', collections:[{name:'Scallop'},{name:'Nana'},{name:'Lotus'},{name:'Shaded Leaves',sub:'Lush'}] },
   { name:'On The Go', collections:[{name:'Canyon'},{name:'Bold'}] },
 ];
+window._personaMapReady = true;
+
+// Seed collection pages & rebuild once PERSONA_MAP is available
+if(initCollectionPages()){ saveHistory(); }
+rebuildPages(0);
 
 function initCollectionClicks(){
   document.querySelectorAll('.persona-header').forEach(el => {
@@ -3546,6 +3737,7 @@ async function sbLoad(){
         people = rec.people || [];
         collAssignees = rec.collAssignees || {};
         personaAssignees = rec.personaAssignees || {};
+        if(initCollectionPages()) sbSync(true); // seed any missing collection pages
         rebuildPages(0); updateTally();
         _sbUpdateBtn(); initCollectionClicks();
         _sbSetLbl('Loaded ✓', 'saved', 2500);
@@ -3803,6 +3995,13 @@ function saveFile() {
 
 
 <button class="add-section-btn" onclick="addPage()">+ Add Section</button>
+
+<!-- Collections (CLP tables per collection) -->
+<div class="section-divider">
+  <span class="section-divider-title">Collections × CLP</span>
+  <span class="section-divider-line"></span>
+</div>
+<div id="collections-container"></div>
 
 <!-- Settings modal -->
 <div class="settings-overlay" id="settings-modal">
