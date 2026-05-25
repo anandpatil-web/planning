@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.4.0';
+const BUILD = '1.4.1';
 
 const pages = [
   {
@@ -3248,7 +3248,7 @@ function updateCustomCell(pi,wi,colId,el){
 }
 function addRow(pi){
   saveHistory();
-  pages[pi].widgets.push({name:'New Widget',req:'',type:'—',shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,prodDep:false,notes:'',customData:{},assignees:[],figma:'',startDate:null,endDate:null});
+  pages[pi].widgets.push({_uid: _genUid('w'), name:'New Widget',req:'',type:'—',shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,prodDep:false,notes:'',customData:{},assignees:[],figma:'',startDate:null,endDate:null});
   rebuildPages(); refreshChips(pi); updateTally();
   sbSyncDebounced(true);
 }
@@ -3261,7 +3261,7 @@ function deleteRow(pi,wi){
 function addPage(){
   saveHistory();
   const pi=pages.length;
-  pages.push({name:'New Section',widgets:[]});
+  pages.push({_uid: _genUid('pg'), name:'New Section', widgets:[]});
   rebuildPages(pi);
   sbSyncDebounced(true);
 }
@@ -3784,7 +3784,7 @@ const CLP_TEMPLATE = [
 ];
 
 function _newCLPWidget(t){
-  return { name:t.name, req:t.req, type:t.type, shot:t.shot||0, shotVid:t.shotVid||0, render:0, renderVid:0, ai:t.ai||0, aiVid:t.aiVid||0,
+  return { _uid: _genUid('w'), name:t.name, req:t.req, type:t.type, shot:t.shot||0, shotVid:t.shotVid||0, render:0, renderVid:0, ai:t.ai||0, aiVid:t.aiVid||0,
     prodDep:true, status:'', notes:'', customData:{}, assignees:[], figma:'', startDate:null, endDate:null };
 }
 
@@ -3796,6 +3796,7 @@ function initCollectionPages(){
     persona.collections.forEach(coll => {
       if(existing.has(coll.name)) return;
       pages.push({
+        _uid: _genUid('pg'),
         name: coll.name,
         persona: persona.name,
         collection: coll.name,
@@ -3942,9 +3943,9 @@ function addCollection(pIdx){
   if(!persona) return;
   saveHistory();
   const name = 'New Collection ' + (persona.collections.length + 1);
-  persona.collections.push({ name, sub: '' });
-  // Also create a corresponding collection page using the CLP template
+  persona.collections.push({ _uid: _genUid('co'), name, sub: '' });
   pages.push({
+    _uid: _genUid('pg'),
     name: name,
     persona: persona.name,
     collection: name,
@@ -3976,7 +3977,7 @@ function deleteCollection(pIdx, cIdx){
 
 function addPersona(){
   saveHistory();
-  PERSONA_MAP.push({ name: 'New Persona', collections: [] });
+  PERSONA_MAP.push({ _uid: _genUid('pn'), name: 'New Persona', collections: [] });
   renderPersonaGrid();
   sbSyncDebounced(true);
 }
@@ -4001,7 +4002,9 @@ function deletePersona(pIdx){
 
 // Initial render — runs after PERSONA_MAP is defined
 renderPersonaGrid();
-if(initCollectionPages()){ saveHistory(); }
+const _initSeeded = initCollectionPages();
+const _initUids = _ensureUids();
+if(_initSeeded || _initUids){ saveHistory(); }
 rebuildPages(0);
 
 // initCollectionClicks is intentionally a no-op now (drawer disabled on cards)
@@ -4074,10 +4077,40 @@ function _mergeArrayOfPrimitives(local, cloud, base){
 
 function _idFieldFor(item){
   if(!item || typeof item !== 'object') return null;
+  if('_uid' in item) return '_uid';   // stable ID survives renames
   if('id' in item) return 'id';
   if('collection' in item) return 'collection';
   if('name' in item) return 'name';
   return null;
+}
+
+function _genUid(prefix){
+  return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+}
+
+// Walk the data model and stamp _uid on anything that's missing one.
+// Existing items get one assigned once; new items get assigned at creation time.
+function _ensureUids(){
+  let changed = false;
+  if(window._personaMapReady && Array.isArray(PERSONA_MAP)){
+    PERSONA_MAP.forEach(persona => {
+      if(!persona._uid){ persona._uid = _genUid('pn'); changed = true; }
+      if(Array.isArray(persona.collections)){
+        persona.collections.forEach(coll => {
+          if(!coll._uid){ coll._uid = _genUid('co'); changed = true; }
+        });
+      }
+    });
+  }
+  pages.forEach(p => {
+    if(!p._uid){ p._uid = _genUid('pg'); changed = true; }
+    if(Array.isArray(p.widgets)){
+      p.widgets.forEach(w => {
+        if(!w._uid){ w._uid = _genUid('w'); changed = true; }
+      });
+    }
+  });
+  return changed;
 }
 
 function _mergeArrayOfObjects(local, cloud, base, idField){
@@ -4270,7 +4303,9 @@ async function sbSync(silent){
     } catch(_){ _lastCloudUpdate = stamp; }
 
     // 5) New baseline = what we just pushed
-    _baseline = _deepClone(merged);
+    _ensureUids();
+      _ensureUids();
+      _baseline = _deepClone(merged);
 
     if(!silent) _asReset();
     const _now = new Date();
@@ -4328,6 +4363,7 @@ async function sbLoad(quiet){
       appliedData = mergeStates(localData, rec, _baseline);
       // After merge, push back so cloud reflects the merged result (without spamming)
       _applyMergedState(appliedData);
+      _ensureUids();
       _baseline = _deepClone(appliedData);
       // Trigger a silent sync to write merged result
       setTimeout(()=>sbSync(true), 100);
@@ -4344,8 +4380,11 @@ async function sbLoad(quiet){
         PERSONA_MAP = appliedData.personaMap;
         renderPersonaGrid();
       }
-      if(initCollectionPages()){
-        // Seed missing collection pages — will trigger a merged sync below
+      const seededAny = initCollectionPages();
+      const stampedAny = _ensureUids();
+      if(seededAny || stampedAny){
+        // Push the seeded/stamped state up so other devices get the same UIDs
+        setTimeout(()=>sbSyncDebounced(true), 200);
       }
       rebuildPages(0); updateTally();
       _baseline = _deepClone(_snapshotForCloud());
@@ -4432,6 +4471,7 @@ function sbStartRealtime(){
             personaAssignees = rec.data.personaAssignees || {};
             collOwners = rec.data.collOwners || {};
             if(rec.data.personaMap){ PERSONA_MAP = rec.data.personaMap; renderPersonaGrid(); }
+            _ensureUids();
             rebuildPages(); updateTally();
             _baseline = _deepClone(_snapshotForCloud());
           }
