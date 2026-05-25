@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.4.3';
+const BUILD = '1.5.0';
 
 const pages = [
   {
@@ -4172,31 +4172,60 @@ function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
   const cloudIdx = _indexByAllKeys(cloud);
   const out = [];
   const usedCloud = new Set();
-  // Walk local first to preserve local ordering for items we touched
+  const usedBase  = new Set();
+
+  // Helper that scans an index for a match without reusing the same item twice
+  function _matchUnused(item, idx, used){
+    for(const k of _itemKeys(item)){
+      if(idx.has(k)){
+        const m = idx.get(k);
+        if(!used.has(m)) return m;
+      }
+    }
+    return null;
+  }
+
+  // Pass 1: each LOCAL item
   for(const item of local){
-    const cloudMatch = _findMatch(item, cloudIdx);
-    const baseMatch  = _findMatch(item, baseIdx);
+    const cloudMatch = _matchUnused(item, cloudIdx, usedCloud);
+    const baseMatch  = _matchUnused(item, baseIdx,  usedBase);
+    if(cloudMatch) usedCloud.add(cloudMatch);
+    if(baseMatch)  usedBase.add(baseMatch);
+
     if(cloudMatch){
-      usedCloud.add(cloudMatch);
+      // Both have it → recurse field merge
       out.push(_merge3(item, cloudMatch, baseMatch));
+    } else if(baseMatch){
+      // Was in base, missing from cloud → cloud deleted it. Honor the delete
+      // UNLESS we modified it locally — in which case preserve local edit so
+      // edits don't silently disappear under a remote delete.
+      const localModified = !_eqIgnoringMeta(baseMatch, item);
+      if(localModified) out.push(item);
+      // else: drop (cloud's delete wins)
     } else {
+      // Not in base, not in cloud → we added it. Keep.
       out.push(item);
     }
   }
+
+  // Pass 2: each CLOUD item we haven't already matched
   for(const item of cloud){
     if(usedCloud.has(item)) continue;
-    const baseMatch = _findMatch(item, baseIdx);
+    const baseMatch = _matchUnused(item, baseIdx, usedBase);
+    if(baseMatch) usedBase.add(baseMatch);
+
     if(baseMatch){
-      // Cloud has it, we don't, and base did too — we deleted.
-      // Honor the delete unless cloud genuinely changed real content since baseline.
+      // Was in base, missing from local → WE deleted it. Honor the delete
+      // UNLESS cloud modified it meaningfully — to preserve concurrent edits.
       const cloudModified = !_eqIgnoringMeta(baseMatch, item);
       if(cloudModified) out.push(item);
-      // else: honor our delete (do not push)
+      // else: drop (our delete wins)
     } else {
-      // Cloud added it new — keep
+      // Not in base → cloud added it. Keep.
       out.push(item);
     }
   }
+
   return out;
 }
 
