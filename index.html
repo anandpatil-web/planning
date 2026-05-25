@@ -330,6 +330,13 @@
   .add-person-row input:focus { border-color: #7c5cfc; }
   .add-person-row button { background: #7c5cfc; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; }
   .add-person-row button:hover { background: #6d4fe8; }
+  .settings-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 18px; padding-top: 16px; border-top: 1px solid #f0f0f8; gap: 10px; }
+  .settings-status { font-size: 11px; color: #9ca3af; transition: color 0.3s; }
+  .settings-status.ok  { color: #16a34a; }
+  .settings-status.err { color: #ef4444; }
+  .settings-status.sync { color: #7c5cfc; }
+  .settings-save { background: #7c5cfc; color: #fff; border: none; border-radius: 8px; padding: 9px 18px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.15s; }
+  .settings-save:hover { background: #6d4fe8; }
 
   /* Detail drawer */
   .drawer-overlay { display: none; position: fixed; inset: 0; background: rgba(17,24,39,0.3); z-index: 9990; }
@@ -3871,25 +3878,53 @@ document.addEventListener('keydown', function(e){
 // ─── Settings (Team Members) ───────────────────────────────────────────────────
 function openSettings(){
   renderPeopleList();
+  _setSettingsStatus('Changes save automatically', '');
   const m = document.getElementById('settings-modal');
   m.style.display = 'flex';
 }
 function closeSettings(){
   document.getElementById('settings-modal').style.display = 'none';
 }
+function _setSettingsStatus(text, cls){
+  const el = document.getElementById('settings-status');
+  if(!el) return;
+  el.textContent = text;
+  el.classList.remove('ok','err','sync');
+  if(cls) el.classList.add(cls);
+}
+async function _syncWithStatus(action){
+  const { url, key } = sbCfg();
+  if(!url || !key){ _setSettingsStatus('⚠ Connect Supabase first', 'err'); return; }
+  _setSettingsStatus(`Saving ${action}…`, 'sync');
+  try {
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
+      method: 'POST',
+      headers:{ 'apikey':key,'Authorization':`Bearer ${key}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates' },
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees }, updated_at: new Date().toISOString() })
+    });
+    if(!r.ok) throw new Error(await r.text());
+    const _now = new Date(); const _hm = String(_now.getHours()).padStart(2,'0')+':'+String(_now.getMinutes()).padStart(2,'0');
+    localStorage.setItem('sb_last_sync', _hm);
+    _setSettingsStatus(`✓ Saved at ${_hm}`, 'ok');
+  } catch(err){
+    console.error('Settings save failed:', err);
+    _setSettingsStatus('✗ Save failed — try again', 'err');
+  }
+}
 function addPerson(){
   const inp = document.getElementById('new-person-inp');
   const name = inp.value.trim();
-  if(!name) return;
+  if(!name){ _setSettingsStatus('Enter a name first', 'err'); return; }
   const initials = name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
   const color = AVATAR_COLORS[people.length % AVATAR_COLORS.length];
   people.push({id:'p_'+Date.now(), name, initials, color});
   inp.value = '';
   renderPeopleList();
   saveHistory();
-  sbSync(true);
+  _syncWithStatus(`"${name}"`);
 }
 function deletePerson(id){
+  const removed = people.find(p=>p.id===id);
   people = people.filter(p=>p.id!==id);
   pages.forEach(page => page.widgets.forEach(w => {
     if(w.assignees) w.assignees = w.assignees.filter(a=>a!==id);
@@ -3899,7 +3934,12 @@ function deletePerson(id){
   renderPeopleList();
   rebuildPages();
   saveHistory();
-  sbSync(true);
+  _syncWithStatus(removed ? `removal of "${removed.name}"` : 'removal');
+}
+async function saveSettings(){
+  await _syncWithStatus('team');
+  // small delay so user sees the ✓ Saved before close
+  setTimeout(closeSettings, 600);
 }
 function renderPeopleList(){
   const el = document.getElementById('people-list');
@@ -4076,6 +4116,10 @@ function saveFile() {
     <div class="add-person-row">
       <input id="new-person-inp" placeholder="Name…" onkeydown="if(event.key==='Enter')addPerson()">
       <button onclick="addPerson()">Add</button>
+    </div>
+    <div class="settings-footer">
+      <span class="settings-status" id="settings-status">Changes save automatically</span>
+      <button class="settings-save" onclick="saveSettings()">Save &amp; Close</button>
     </div>
   </div>
 </div>
