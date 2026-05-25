@@ -2004,7 +2004,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2026-05-15 18:00';
+const BUILD = '1.1.2';
 
 const pages = [
   {
@@ -4079,7 +4079,7 @@ function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
 _asInterval = setInterval(_asTick, 1000);
 _sbUpdateBtn();
 sbLoad();
-document.getElementById('build-badge').textContent = 'build ' + BUILD;
+document.getElementById('build-badge').textContent = 'v' + BUILD;
 
 document.addEventListener('paste', function(e){
   if(!(document.activeElement && document.activeElement.isContentEditable)) return;
@@ -4280,11 +4280,6 @@ function saveFile() {
   const scripts = html.querySelectorAll('script');
   scripts.forEach(s => {
     if (s.textContent.includes('const pages = [')) {
-      const buildStamp = now.getFullYear() + '-' +
-        String(now.getMonth()+1).padStart(2,'0') + '-' +
-        String(now.getDate()).padStart(2,'0') + ' ' +
-        String(now.getHours()).padStart(2,'0') + ':' +
-        String(now.getMinutes()).padStart(2,'0');
       s.textContent = s.textContent
         .replace(/const pages = \[[\s\S]*?\];/, 'const pages = ' + JSON.stringify(pages, null, 2) + ';')
         .replace(/let customCols = \[.*?\];/, 'let customCols = ' + JSON.stringify(customCols) + ';')
@@ -4292,8 +4287,7 @@ function saveFile() {
         .replace(/let collAssignees = \{.*?\};/, 'let collAssignees = ' + JSON.stringify(collAssignees) + ';')
         .replace(/let personaAssignees = \{.*?\};/, 'let personaAssignees = ' + JSON.stringify(personaAssignees) + ';')
         .replace(/let collOwners = \{.*?\};/, 'let collOwners = ' + JSON.stringify(collOwners) + ';')
-        .replace(/let PERSONA_MAP = \[[\s\S]*?\];/, 'let PERSONA_MAP = ' + JSON.stringify(PERSONA_MAP, null, 2) + ';')
-        .replace(/const BUILD = '.*?';/, "const BUILD = '" + buildStamp + "';");
+        .replace(/let PERSONA_MAP = \[[\s\S]*?\];/, 'let PERSONA_MAP = ' + JSON.stringify(PERSONA_MAP, null, 2) + ';');
     }
   });
 
