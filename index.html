@@ -152,6 +152,15 @@
   .persona-name.editable-field, .coll-name.editable-field { cursor:text; }
   .persona-name.editable-field:focus, .coll-name.editable-field:focus { background:rgba(124,92,252,0.07); box-shadow:0 0 0 1.5px rgba(124,92,252,0.25); }
 
+  /* Collection owner chip */
+  .owner-chip { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px 2px 3px; border-radius: 12px; background: #f5f3ff; border: 1px solid #ddd6fe; font-size: 10px; font-weight: 600; color: #7c5cfc; cursor: pointer; user-select: none; transition: all 0.12s; white-space: nowrap; }
+  .owner-chip:hover { background: #ede9fe; }
+  .owner-chip.unassigned { background: #fafafa; border-style: dashed; border-color: #e5e7eb; color: #9ca3af; padding: 3px 10px; }
+  .owner-chip.unassigned:hover { border-color: #7c5cfc; color: #7c5cfc; background: #f5f3ff; border-style: solid; }
+  .owner-chip .avatar { width: 18px; height: 18px; font-size: 8px; margin-left: 0; border-width: 1px; }
+  .owner-chip-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #7c5cfc; font-weight: 600; margin-left: 6px; padding: 1px 7px 1px 3px; background: #f5f3ff; border-radius: 9px; vertical-align: middle; }
+  .owner-chip-inline .avatar { width: 14px; height: 14px; font-size: 7px; border-width: 1px; margin-left: 0; }
+
   .widget-rows { display: none; }
   .widget-rows.open { display: table-row-group; }
 
@@ -2947,6 +2956,7 @@ let customCols = [];
 let people = []; // [{id, name, initials, color}]
 let collAssignees = {}; // {'Collection Name': ['pid1',...]}
 let personaAssignees = {}; // {'Persona Name': ['pid1',...]}
+let collOwners = {}; // {'Collection Name': 'pid'} — single main owner per collection
 const AVATAR_COLORS = ['#7c5cfc','#f97316','#14b8a6','#e11d48','#3b82f6','#16a34a','#d97706','#9333ea','#0ea5e9'];
 
 // ─── Tag config ────────────────────────────────────────────────────────────────
@@ -2972,7 +2982,7 @@ let undoStack = [], redoStack = [];
 function snapshot(){
   // PERSONA_MAP may not exist yet at parse time, so guard
   const pm = (typeof window!=='undefined' && window._personaMapReady) ? PERSONA_MAP : null;
-  return JSON.stringify({pages, customCols, people, collAssignees, personaAssignees, personaMap: pm});
+  return JSON.stringify({pages, customCols, people, collAssignees, personaAssignees, collOwners, personaMap: pm});
 }
 function saveHistory(){
   undoStack.push(snapshot());
@@ -2987,6 +2997,7 @@ function restoreSnapshot(s){
   people.splice(0,people.length,...(d.people||[]));
   collAssignees = d.collAssignees || {};
   personaAssignees = d.personaAssignees || {};
+  collOwners = d.collOwners || {};
   if(d.personaMap && window._personaMapReady){
     PERSONA_MAP = d.personaMap;
     renderPersonaGrid();
@@ -3161,7 +3172,7 @@ function buildPage(page, pi){
   return `
   <div class="page-block" id="page-block-${pi}">
     <div class="page-header" onclick="toggle(${pi})">
-      <div style="display:flex;align-items:center;gap:4px">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
         <span class="page-name editable-field" contenteditable="true"
           onclick="event.stopPropagation()"
           onblur="updatePageName(${pi},this)"
@@ -3170,6 +3181,7 @@ function buildPage(page, pi){
         <span class="page-figma-icon${page.figma?' has-link':''}" id="pfigma-${pi}"
           onclick="event.stopPropagation();openPageFigmaDropdown(${pi},this)"
           title="${page.figma ? 'Figma: ' + page.figma : 'Add Figma link'}">F</span>
+        ${page.collection ? ownerChipHTML(page.collection) : ''}
       </div>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-${pi}">${chips}</div>
@@ -3515,6 +3527,91 @@ function clearTimeline(pi, wi){
   sbSync(true);
 }
 
+// ─── Collection owner ─────────────────────────────────────────────────────────
+function _getPerson(id){ return people.find(p=>p.id===id); }
+
+function ownerChipHTML(collName, variant){
+  const ownerId = collOwners[collName];
+  const owner = ownerId ? _getPerson(ownerId) : null;
+  if(variant === 'inline'){
+    if(!owner) return '';
+    return `<span class="owner-chip-inline" onclick="event.stopPropagation();openCollOwnerDropdown('${collName.replace(/'/g,"\\'")}',this)" title="Owner: ${owner.name}">
+      <span class="avatar" style="background:${owner.color}">${owner.initials}</span>${owner.name}
+    </span>`;
+  }
+  if(!owner){
+    return `<span class="owner-chip unassigned" onclick="event.stopPropagation();openCollOwnerDropdown('${collName.replace(/'/g,"\\'")}',this)">👤 Assign owner</span>`;
+  }
+  return `<span class="owner-chip" onclick="event.stopPropagation();openCollOwnerDropdown('${collName.replace(/'/g,"\\'")}',this)" title="Click to change owner">
+    <span class="avatar" style="background:${owner.color}">${owner.initials}</span>${owner.name}
+  </span>`;
+}
+
+function openCollOwnerDropdown(collName, el){
+  document.querySelectorAll('.assign-dropdown').forEach(d=>d.remove());
+  if(window._assignCloseHandler){ document.removeEventListener('mousedown', window._assignCloseHandler); }
+  const dd = document.createElement('div');
+  dd.className = 'assign-dropdown';
+  if(!people.length){
+    dd.innerHTML = '<div class="assign-empty">No team members yet.<br>Add people via ⚙ Settings.</div>';
+  } else {
+    const currentId = collOwners[collName];
+    const clear = currentId ? `<div class="assign-opt" onmousedown="event.preventDefault();setCollOwner('${collName.replace(/'/g,"\\'")}',null)" style="border-bottom:1px solid #f0f0f8;margin-bottom:4px;padding-bottom:6px;color:#ef4444">✕ Clear owner</div>` : '';
+    dd.innerHTML = clear + people.map(p => {
+      const active = currentId === p.id;
+      return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();setCollOwner('${collName.replace(/'/g,"\\'")}','${p.id}')">
+        <span class="avatar" style="background:${p.color};margin-left:0">${p.initials}</span>
+        <span style="flex:1">${p.name}</span>
+        ${active ? '<span style="color:#7c5cfc;font-size:13px">✓</span>' : ''}
+      </div>`;
+    }).join('');
+  }
+  document.body.appendChild(dd);
+  const r = el.getBoundingClientRect();
+  const ddH = Math.min((people.length+1) * 38 + 12, 300);
+  if(window.innerHeight - r.bottom < ddH + 8 && r.top > ddH + 8){
+    dd.style.bottom = (window.innerHeight - r.top + 4) + 'px'; dd.style.top = 'auto';
+  } else dd.style.top = (r.bottom + 4) + 'px';
+  let left = r.left;
+  if(left + 200 > window.innerWidth) left = window.innerWidth - 208;
+  dd.style.left = left + 'px';
+  window._assignCloseHandler = (e) => {
+    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
+      dd.remove(); document.removeEventListener('mousedown', window._assignCloseHandler); window._assignCloseHandler = null;
+    }
+  };
+  setTimeout(()=>document.addEventListener('mousedown', window._assignCloseHandler), 0);
+}
+
+function setCollOwner(collName, newOwnerId){
+  saveHistory();
+  const oldOwnerId = collOwners[collName];
+  if(newOwnerId === null || newOwnerId === undefined){
+    delete collOwners[collName];
+  } else {
+    collOwners[collName] = newOwnerId;
+  }
+  // Propagate to all widgets in the matching collection page
+  const collPage = pages.find(p => p.collection === collName);
+  if(collPage && Array.isArray(collPage.widgets)){
+    collPage.widgets.forEach(w => {
+      if(!w.assignees) w.assignees = [];
+      // Remove old owner if present
+      if(oldOwnerId){
+        const i = w.assignees.indexOf(oldOwnerId);
+        if(i !== -1) w.assignees.splice(i, 1);
+      }
+      // Add new owner (if not already present)
+      if(newOwnerId && !w.assignees.includes(newOwnerId)){
+        w.assignees.push(newOwnerId);
+      }
+    });
+  }
+  rebuildPages();
+  renderPersonaGrid();
+  sbSync(true);
+}
+
 // ─── Figma links ──────────────────────────────────────────────────────────────
 function figmaHTML(pi, wi){
   const w = gw(pi, wi);
@@ -3689,9 +3786,12 @@ function renderPersonaGrid(){
       <div class="coll-item">
         <div class="coll-dot gl"></div>
         <div style="flex:1;min-width:0">
-          <div class="coll-name gl-name editable-field" contenteditable="true" spellcheck="false"
-               onblur="updateCollName(${pIdx},${cIdx},this)"
-               onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(coll.name)}</div>
+          <div style="display:flex;align-items:center;flex-wrap:wrap">
+            <span class="coll-name gl-name editable-field" contenteditable="true" spellcheck="false"
+                 onblur="updateCollName(${pIdx},${cIdx},this)"
+                 onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(coll.name)}</span>
+            ${ownerChipHTML(coll.name, 'inline')}
+          </div>
           <div class="coll-sub editable-field" contenteditable="true" spellcheck="false" data-ph="Subtitle…"
                onblur="updateCollSub(${pIdx},${cIdx},this)"
                onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(coll.sub||'')}</div>
@@ -3748,6 +3848,9 @@ function updateCollName(pIdx, cIdx, el){
     pages[idx].name = newName;
     pages[idx].collection = newName;
   }
+  // Move collOwners + collAssignees keys
+  if(collOwners[oldName]){ collOwners[newName] = collOwners[oldName]; delete collOwners[oldName]; }
+  if(collAssignees[oldName]){ collAssignees[newName] = collAssignees[oldName]; delete collAssignees[oldName]; }
   rebuildPages();
   sbSync(true);
 }
@@ -3873,7 +3976,7 @@ async function sbSync(silent){
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates'
       },
-      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, collOwners, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
     });
     if(!r.ok) throw new Error(await r.text());
     if(!silent) _asReset(); // only reset countdown on manual saves
@@ -3910,6 +4013,7 @@ async function sbLoad(){
         people = rec.people || [];
         collAssignees = rec.collAssignees || {};
         personaAssignees = rec.personaAssignees || {};
+        collOwners = rec.collOwners || {};
         if(rec.personaMap && Array.isArray(rec.personaMap)){
           PERSONA_MAP = rec.personaMap;
           renderPersonaGrid();
@@ -4017,7 +4121,7 @@ async function _syncWithStatus(action){
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
       method: 'POST',
       headers:{ 'apikey':key,'Authorization':`Bearer ${key}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates' },
-      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, collOwners, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
     });
     if(!r.ok) throw new Error(await r.text());
     const _now = new Date(); const _hm = String(_now.getHours()).padStart(2,'0')+':'+String(_now.getMinutes()).padStart(2,'0');
@@ -4048,7 +4152,9 @@ function deletePerson(id){
   }));
   Object.keys(collAssignees).forEach(k => { collAssignees[k] = collAssignees[k].filter(a=>a!==id); });
   Object.keys(personaAssignees).forEach(k => { personaAssignees[k] = personaAssignees[k].filter(a=>a!==id); });
+  Object.keys(collOwners).forEach(k => { if(collOwners[k] === id) delete collOwners[k]; });
   renderPeopleList();
+  renderPersonaGrid();
   rebuildPages();
   saveHistory();
   _syncWithStatus(removed ? `removal of "${removed.name}"` : 'removal');
@@ -4185,6 +4291,7 @@ function saveFile() {
         .replace(/let people = \[.*?\];/, 'let people = ' + JSON.stringify(people) + ';')
         .replace(/let collAssignees = \{.*?\};/, 'let collAssignees = ' + JSON.stringify(collAssignees) + ';')
         .replace(/let personaAssignees = \{.*?\};/, 'let personaAssignees = ' + JSON.stringify(personaAssignees) + ';')
+        .replace(/let collOwners = \{.*?\};/, 'let collOwners = ' + JSON.stringify(collOwners) + ';')
         .replace(/let PERSONA_MAP = \[[\s\S]*?\];/, 'let PERSONA_MAP = ' + JSON.stringify(PERSONA_MAP, null, 2) + ';')
         .replace(/const BUILD = '.*?';/, "const BUILD = '" + buildStamp + "';");
     }
