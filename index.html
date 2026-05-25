@@ -3696,7 +3696,7 @@ function _sbSetLbl(text, cls, reset){
 async function sbSync(silent){
   const { url, key } = sbCfg();
   if(!url || !key){ if(!silent) showSbSetup(); return; }
-  _sbSetLbl('Syncing…', '');
+  if(!silent) _sbSetLbl('Syncing…', '');
   try {
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
       method: 'POST',
@@ -3709,10 +3709,16 @@ async function sbSync(silent){
       body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees }, updated_at: new Date().toISOString() })
     });
     if(!r.ok) throw new Error(await r.text());
-    _asReset();
+    if(!silent) _asReset(); // only reset countdown on manual saves
     const _now = new Date(); const _hm = String(_now.getHours()).padStart(2,'0')+':'+String(_now.getMinutes()).padStart(2,'0');
     localStorage.setItem('sb_last_sync', _hm);
-    _sbSetLbl('Synced ✓', 'saved', 2500);
+    if(silent){
+      // brief flash without disturbing the countdown
+      const lbl = document.getElementById('autosave-lbl');
+      if(lbl){ lbl.classList.add('saved'); setTimeout(()=>{ lbl.classList.remove('saved'); _asUpdateLbl(); }, 1500); }
+    } else {
+      _sbSetLbl('Synced ✓', 'saved', 2500);
+    }
   } catch(err){
     console.error('Supabase sync failed:', err);
     _sbSetLbl('Sync failed ✗', 'err', 3000);
