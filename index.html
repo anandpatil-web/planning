@@ -2004,7 +2004,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.1.2';
+const BUILD = '1.1.3';
 
 const pages = [
   {
@@ -3946,10 +3946,13 @@ const DEFAULT_SB_URL = 'https://umfesxyxetssvkchukdj.supabase.co';
 const DEFAULT_SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmVzeHl4ZXRzc3ZrY2h1a2RqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4MTI3MTgsImV4cCI6MjA5NDM4ODcxOH0.W7VQuuLPBQdc96VbeQ_KLb9ZKu1xfxMYxLUhlpIKC3s';
 
 function sbCfg(){
-  return {
-    url: localStorage.getItem('sb_url') || DEFAULT_SB_URL,
-    key: localStorage.getItem('sb_key') || DEFAULT_SB_KEY
-  };
+  // Always use the baked-in credentials so every device hits the same backend.
+  // Clean up any legacy localStorage overrides from older versions.
+  if(localStorage.getItem('sb_url') || localStorage.getItem('sb_key')){
+    localStorage.removeItem('sb_url');
+    localStorage.removeItem('sb_key');
+  }
+  return { url: DEFAULT_SB_URL, key: DEFAULT_SB_KEY };
 }
 
 function _sbSetLbl(text, cls, reset){
@@ -3997,34 +4000,49 @@ async function sbSync(silent){
 
 async function sbLoad(){
   const { url, key } = sbCfg();
-  if(!url || !key) return;
+  if(!url || !key){ _sbSetLbl('⚠ No credentials', 'err', 4000); return; }
+  _sbSetLbl('Loading cloud data…', '');
   try {
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data`, {
       headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
     });
-    if(!r.ok) return;
-    const rows = await r.json();
-    if(rows.length && rows[0].data){
-      const rec = rows[0].data;
-      const { pages: p, customCols: c } = rec;
-      if(Array.isArray(p)){
-        pages.length = 0; pages.push(...p);
-        customCols = c || [];
-        people = rec.people || [];
-        collAssignees = rec.collAssignees || {};
-        personaAssignees = rec.personaAssignees || {};
-        collOwners = rec.collOwners || {};
-        if(rec.personaMap && Array.isArray(rec.personaMap)){
-          PERSONA_MAP = rec.personaMap;
-          renderPersonaGrid();
-        }
-        if(initCollectionPages()) sbSync(true); // seed any missing collection pages
-        rebuildPages(0); updateTally();
-        _sbUpdateBtn();
-        _sbSetLbl('Loaded ✓', 'saved', 2500);
-      }
+    if(!r.ok){
+      const body = await r.text();
+      console.error('sbLoad HTTP error', r.status, body);
+      _sbSetLbl(`⚠ Load failed (${r.status})`, 'err', 5000);
+      return;
     }
-  } catch(err){ console.error('Supabase load failed:', err); }
+    const rows = await r.json();
+    if(!rows.length || !rows[0].data){
+      _sbSetLbl('No cloud data yet — using defaults', '', 4000);
+      // push the local defaults up so the bin gets seeded
+      sbSync(true);
+      return;
+    }
+    const rec = rows[0].data;
+    const { pages: p, customCols: c } = rec;
+    if(Array.isArray(p)){
+      pages.length = 0; pages.push(...p);
+      customCols = c || [];
+      people = rec.people || [];
+      collAssignees = rec.collAssignees || {};
+      personaAssignees = rec.personaAssignees || {};
+      collOwners = rec.collOwners || {};
+      if(rec.personaMap && Array.isArray(rec.personaMap)){
+        PERSONA_MAP = rec.personaMap;
+        renderPersonaGrid();
+      }
+      if(initCollectionPages()) sbSync(true); // seed any missing collection pages
+      rebuildPages(0); updateTally();
+      _sbUpdateBtn();
+      _sbSetLbl('Loaded ✓ from cloud', 'saved', 2500);
+    } else {
+      _sbSetLbl('⚠ Cloud data malformed', 'err', 4000);
+    }
+  } catch(err){
+    console.error('Supabase load failed:', err);
+    _sbSetLbl('⚠ Cloud load failed — offline?', 'err', 5000);
+  }
 }
 
 function _sbUpdateBtn(){
