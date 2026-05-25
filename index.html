@@ -229,7 +229,7 @@
   .jb-clear:hover { opacity: 1; }
   .autosave-lbl { font-size: 11px; color: #9ca3af; letter-spacing: 0.2px; padding: 0 4px; white-space: nowrap; transition: color 0.3s; }
   .autosave-lbl.saved { color: #16a34a; }
-  .build-badge { position: fixed; bottom: 14px; left: 20px; font-size: 10px; color: #c4c4d4; letter-spacing: 0.3px; z-index: 9999; pointer-events: none; }
+  .build-badge { display: inline-block; margin-left: 10px; font-size: 10px; color: #9ca3af; letter-spacing: 0.3px; font-weight: 500; background: #f3f4f6; padding: 3px 9px; border-radius: 10px; vertical-align: middle; position: relative; top: -2px; }
 
   /* Settings button */
   .settings-btn { position: fixed; top: 22px; right: 24px; background: #fff; border: 1px solid #e5e7eb; border-radius: 50%; width: 36px; height: 36px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(100,100,160,0.1); z-index: 100; transition: border-color 0.15s; }
@@ -381,7 +381,7 @@
 <button class="settings-btn" onclick="openSettings()" title="Team settings">⚙</button>
 
 <div id="view-main">
-<h1>Go-Live Marketing Assets</h1>
+<h1>Go-Live Marketing Assets <span class="build-badge" id="build-badge"></span></h1>
 <p class="subtitle">Production method · Product dependency · Status</p>
 
 <div class="legend">
@@ -4280,8 +4280,6 @@ create policy "anon all" on marketing_state
     </div>
   </div>
 </div>
-
-<div class="build-badge" id="build-badge"></div>
 
 <div class="bottom-toolbar">
   <span class="autosave-lbl" id="autosave-lbl">Autosave 5:00</span>
