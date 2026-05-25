@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.5.0';
+const BUILD = '1.5.1';
 
 const pages = [
   {
@@ -4003,6 +4003,7 @@ function deletePersona(pIdx){
 // Initial render — runs after PERSONA_MAP is defined
 renderPersonaGrid();
 const _initSeeded = initCollectionPages();
+_dedupeAll();
 const _initUids = _ensureUids();
 if(_initSeeded || _initUids){ saveHistory(); }
 rebuildPages(0);
@@ -4116,6 +4117,50 @@ function _genUid(prefix){
 
 // Walk the data model and stamp _uid on anything that's missing one.
 // Existing items get one assigned once; new items get assigned at creation time.
+// Emergency dedupe — sweeps the entire data tree and collapses duplicates by
+// any matching identifier (_uid / id / collection / name). Idempotent.
+function _dedupeAll(){
+  let changed = false;
+  if(window._personaMapReady && Array.isArray(PERSONA_MAP)){
+    const beforeP = PERSONA_MAP.length;
+    PERSONA_MAP = _dedupeByKeys(PERSONA_MAP);
+    if(PERSONA_MAP.length !== beforeP) changed = true;
+    PERSONA_MAP.forEach(persona => {
+      if(Array.isArray(persona.collections)){
+        const before = persona.collections.length;
+        persona.collections = _dedupeByKeys(persona.collections);
+        if(persona.collections.length !== before) changed = true;
+      }
+    });
+  }
+  if(Array.isArray(pages)){
+    const beforeP = pages.length;
+    const deduped = _dedupeByKeys(pages);
+    if(deduped.length !== beforeP){
+      pages.length = 0; pages.push(...deduped);
+      changed = true;
+    }
+    pages.forEach(p => {
+      if(Array.isArray(p.widgets)){
+        const before = p.widgets.length;
+        p.widgets = _dedupeByKeys(p.widgets);
+        if(p.widgets.length !== before) changed = true;
+      }
+    });
+  }
+  if(Array.isArray(people)){
+    const before = people.length;
+    people = _dedupeByKeys(people);
+    if(people.length !== before) changed = true;
+  }
+  if(Array.isArray(customCols)){
+    const before = customCols.length;
+    customCols = _dedupeByKeys(customCols);
+    if(customCols.length !== before) changed = true;
+  }
+  return changed;
+}
+
 function _ensureUids(){
   let changed = false;
   if(window._personaMapReady && Array.isArray(PERSONA_MAP)){
@@ -4166,8 +4211,29 @@ function _eqIgnoringMeta(a, b){
   return true;
 }
 
+// Deduplicate an array of objects by their identifying keys (any of _uid / id / collection / name).
+// First occurrence wins. Used everywhere to prevent duplicate accumulation through merges.
+function _dedupeByKeys(arr){
+  if(!Array.isArray(arr)) return arr;
+  const seen = new Set();
+  const out = [];
+  for(const item of arr){
+    const keys = _itemKeys(item);
+    if(keys.length === 0){ out.push(item); continue; }
+    let dupe = false;
+    for(const k of keys){ if(seen.has(k)){ dupe = true; break; } }
+    if(dupe) continue;
+    for(const k of keys) seen.add(k);
+    out.push(item);
+  }
+  return out;
+}
+
 function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
-  base = base || [];
+  // Stop the bleeding: dedupe inputs first so corrupted history doesn't propagate.
+  local = _dedupeByKeys(local);
+  cloud = _dedupeByKeys(cloud);
+  base  = _dedupeByKeys(base || []);
   const baseIdx  = _indexByAllKeys(base);
   const cloudIdx = _indexByAllKeys(cloud);
   const out = [];
@@ -4382,7 +4448,9 @@ async function sbSync(silent){
     } catch(_){ _lastCloudUpdate = stamp; }
 
     // 5) New baseline = what we just pushed
+    _dedupeAll();
     _ensureUids();
+      _dedupeAll();
       _ensureUids();
       _baseline = _deepClone(merged);
 
@@ -4442,6 +4510,7 @@ async function sbLoad(quiet){
       appliedData = mergeStates(localData, rec, _baseline);
       // After merge, push back so cloud reflects the merged result (without spamming)
       _applyMergedState(appliedData);
+      _dedupeAll();
       _ensureUids();
       _baseline = _deepClone(appliedData);
       // Trigger a silent sync to write merged result
@@ -4460,6 +4529,7 @@ async function sbLoad(quiet){
         renderPersonaGrid();
       }
       const seededAny = initCollectionPages();
+      _dedupeAll();
       const stampedAny = _ensureUids();
       if(seededAny || stampedAny){
         // Push the seeded/stamped state up so other devices get the same UIDs
@@ -4550,6 +4620,7 @@ function sbStartRealtime(){
             personaAssignees = rec.data.personaAssignees || {};
             collOwners = rec.data.collOwners || {};
             if(rec.data.personaMap){ PERSONA_MAP = rec.data.personaMap; renderPersonaGrid(); }
+            _dedupeAll();
             _ensureUids();
             rebuildPages(); updateTally();
             _baseline = _deepClone(_snapshotForCloud());
