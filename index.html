@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.4.2';
+const BUILD = '1.4.3';
 
 const pages = [
   {
@@ -4139,12 +4139,39 @@ function _ensureUids(){
   return changed;
 }
 
+// Structural equality that ignores internal metadata (_uid). This way an
+// item that was stamped with _uid locally but is still bare on the cloud is
+// considered "unmodified by cloud" — so our deletes are honored.
+function _eqIgnoringMeta(a, b){
+  if(a === b) return true;
+  if(typeof a !== typeof b) return false;
+  if(a === null || b === null) return a === b;
+  if(typeof a !== 'object') return a === b;
+  if(Array.isArray(a) !== Array.isArray(b)) return false;
+  if(Array.isArray(a)){
+    if(a.length !== b.length) return false;
+    for(let i=0; i<a.length; i++){
+      if(!_eqIgnoringMeta(a[i], b[i])) return false;
+    }
+    return true;
+  }
+  const META = new Set(['_uid']);
+  const ka = Object.keys(a).filter(k => !META.has(k));
+  const kb = Object.keys(b).filter(k => !META.has(k));
+  if(ka.length !== kb.length) return false;
+  for(const k of ka){
+    if(!(k in b)) return false;
+    if(!_eqIgnoringMeta(a[k], b[k])) return false;
+  }
+  return true;
+}
+
 function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
   base = base || [];
   const baseIdx  = _indexByAllKeys(base);
   const cloudIdx = _indexByAllKeys(cloud);
   const out = [];
-  const usedCloud = new Set(); // identity of cloud items we've already matched
+  const usedCloud = new Set();
   // Walk local first to preserve local ordering for items we touched
   for(const item of local){
     const cloudMatch = _findMatch(item, cloudIdx);
@@ -4153,7 +4180,6 @@ function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
       usedCloud.add(cloudMatch);
       out.push(_merge3(item, cloudMatch, baseMatch));
     } else {
-      // Cloud doesn't have any matching key — either we added it new, or cloud removed.
       out.push(item);
     }
   }
@@ -4162,8 +4188,8 @@ function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
     const baseMatch = _findMatch(item, baseIdx);
     if(baseMatch){
       // Cloud has it, we don't, and base did too — we deleted.
-      // Preserve only if cloud genuinely modified it since baseline; else honor the delete.
-      const cloudModified = JSON.stringify(baseMatch) !== JSON.stringify(item);
+      // Honor the delete unless cloud genuinely changed real content since baseline.
+      const cloudModified = !_eqIgnoringMeta(baseMatch, item);
       if(cloudModified) out.push(item);
       // else: honor our delete (do not push)
     } else {
