@@ -170,8 +170,23 @@
   .owner-chip.unassigned { background: #fafafa; border-style: dashed; border-color: #e5e7eb; color: #9ca3af; padding: 3px 10px; }
   .owner-chip.unassigned:hover { border-color: #7c5cfc; color: #7c5cfc; background: #f5f3ff; border-style: solid; }
   .owner-chip .avatar { width: 18px; height: 18px; font-size: 8px; margin-left: 0; border-width: 1px; }
-  .owner-chip-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #7c5cfc; font-weight: 600; margin-left: 6px; padding: 1px 7px 1px 3px; background: #f5f3ff; border-radius: 9px; vertical-align: middle; }
+  .owner-chip-inline { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; color: #7c5cfc; font-weight: 600; margin-left: 6px; padding: 1px 7px 1px 3px; background: #f5f3ff; border-radius: 9px; vertical-align: middle; cursor: pointer; }
   .owner-chip-inline .avatar { width: 14px; height: 14px; font-size: 7px; border-width: 1px; margin-left: 0; }
+
+  /* Collection end-date chip */
+  .date-chip { display: inline-flex; align-items: center; gap: 4px; padding: 2px 9px 2px 7px; border-radius: 12px; font-size: 10px; font-weight: 600; cursor: pointer; user-select: none; transition: all 0.12s; white-space: nowrap; }
+  .date-chip.unset { background: #fafafa; border: 1px dashed #e5e7eb; color: #9ca3af; padding: 3px 10px; }
+  .date-chip.unset:hover { border-color: #7c5cfc; color: #7c5cfc; background: #f5f3ff; border-style: solid; }
+  .date-chip.set { border: 1px solid #ddd6fe; background: #f5f3ff; color: #7c5cfc; }
+  .date-chip.set:hover { background: #ede9fe; }
+  .date-chip.overdue { border-color: #fecaca; background: #fef2f2; color: #dc2626; }
+  .date-chip.overdue:hover { background: #fee2e2; }
+  .date-chip.soon { border-color: #fde68a; background: #fffbeb; color: #d97706; }
+  .date-chip.soon:hover { background: #fef3c7; }
+  .date-chip-inline { display: inline-flex; align-items: center; gap: 3px; font-size: 10px; font-weight: 600; margin-left: 6px; padding: 1px 7px 1px 5px; border-radius: 9px; vertical-align: middle; cursor: pointer; white-space: nowrap; }
+  .date-chip-inline.set { background: #f5f3ff; color: #7c5cfc; border: 1px solid #ddd6fe; }
+  .date-chip-inline.overdue { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
+  .date-chip-inline.soon { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
 
   .widget-rows { display: none; }
   .widget-rows.open { display: table-row-group; }
@@ -2016,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.5.4';
+const BUILD = '1.6.0';
 
 const pages = [
   {
@@ -3201,6 +3216,7 @@ function buildPage(page, pi){
           onclick="event.stopPropagation();openPageFigmaDropdown(${pi},this)"
           title="${page.figma ? 'Figma: ' + page.figma : 'Add Figma link'}">F</span>
         ${page.collection ? ownerChipHTML(page.collection) : ''}
+        ${page.collection ? dateChipHTML(page.collection) : ''}
       </div>
       <div style="display:flex;align-items:center;gap:8px">
         <div class="page-chips" id="chips-${pi}">${chips}</div>
@@ -3682,6 +3698,95 @@ function setCollOwner(collName, newOwnerId){
   sbSyncDebounced(true);
 }
 
+// ─── Collection end-date ─────────────────────────────────────────────────────
+function _findCollByName(collName){
+  for(const persona of PERSONA_MAP || []){
+    if(!Array.isArray(persona.collections)) continue;
+    for(const coll of persona.collections){
+      if(coll.name === collName) return coll;
+    }
+  }
+  return null;
+}
+
+function _dateStatus(iso){
+  if(!iso) return 'unset';
+  const today = new Date().toISOString().slice(0,10);
+  if(iso < today) return 'overdue';
+  // Within next 7 days = soon
+  const d = new Date(iso + 'T00:00:00');
+  const now = new Date(); now.setHours(0,0,0,0);
+  const diff = (d - now) / (1000 * 60 * 60 * 24);
+  if(diff <= 7) return 'soon';
+  return 'set';
+}
+
+function _fmtCollDate(iso){
+  if(!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+}
+
+function dateChipHTML(collName, variant){
+  const coll = _findCollByName(collName);
+  const iso = coll && coll.endDate;
+  const status = _dateStatus(iso);
+  if(variant === 'inline'){
+    if(!iso) return '';
+    return `<span class="date-chip-inline ${status}" onclick="event.stopPropagation();openCollDateDropdown('${collName.replace(/'/g,"\\'")}',this)" title="Deadline: ${iso}">
+      📅 ${_fmtCollDate(iso)}
+    </span>`;
+  }
+  // Block (used in collection page header)
+  if(!iso){
+    return `<span class="date-chip unset" onclick="event.stopPropagation();openCollDateDropdown('${collName.replace(/'/g,"\\'")}',this)">📅 Set deadline</span>`;
+  }
+  return `<span class="date-chip ${status}" onclick="event.stopPropagation();openCollDateDropdown('${collName.replace(/'/g,"\\'")}',this)" title="Click to change">📅 ${_fmtCollDate(iso)}</span>`;
+}
+
+function openCollDateDropdown(collName, el){
+  document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
+  if(window._collDateCloseHandler){ document.removeEventListener('mousedown', window._collDateCloseHandler); }
+  const coll = _findCollByName(collName);
+  const current = (coll && coll.endDate) || '';
+  const dd = document.createElement('div');
+  dd.className = 'tl-dropdown';
+  dd.innerHTML = `
+    <label>Collection deadline</label>
+    <input type="date" id="cd-inp" value="${current}" />
+    <div class="tl-dd-actions">
+      <button class="tl-dd-clear" onclick="setCollEndDate('${collName.replace(/'/g,"\\'")}',null)">Clear</button>
+      <button class="tl-dd-done" onclick="setCollEndDate('${collName.replace(/'/g,"\\'")}',document.getElementById('cd-inp').value||null)">Save</button>
+    </div>`;
+  document.body.appendChild(dd);
+  const r = el.getBoundingClientRect();
+  const spaceBelow = window.innerHeight - r.bottom;
+  if(spaceBelow < 200 && r.top > 200){ dd.style.bottom = (window.innerHeight - r.top + 4) + 'px'; dd.style.top='auto'; }
+  else dd.style.top = (r.bottom + 4) + 'px';
+  let left = r.left;
+  if(left + 230 > window.innerWidth) left = window.innerWidth - 238;
+  dd.style.left = left + 'px';
+  setTimeout(()=>{ const inp = document.getElementById('cd-inp'); if(inp) inp.focus(); }, 50);
+  window._collDateCloseHandler = (e) => {
+    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
+      dd.remove(); document.removeEventListener('mousedown', window._collDateCloseHandler); window._collDateCloseHandler = null;
+    }
+  };
+  setTimeout(()=>document.addEventListener('mousedown', window._collDateCloseHandler), 0);
+}
+
+function setCollEndDate(collName, isoDate){
+  const coll = _findCollByName(collName);
+  if(!coll) return;
+  saveHistory();
+  if(isoDate) coll.endDate = isoDate;
+  else delete coll.endDate;
+  document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
+  renderPersonaGrid();
+  rebuildPages();
+  sbSyncDebounced(true);
+}
+
 // ─── Figma links ──────────────────────────────────────────────────────────────
 function figmaHTML(pi, wi){
   const w = gw(pi, wi);
@@ -3862,6 +3967,7 @@ function renderPersonaGrid(){
                  onblur="updateCollName(${pIdx},${cIdx},this)"
                  onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(coll.name)}</span>
             ${ownerChipHTML(coll.name, 'inline')}
+            ${dateChipHTML(coll.name, 'inline')}
           </div>
           <div class="coll-sub editable-field" contenteditable="true" spellcheck="false" data-ph="Subtitle…"
                onblur="updateCollSub(${pIdx},${cIdx},this)"
