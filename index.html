@@ -3411,10 +3411,10 @@ function openAssignDropdown(pi, wi, el){
     dd.style.bottom = (window.innerHeight - r.top + 4) + 'px';
     dd.style.top = 'auto';
   } else {
-    dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
+    dd.style.top = (r.bottom + 4) + 'px';
   }
   // align left but keep on screen
-  let left = r.left + window.scrollX;
+  let left = r.left;
   if(left + 180 > window.innerWidth) left = window.innerWidth - 188;
   dd.style.left = left + 'px';
 
@@ -3524,9 +3524,9 @@ function openTimelineDropdown(pi, wi, el){
     dd.style.bottom = (window.innerHeight - r.top + 4) + 'px';
     dd.style.top = 'auto';
   } else {
-    dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
+    dd.style.top = (r.bottom + 4) + 'px';
   }
-  let left = r.left + window.scrollX;
+  let left = r.left;
   if(left + 230 > window.innerWidth) left = window.innerWidth - 238;
   dd.style.left = left + 'px';
   window._tlCloseHandler = (e) => {
@@ -3589,8 +3589,8 @@ function openFigmaDropdown(pi, wi, el){
   const r = el.getBoundingClientRect();
   const spaceBelow = window.innerHeight - r.bottom;
   if(spaceBelow < 180 && r.top > 180){ dd.style.bottom = (window.innerHeight - r.top + 4) + 'px'; dd.style.top='auto'; }
-  else dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
-  let left = r.left + window.scrollX;
+  else dd.style.top = (r.bottom + 4) + 'px';
+  let left = r.left;
   if(left + 290 > window.innerWidth) left = window.innerWidth - 298;
   dd.style.left = left + 'px';
   setTimeout(()=>document.getElementById(`figma-inp-${pi}-${wi}`).focus(), 50);
@@ -3627,8 +3627,8 @@ function openPageFigmaDropdown(pi, el){
     </div>`;
   document.body.appendChild(dd);
   const r = el.getBoundingClientRect();
-  dd.style.top = (r.bottom + 4 + window.scrollY) + 'px';
-  let left = r.left + window.scrollX;
+  dd.style.top = (r.bottom + 4) + 'px';
+  let left = r.left;
   if(left + 290 > window.innerWidth) left = window.innerWidth - 298;
   dd.style.left = left + 'px';
   setTimeout(()=>document.getElementById(`pfigma-inp-${pi}`).focus(), 50);
@@ -3652,17 +3652,17 @@ function savePageFigma(pi){
 
 // ─── CLP Template & Collection Pages ──────────────────────────────────────────
 const CLP_TEMPLATE = [
-  { name:'Hero Section',         req:'1 video, 3 images', type:'—' },
-  { name:'Moodboard',            req:'2 images',          type:'TBD' },
-  { name:'Inspiration Section',  req:'2 images, 1 video', type:'TBD' },
-  { name:'Craftsmanship Section',req:'1 video',           type:'TBD' },
-  { name:'Sketches',             req:'1 image',           type:'TBD' },
-  { name:'Featured Pieces',      req:'1 image each piece',type:'—' },
-  { name:'Lookbook Section',     req:'1 video, 4 images', type:'—' },
+  { name:'Hero Section',         req:'1 video, 3 images', type:'—',   shot:3, shotVid:1, ai:0, aiVid:0 },
+  { name:'Moodboard',            req:'2 images',          type:'TBD', shot:0, shotVid:0, ai:2, aiVid:0 },
+  { name:'Inspiration Section',  req:'2 images, 1 video', type:'TBD', shot:0, shotVid:0, ai:2, aiVid:1 },
+  { name:'Craftsmanship Section',req:'1 video',           type:'TBD', shot:0, shotVid:0, ai:0, aiVid:1 },
+  { name:'Sketches',             req:'1 image',           type:'TBD', shot:0, shotVid:0, ai:1, aiVid:0 },
+  { name:'Featured Pieces',      req:'1 image each piece',type:'—',   shot:0, shotVid:0, ai:4, aiVid:0 },
+  { name:'Lookbook Section',     req:'1 video, 4 images', type:'—',   shot:0, shotVid:0, ai:4, aiVid:1 },
 ];
 
 function _newCLPWidget(t){
-  return { name:t.name, req:t.req, type:t.type, shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,
+  return { name:t.name, req:t.req, type:t.type, shot:t.shot||0, shotVid:t.shotVid||0, render:0, renderVid:0, ai:t.ai||0, aiVid:t.aiVid||0,
     prodDep:true, status:'', notes:'', customData:{}, assignees:[], figma:'', startDate:null, endDate:null };
 }
 
@@ -3682,6 +3682,20 @@ function initCollectionPages(){
         widgets: CLP_TEMPLATE.map(_newCLPWidget)
       });
       added = true;
+    });
+  });
+  // Migrate existing collection widgets: fill in template asset counts if all zero & names match
+  pages.forEach(p => {
+    if(!p.collection || !Array.isArray(p.widgets)) return;
+    p.widgets.forEach((w, i) => {
+      const tpl = CLP_TEMPLATE[i];
+      if(!tpl || w.name !== tpl.name) return;
+      const allZero = !w.shot && !w.shotVid && !w.ai && !w.aiVid && !w.render && !w.renderVid;
+      if(allZero){
+        w.shot = tpl.shot||0; w.shotVid = tpl.shotVid||0;
+        w.ai = tpl.ai||0; w.aiVid = tpl.aiVid||0;
+        added = true;
+      }
     });
   });
   return added;
