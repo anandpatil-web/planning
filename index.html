@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.5.1';
+const BUILD = '1.5.2';
 
 const pages = [
   {
@@ -4119,17 +4119,18 @@ function _genUid(prefix){
 // Existing items get one assigned once; new items get assigned at creation time.
 // Emergency dedupe — sweeps the entire data tree and collapses duplicates by
 // any matching identifier (_uid / id / collection / name). Idempotent.
+// Re-renders the affected views automatically when anything changed.
 function _dedupeAll(){
-  let changed = false;
+  let removed = 0;
   if(window._personaMapReady && Array.isArray(PERSONA_MAP)){
     const beforeP = PERSONA_MAP.length;
     PERSONA_MAP = _dedupeByKeys(PERSONA_MAP);
-    if(PERSONA_MAP.length !== beforeP) changed = true;
+    removed += (beforeP - PERSONA_MAP.length);
     PERSONA_MAP.forEach(persona => {
       if(Array.isArray(persona.collections)){
         const before = persona.collections.length;
         persona.collections = _dedupeByKeys(persona.collections);
-        if(persona.collections.length !== before) changed = true;
+        removed += (before - persona.collections.length);
       }
     });
   }
@@ -4138,27 +4139,35 @@ function _dedupeAll(){
     const deduped = _dedupeByKeys(pages);
     if(deduped.length !== beforeP){
       pages.length = 0; pages.push(...deduped);
-      changed = true;
+      removed += (beforeP - deduped.length);
     }
     pages.forEach(p => {
       if(Array.isArray(p.widgets)){
         const before = p.widgets.length;
         p.widgets = _dedupeByKeys(p.widgets);
-        if(p.widgets.length !== before) changed = true;
+        removed += (before - p.widgets.length);
       }
     });
   }
   if(Array.isArray(people)){
     const before = people.length;
     people = _dedupeByKeys(people);
-    if(people.length !== before) changed = true;
+    removed += (before - people.length);
   }
   if(Array.isArray(customCols)){
     const before = customCols.length;
     customCols = _dedupeByKeys(customCols);
-    if(customCols.length !== before) changed = true;
+    removed += (before - customCols.length);
   }
-  return changed;
+  if(removed > 0){
+    console.warn('[dedupe] removed', removed, 'duplicate entries');
+    // Re-render anything that may show stale duplicates
+    try { renderPersonaGrid(); } catch(_){}
+    try { rebuildPages(); } catch(_){}
+    // Force a clean push to cloud so other devices receive the cleaned state
+    setTimeout(()=>sbSyncDebounced(true), 50);
+  }
+  return removed > 0;
 }
 
 function _ensureUids(){
