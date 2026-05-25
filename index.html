@@ -2015,7 +2015,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.1.4';
+const BUILD = '1.2.0';
 
 const pages = [
   {
@@ -3077,34 +3077,41 @@ function adj(pi,wi,key,delta){
   const w=gw(pi,wi); w[key]=Math.max(0,(w[key]||0)+delta);
   document.getElementById(`pills-${pi}-${wi}`).innerHTML=pillsHTML(pi,wi);
   refreshChips(pi); updateTally();
+  sbSync(true);
 }
 function addTag(pi,wi,sel){
   if(!sel.value)return; saveHistory(); gw(pi,wi)[sel.value]=1;
   document.getElementById(`pills-${pi}-${wi}`).innerHTML=pillsHTML(pi,wi);
   refreshChips(pi); updateTally(); sel.value='';
+  sbSync(true);
 }
 function toggleProd(pi,wi){
   saveHistory();
   gw(pi,wi).prodDep=!gw(pi,wi).prodDep;
   document.getElementById(`prod-${pi}-${wi}`).innerHTML=prodHTML(pi,wi);
+  sbSync(true);
 }
 function updateNotes(pi,wi,el){
   const v=el.textContent.trim(); if(v===(gw(pi,wi).notes||'')) return;
   saveHistory(); gw(pi,wi).notes=v;
+  sbSync(true);
 }
 function updateName(pi,wi,el){
   const v=el.textContent.trim(); if(v===gw(pi,wi).name) return;
   saveHistory(); gw(pi,wi).name=v;
+  sbSync(true);
 }
 function updateReq(pi,wi,el){
   const v=el.textContent.trim(); if(v===(gw(pi,wi).req||'')) return;
   saveHistory(); gw(pi,wi).req=v;
+  sbSync(true);
 }
 function cycleStatus(pi,wi){
   saveHistory();
   const w=gw(pi,wi), idx=S_CYCLE.indexOf(w.status||'');
   w.status=S_CYCLE[(idx+1)%S_CYCLE.length];
   document.getElementById(`status-${pi}-${wi}`).innerHTML=statusHTML(pi,wi);
+  sbSync(true);
 }
 
 function refreshChips(pi){
@@ -3224,47 +3231,56 @@ function buildPage(page, pi){
 function updatePageName(pi,el){
   const v=el.textContent.trim(); if(v===pages[pi].name) return;
   saveHistory(); pages[pi].name=v;
+  sbSync(true);
 }
 function updateColLabel(colId,el){
   const c=customCols.find(c=>c.id===colId); if(!c) return;
   const v=el.textContent.trim(); if(v===c.label) return;
   saveHistory(); c.label=v;
+  sbSync(true);
 }
 function updateCustomCell(pi,wi,colId,el){
   const w=gw(pi,wi); if(!w.customData) w.customData={};
   const v=el.textContent.trim(); if(v===(w.customData[colId]||'')) return;
   saveHistory(); w.customData[colId]=v;
+  sbSync(true);
 }
 function addRow(pi){
   saveHistory();
-  pages[pi].widgets.push({name:'New Widget',req:'',type:'—',shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,prodDep:false,notes:'',customData:{}});
+  pages[pi].widgets.push({name:'New Widget',req:'',type:'—',shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,prodDep:false,notes:'',customData:{},assignees:[],figma:'',startDate:null,endDate:null});
   rebuildPages(); refreshChips(pi); updateTally();
+  sbSync(true);
 }
 function deleteRow(pi,wi){
   saveHistory();
   pages[pi].widgets.splice(wi,1);
   rebuildPages(); refreshChips(pi); updateTally();
+  sbSync(true);
 }
 function addPage(){
   saveHistory();
   const pi=pages.length;
   pages.push({name:'New Section',widgets:[]});
   rebuildPages(pi);
+  sbSync(true);
 }
 function deletePage(pi){
   if(!confirm(`Delete section "${pages[pi].name}"?`)) return;
   saveHistory();
   pages.splice(pi,1); rebuildPages(); updateTally();
+  sbSync(true);
 }
 function addCol(){
   saveHistory();
   customCols.push({id:'col_'+Date.now(),label:'New Column'});
   rebuildPages();
+  sbSync(true);
 }
 function deleteCol(colId){
   saveHistory();
   customCols=customCols.filter(c=>c.id!==colId);
   rebuildPages();
+  sbSync(true);
 }
 
 function rebuildPages(newOpenIdx){
@@ -4020,27 +4036,37 @@ function _sbSetLbl(text, cls, reset){
   if(reset) setTimeout(()=>{ lbl.style.color=''; lbl.classList.remove('saved'); _asUpdateLbl(); }, reset);
 }
 
+// Tracks the cloud row's last-known updated_at — used by the poller to detect
+// remote changes from other devices.
+let _lastCloudUpdate = null;
+
 async function sbSync(silent){
   const { url, key } = sbCfg();
   if(!url || !key){ if(!silent) showSbSetup(); return; }
   if(!silent) _sbSetLbl('Syncing…', '');
   try {
+    const stamp = new Date().toISOString();
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
       method: 'POST',
       headers:{
         'apikey': key,
         'Authorization': `Bearer ${key}`,
         'Content-Type': 'application/json',
-        'Prefer': 'resolution=merge-duplicates'
+        'Prefer': 'resolution=merge-duplicates,return=representation'
       },
-      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, collOwners, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, collOwners, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: stamp })
     });
     if(!r.ok) throw new Error(await r.text());
+    // Capture the row's updated_at so the poller doesn't think this is a remote change
+    try {
+      const rows = await r.json();
+      if(rows && rows[0] && rows[0].updated_at) _lastCloudUpdate = rows[0].updated_at;
+      else _lastCloudUpdate = stamp;
+    } catch(_) { _lastCloudUpdate = stamp; }
     if(!silent) _asReset(); // only reset countdown on manual saves
     const _now = new Date(); const _hm = String(_now.getHours()).padStart(2,'0')+':'+String(_now.getMinutes()).padStart(2,'0');
     localStorage.setItem('sb_last_sync', _hm);
     if(silent){
-      // brief flash without disturbing the countdown
       const lbl = document.getElementById('autosave-lbl');
       if(lbl){ lbl.classList.add('saved'); setTimeout(()=>{ lbl.classList.remove('saved'); _asUpdateLbl(); }, 1500); }
     } else {
@@ -4052,27 +4078,27 @@ async function sbSync(silent){
   }
 }
 
-async function sbLoad(){
+async function sbLoad(quiet){
   const { url, key } = sbCfg();
-  if(!url || !key){ _sbSetLbl('⚠ No credentials', 'err', 4000); return; }
-  _sbSetLbl('Loading cloud data…', '');
+  if(!url || !key){ if(!quiet) _sbSetLbl('⚠ No credentials', 'err', 4000); return; }
+  if(!quiet) _sbSetLbl('Loading cloud data…', '');
   try {
-    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data`, {
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
       headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
     });
     if(!r.ok){
       const body = await r.text();
       console.error('sbLoad HTTP error', r.status, body);
-      _sbSetLbl(`⚠ Load failed (${r.status})`, 'err', 5000);
+      if(!quiet) _sbSetLbl(`⚠ Load failed (${r.status})`, 'err', 5000);
       return;
     }
     const rows = await r.json();
     if(!rows.length || !rows[0].data){
-      _sbSetLbl('No cloud data yet — using defaults', '', 4000);
-      // push the local defaults up so the bin gets seeded
+      if(!quiet) _sbSetLbl('No cloud data yet — using defaults', '', 4000);
       sbSync(true);
       return;
     }
+    _lastCloudUpdate = rows[0].updated_at || _lastCloudUpdate;
     const rec = rows[0].data;
     const { pages: p, customCols: c } = rec;
     if(Array.isArray(p)){
@@ -4086,16 +4112,43 @@ async function sbLoad(){
         PERSONA_MAP = rec.personaMap;
         renderPersonaGrid();
       }
-      if(initCollectionPages()) sbSync(true); // seed any missing collection pages
+      if(initCollectionPages()) sbSync(true);
       rebuildPages(0); updateTally();
       _sbUpdateBtn();
-      _sbSetLbl('Loaded ✓ from cloud', 'saved', 2500);
+      _sbSetLbl(quiet ? 'Synced ↻' : 'Loaded ✓ from cloud', 'saved', quiet ? 1500 : 2500);
     } else {
-      _sbSetLbl('⚠ Cloud data malformed', 'err', 4000);
+      if(!quiet) _sbSetLbl('⚠ Cloud data malformed', 'err', 4000);
     }
   } catch(err){
     console.error('Supabase load failed:', err);
-    _sbSetLbl('⚠ Cloud load failed — offline?', 'err', 5000);
+    if(!quiet) _sbSetLbl('⚠ Cloud load failed — offline?', 'err', 5000);
+  }
+}
+
+// Poll cloud every 12s — if updated_at changed (another device wrote),
+// reload silently. Skip if user is actively editing to avoid clobbering input.
+async function sbPoll(){
+  const { url, key } = sbCfg();
+  if(!url || !key) return;
+  // Don't poll if user is currently editing a text field
+  const ae = document.activeElement;
+  if(ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA')) return;
+  try {
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=updated_at`, {
+      headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
+    });
+    if(!r.ok) return;
+    const rows = await r.json();
+    if(!rows.length) return;
+    const cloudStamp = rows[0].updated_at;
+    if(!cloudStamp) return;
+    if(!_lastCloudUpdate){ _lastCloudUpdate = cloudStamp; return; }
+    if(cloudStamp !== _lastCloudUpdate){
+      // Remote change detected — pull silently
+      await sbLoad(true);
+    }
+  } catch(err){
+    // Silent — polling errors shouldn't disturb the UI
   }
 }
 
@@ -4151,6 +4204,8 @@ function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
 _asInterval = setInterval(_asTick, 1000);
 _sbUpdateBtn();
 sbLoad();
+// Cross-device live sync — poll every 12s for remote changes
+setInterval(sbPoll, 12000);
 document.getElementById('build-badge').textContent = 'v' + BUILD;
 
 document.addEventListener('paste', function(e){
