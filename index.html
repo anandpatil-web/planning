@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.5.3';
+const BUILD = '1.5.4';
 
 const pages = [
   {
@@ -4296,12 +4296,9 @@ function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
       // Both have it → recurse field merge
       out.push(_merge3(item, cloudMatch, baseMatch));
     } else if(baseMatch){
-      // Was in base, missing from cloud → cloud deleted it. Honor the delete
-      // UNLESS we modified it locally — in which case preserve local edit so
-      // edits don't silently disappear under a remote delete.
-      const localModified = !_eqIgnoringMeta(baseMatch, item);
-      if(localModified) out.push(item);
-      // else: drop (cloud's delete wins)
+      // Was in base, missing from cloud → cloud deleted it. Honor unconditionally.
+      // Tradeoff: if we'd edited locally, edit is lost. Acceptable to ensure
+      // deletes always work reliably across devices.
     } else {
       // Not in base, not in cloud → we added it. Keep.
       out.push(item);
@@ -4315,11 +4312,7 @@ function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
     if(baseMatch) usedBase.add(baseMatch);
 
     if(baseMatch){
-      // Was in base, missing from local → WE deleted it. Honor the delete
-      // UNLESS cloud modified it meaningfully — to preserve concurrent edits.
-      const cloudModified = !_eqIgnoringMeta(baseMatch, item);
-      if(cloudModified) out.push(item);
-      // else: drop (our delete wins)
+      // Was in base, missing from local → WE deleted it. Honor unconditionally.
     } else {
       // Not in base → cloud added it. Keep.
       out.push(item);
