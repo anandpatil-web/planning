@@ -3737,7 +3737,17 @@ function initCollectionClicks(){
 const SB_TABLE = 'marketing_state';
 const SB_ROW   = 'main';
 
-function sbCfg(){ return { url: localStorage.getItem('sb_url')||'', key: localStorage.getItem('sb_key')||'' }; }
+// Baked-in defaults so every visitor connects automatically. Anon key is safe
+// to expose — protected by RLS policies on the table.
+const DEFAULT_SB_URL = 'https://umfesxyxetssvkchukdj.supabase.co';
+const DEFAULT_SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVtZmVzeHl4ZXRzc3ZrY2h1a2RqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg4MTI3MTgsImV4cCI6MjA5NDM4ODcxOH0.W7VQuuLPBQdc96VbeQ_KLb9ZKu1xfxMYxLUhlpIKC3s';
+
+function sbCfg(){
+  return {
+    url: localStorage.getItem('sb_url') || DEFAULT_SB_URL,
+    key: localStorage.getItem('sb_key') || DEFAULT_SB_KEY
+  };
+}
 
 function _sbSetLbl(text, cls, reset){
   const lbl = document.getElementById('autosave-lbl');
