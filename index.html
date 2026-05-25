@@ -133,6 +133,24 @@
   .coll-name.gl-name { color:#374151; font-weight:500; }
   .coll-name.ev-name { color:#c4c4d4; }
   .coll-sub  { font-size:10px; color:#9ca3af; font-style:italic; margin-top:1px; }
+  .coll-item { position:relative; padding-right: 18px; }
+  .coll-item .coll-del { position:absolute; right:0; top:2px; font-size:13px; color:#e5e7eb; cursor:pointer; line-height:1; padding:2px 4px; border-radius:4px; opacity:0; transition:all 0.12s; }
+  .coll-item:hover .coll-del { opacity:1; }
+  .coll-item .coll-del:hover { color:#ef4444; background:#fef2f2; }
+  .coll-add-row { margin-top:6px; padding:4px 0; }
+  .coll-add-btn { background:none; border:1px dashed #e5e7eb; color:#c4c4d4; font-size:10px; font-family:inherit; border-radius:6px; padding:3px 10px; cursor:pointer; width:100%; transition:all 0.12s; }
+  .coll-add-btn:hover { border-color:#7c5cfc; color:#7c5cfc; }
+  .persona-card { display:flex; flex-direction:column; }
+  .persona-header { display:flex; align-items:flex-start; justify-content:space-between; gap:6px; }
+  .persona-header > div:first-child { flex:1; min-width:0; }
+  .persona-del-btn { color:#e5e7eb; font-size:14px; cursor:pointer; padding:2px 5px; border-radius:4px; line-height:1; opacity:0; transition:all 0.12s; }
+  .persona-card:hover .persona-del-btn { opacity:1; }
+  .persona-del-btn:hover { color:#ef4444; background:#fef2f2; }
+  .add-persona-card { background:#fafafa; border:1.5px dashed #e5e7eb; display:flex; align-items:center; justify-content:center; min-height:90px; border-radius:12px; cursor:pointer; transition:all 0.12s; color:#9ca3af; font-size:12px; font-weight:600; }
+  .add-persona-card:hover { border-color:#7c5cfc; color:#7c5cfc; background:#f5f3ff; }
+  /* contenteditable styling inside persona cards */
+  .persona-name.editable-field, .coll-name.editable-field { cursor:text; }
+  .persona-name.editable-field:focus, .coll-name.editable-field:focus { background:rgba(124,92,252,0.07); box-shadow:0 0 0 1.5px rgba(124,92,252,0.25); }
 
   .widget-rows { display: none; }
   .widget-rows.open { display: table-row-group; }
@@ -397,85 +415,7 @@
     </div>
   </div>
   <div class="collections-body" id="coll-body">
-    <div class="collections-grid">
-
-      <!-- Persona 1: Gala Grandeur -->
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-name">Gala Grandeur</div>
-          <div class="persona-count">3 collections · 3 go-live</div>
-        </div>
-        <div class="collection-list">
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Ensemble</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Empress</div><div class="coll-sub">The Maharani</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Lumiere</div><div class="coll-sub">Qween of Eden</div></div></div>
-        </div>
-      </div>
-
-      <!-- Persona 2: Pride -->
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-name">Pride</div>
-          <div class="persona-count">4 collections · 3 go-live</div>
-        </div>
-        <div class="collection-list">
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Pride</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Eleve</div><div class="coll-sub">Stairway to Power</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Wolf</div></div></div>
-          <div class="coll-item"><div class="coll-dot ev"></div><div><div class="coll-name ev-name">Maree</div><div class="coll-sub">Name TBD</div></div></div>
-        </div>
-      </div>
-
-      <!-- Persona 3: Untamed in Love -->
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-name">Untamed in Love</div>
-          <div class="persona-count">1 collection · 1 go-live</div>
-        </div>
-        <div class="collection-list">
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Victorious</div><div class="coll-sub">Victorious Love</div></div></div>
-        </div>
-      </div>
-
-      <!-- Persona 4: Party Girl -->
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-name">Party Girl</div>
-          <div class="persona-count">2 collections · 2 go-live</div>
-        </div>
-        <div class="collection-list">
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Confetti</div><div class="coll-sub">Paris at Midnight</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Discoball</div><div class="coll-sub">Name TBD</div></div></div>
-        </div>
-      </div>
-
-      <!-- Persona 5: Classic Capsules -->
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-name">Classic Capsules</div>
-          <div class="persona-count">4 collections · 4 go-live</div>
-        </div>
-        <div class="collection-list">
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Scallop</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Ombre</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Baguette</div></div></div>
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">Paisley</div></div></div>
-        </div>
-      </div>
-
-
-      <!-- Persona 6: Femininity Reclaimed -->
-      <div class="persona-card">
-        <div class="persona-header">
-          <div class="persona-name">Femininity Reclaimed</div>
-          <div class="persona-count">1 collection · 1 go-live</div>
-        </div>
-        <div class="collection-list">
-          <div class="coll-item"><div class="coll-dot gl"></div><div><div class="coll-name gl-name">She</div><div class="coll-sub">Colour Me Committed</div></div></div>
-        </div>
-      </div>
-
-    </div><!-- /grid -->
+    <div class="collections-grid" id="collections-grid"><!-- rendered by JS --></div>
   </div><!-- /body -->
 </div><!-- /collections-wrap -->
 
@@ -3029,7 +2969,11 @@ const gw = (pi,wi) => pages[pi].widgets[wi];
 // ─── History (undo / redo) ─────────────────────────────────────────────────────
 const MAX_HIST = 60;
 let undoStack = [], redoStack = [];
-function snapshot(){ return JSON.stringify({pages, customCols, people, collAssignees, personaAssignees}); }
+function snapshot(){
+  // PERSONA_MAP may not exist yet at parse time, so guard
+  const pm = (typeof window!=='undefined' && window._personaMapReady) ? PERSONA_MAP : null;
+  return JSON.stringify({pages, customCols, people, collAssignees, personaAssignees, personaMap: pm});
+}
 function saveHistory(){
   undoStack.push(snapshot());
   if(undoStack.length > MAX_HIST) undoStack.shift();
@@ -3043,7 +2987,11 @@ function restoreSnapshot(s){
   people.splice(0,people.length,...(d.people||[]));
   collAssignees = d.collAssignees || {};
   personaAssignees = d.personaAssignees || {};
-  rebuildPages(); syncUrBtns(); initCollectionClicks();
+  if(d.personaMap && window._personaMapReady){
+    PERSONA_MAP = d.personaMap;
+    renderPersonaGrid();
+  }
+  rebuildPages(); syncUrBtns();
 }
 function undo(){ if(!undoStack.length) return; redoStack.push(snapshot()); restoreSnapshot(undoStack.pop()); }
 function redo(){ if(!redoStack.length) return; undoStack.push(snapshot()); restoreSnapshot(redoStack.pop()); }
@@ -3708,30 +3656,182 @@ function initCollectionPages(){
   return added;
 }
 
-// ─── PERSONA_MAP ───────────────────────────────────────────────────────────────
-const PERSONA_MAP = [
-  { name:'Gala Grandeur', collections:[{name:'Ensemble'},{name:'Empress',sub:'The Maharani'},{name:'Lumiere',sub:'Qween of Eden'}] },
-  { name:'Pride', collections:[{name:'Pride'},{name:'Eleve',sub:'Stairway to Power'},{name:'Wolf'},{name:'Maree',sub:'Name TBD'}] },
-  { name:'Untamed in Love', collections:[{name:'Victorious',sub:'Victorious Love'}] },
-  { name:'Party Girl', collections:[{name:'Confetti',sub:'Paris at Midnight'},{name:'Discoball',sub:'Name TBD'}] },
-  { name:'Classic Capsules', collections:[{name:'Scallop'},{name:'Nana'},{name:'Lotus'},{name:'Shaded Leaves',sub:'Lush'}] },
-  { name:'On The Go', collections:[{name:'Canyon'},{name:'Bold'}] },
+// ─── PERSONA_MAP (editable, persisted) ────────────────────────────────────────
+let PERSONA_MAP = [
+  { name:'Gala Grandeur', collections:[
+    {name:'Ensemble',sub:''}, {name:'Empress',sub:'The Maharani'}, {name:'Lumiere',sub:'Qween of Eden'}
+  ]},
+  { name:'Pride', collections:[
+    {name:'Pride',sub:''}, {name:'Eleve',sub:'Stairway to Power'}, {name:'Wolf',sub:''}, {name:'Maree',sub:'Name TBD'}
+  ]},
+  { name:'Untamed in Love', collections:[
+    {name:'Victorious',sub:'Victorious Love'}
+  ]},
+  { name:'Party Girl', collections:[
+    {name:'Confetti',sub:'Paris at Midnight'}, {name:'Discoball',sub:'Name TBD'}
+  ]},
+  { name:'Classic Capsules', collections:[
+    {name:'Scallop',sub:''}, {name:'Ombre',sub:''}, {name:'Baguette',sub:''}, {name:'Paisley',sub:''}
+  ]},
+  { name:'Femininity Reclaimed', collections:[
+    {name:'She',sub:'Colour Me Committed'}
+  ]},
 ];
 window._personaMapReady = true;
 
-// Seed collection pages & rebuild once PERSONA_MAP is available
+function _escHTML(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderPersonaGrid(){
+  const grid = document.getElementById('collections-grid');
+  if(!grid) return;
+  grid.innerHTML = PERSONA_MAP.map((persona, pIdx) => {
+    const collItems = persona.collections.map((coll, cIdx) => `
+      <div class="coll-item">
+        <div class="coll-dot gl"></div>
+        <div style="flex:1;min-width:0">
+          <div class="coll-name gl-name editable-field" contenteditable="true" spellcheck="false"
+               onblur="updateCollName(${pIdx},${cIdx},this)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(coll.name)}</div>
+          <div class="coll-sub editable-field" contenteditable="true" spellcheck="false" data-ph="Subtitle…"
+               onblur="updateCollSub(${pIdx},${cIdx},this)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(coll.sub||'')}</div>
+        </div>
+        <span class="coll-del" onclick="deleteCollection(${pIdx},${cIdx})" title="Delete collection">×</span>
+      </div>`).join('');
+    return `<div class="persona-card">
+      <div class="persona-header">
+        <div>
+          <div class="persona-name editable-field" contenteditable="true" spellcheck="false"
+               onblur="updatePersonaName(${pIdx},this)"
+               onkeydown="if(event.key==='Enter'){event.preventDefault();this.blur()}">${_escHTML(persona.name)}</div>
+          <div class="persona-count">${persona.collections.length} collection${persona.collections.length!==1?'s':''}</div>
+        </div>
+        <span class="persona-del-btn" onclick="deletePersona(${pIdx})" title="Delete persona">×</span>
+      </div>
+      <div class="collection-list">
+        ${collItems}
+        <div class="coll-add-row">
+          <button class="coll-add-btn" onclick="addCollection(${pIdx})">+ Add collection</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('') + `<div class="add-persona-card" onclick="addPersona()">+ Add Persona</div>`;
+}
+
+function _findCollPageIdx(collName){
+  return pages.findIndex(p => p.collection === collName);
+}
+
+function updatePersonaName(pIdx, el){
+  const newName = el.textContent.trim();
+  const persona = PERSONA_MAP[pIdx];
+  if(!persona || !newName || newName === persona.name) return;
+  saveHistory();
+  const oldName = persona.name;
+  persona.name = newName;
+  // Update collection pages' persona reference
+  pages.forEach(p => { if(p.persona === oldName) p.persona = newName; });
+  rebuildPages();
+  sbSync(true);
+}
+
+function updateCollName(pIdx, cIdx, el){
+  const newName = el.textContent.trim();
+  const coll = PERSONA_MAP[pIdx] && PERSONA_MAP[pIdx].collections[cIdx];
+  if(!coll || !newName || newName === coll.name) return;
+  saveHistory();
+  const oldName = coll.name;
+  coll.name = newName;
+  // Rename matching collection page
+  const idx = _findCollPageIdx(oldName);
+  if(idx !== -1){
+    pages[idx].name = newName;
+    pages[idx].collection = newName;
+  }
+  rebuildPages();
+  sbSync(true);
+}
+
+function updateCollSub(pIdx, cIdx, el){
+  const newSub = el.textContent.trim();
+  const coll = PERSONA_MAP[pIdx] && PERSONA_MAP[pIdx].collections[cIdx];
+  if(!coll || newSub === (coll.sub||'')) return;
+  saveHistory();
+  coll.sub = newSub;
+  const idx = _findCollPageIdx(coll.name);
+  if(idx !== -1) pages[idx].sub = newSub;
+  sbSync(true);
+}
+
+function addCollection(pIdx){
+  const persona = PERSONA_MAP[pIdx];
+  if(!persona) return;
+  saveHistory();
+  const name = 'New Collection ' + (persona.collections.length + 1);
+  persona.collections.push({ name, sub: '' });
+  // Also create a corresponding collection page using the CLP template
+  pages.push({
+    name: name,
+    persona: persona.name,
+    collection: name,
+    sub: '',
+    figma: '',
+    widgets: CLP_TEMPLATE.map(_newCLPWidget)
+  });
+  renderPersonaGrid();
+  rebuildPages();
+  sbSync(true);
+}
+
+function deleteCollection(pIdx, cIdx){
+  const persona = PERSONA_MAP[pIdx];
+  if(!persona) return;
+  const coll = persona.collections[cIdx];
+  if(!coll) return;
+  if(!confirm(`Delete collection "${coll.name}"? Its CLP table will also be removed.`)) return;
+  saveHistory();
+  persona.collections.splice(cIdx, 1);
+  // Remove assignees + matching collection page
+  delete collAssignees[coll.name];
+  const idx = _findCollPageIdx(coll.name);
+  if(idx !== -1) pages.splice(idx, 1);
+  renderPersonaGrid();
+  rebuildPages();
+  sbSync(true);
+}
+
+function addPersona(){
+  saveHistory();
+  PERSONA_MAP.push({ name: 'New Persona', collections: [] });
+  renderPersonaGrid();
+  sbSync(true);
+}
+
+function deletePersona(pIdx){
+  const persona = PERSONA_MAP[pIdx];
+  if(!persona) return;
+  const collCount = persona.collections.length;
+  if(!confirm(`Delete persona "${persona.name}"${collCount?' and all '+collCount+' collections under it':''}? CLP tables will also be removed.`)) return;
+  saveHistory();
+  persona.collections.forEach(coll => {
+    delete collAssignees[coll.name];
+    const idx = _findCollPageIdx(coll.name);
+    if(idx !== -1) pages.splice(idx, 1);
+  });
+  delete personaAssignees[persona.name];
+  PERSONA_MAP.splice(pIdx, 1);
+  renderPersonaGrid();
+  rebuildPages();
+  sbSync(true);
+}
+
+// Initial render — runs after PERSONA_MAP is defined
+renderPersonaGrid();
 if(initCollectionPages()){ saveHistory(); }
 rebuildPages(0);
 
-function initCollectionClicks(){
-  document.querySelectorAll('.persona-header').forEach(el => {
-    const nameEl = el.querySelector('.persona-name');
-    if(!nameEl) return;
-    const name = nameEl.textContent.trim();
-    el.style.cursor = 'pointer';
-    el.onclick = () => openPersonaDrawer(name);
-  });
-}
+// initCollectionClicks is intentionally a no-op now (drawer disabled on cards)
+function initCollectionClicks(){ /* drawer disabled — cards are editable instead */ }
 
 // ─── Supabase sync ─────────────────────────────────────────────────────────────
 const SB_TABLE = 'marketing_state';
@@ -3773,7 +3873,7 @@ async function sbSync(silent){
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates'
       },
-      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees }, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
     });
     if(!r.ok) throw new Error(await r.text());
     if(!silent) _asReset(); // only reset countdown on manual saves
@@ -3810,9 +3910,13 @@ async function sbLoad(){
         people = rec.people || [];
         collAssignees = rec.collAssignees || {};
         personaAssignees = rec.personaAssignees || {};
+        if(rec.personaMap && Array.isArray(rec.personaMap)){
+          PERSONA_MAP = rec.personaMap;
+          renderPersonaGrid();
+        }
         if(initCollectionPages()) sbSync(true); // seed any missing collection pages
         rebuildPages(0); updateTally();
-        _sbUpdateBtn(); initCollectionClicks();
+        _sbUpdateBtn();
         _sbSetLbl('Loaded ✓', 'saved', 2500);
       }
     }
@@ -3913,7 +4017,7 @@ async function _syncWithStatus(action){
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
       method: 'POST',
       headers:{ 'apikey':key,'Authorization':`Bearer ${key}`,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates' },
-      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees }, updated_at: new Date().toISOString() })
+      body: JSON.stringify({ id: SB_ROW, data: { pages, customCols, people, collAssignees, personaAssignees, personaMap: (window._personaMapReady ? PERSONA_MAP : undefined) }, updated_at: new Date().toISOString() })
     });
     if(!r.ok) throw new Error(await r.text());
     const _now = new Date(); const _hm = String(_now.getHours()).padStart(2,'0')+':'+String(_now.getMinutes()).padStart(2,'0');
@@ -4081,6 +4185,7 @@ function saveFile() {
         .replace(/let people = \[.*?\];/, 'let people = ' + JSON.stringify(people) + ';')
         .replace(/let collAssignees = \{.*?\};/, 'let collAssignees = ' + JSON.stringify(collAssignees) + ';')
         .replace(/let personaAssignees = \{.*?\};/, 'let personaAssignees = ' + JSON.stringify(personaAssignees) + ';')
+        .replace(/let PERSONA_MAP = \[[\s\S]*?\];/, 'let PERSONA_MAP = ' + JSON.stringify(PERSONA_MAP, null, 2) + ';')
         .replace(/const BUILD = '.*?';/, "const BUILD = '" + buildStamp + "';");
     }
   });
