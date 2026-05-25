@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.5.2';
+const BUILD = '1.5.3';
 
 const pages = [
   {
@@ -3966,10 +3966,12 @@ function deleteCollection(pIdx, cIdx){
   if(!confirm(`Delete collection "${coll.name}"? Its CLP table will also be removed.`)) return;
   saveHistory();
   persona.collections.splice(cIdx, 1);
-  // Remove assignees + matching collection page
   delete collAssignees[coll.name];
-  const idx = _findCollPageIdx(coll.name);
-  if(idx !== -1) pages.splice(idx, 1);
+  delete collOwners[coll.name];
+  // Remove ALL pages matching this collection name (handle any duplicates left from earlier sync bugs)
+  for(let i = pages.length - 1; i >= 0; i--){
+    if(pages[i].collection === coll.name) pages.splice(i, 1);
+  }
   renderPersonaGrid();
   rebuildPages();
   sbSyncDebounced(true);
@@ -3988,13 +3990,16 @@ function deletePersona(pIdx){
   const collCount = persona.collections.length;
   if(!confirm(`Delete persona "${persona.name}"${collCount?' and all '+collCount+' collections under it':''}? CLP tables will also be removed.`)) return;
   saveHistory();
-  persona.collections.forEach(coll => {
-    delete collAssignees[coll.name];
-    const idx = _findCollPageIdx(coll.name);
-    if(idx !== -1) pages.splice(idx, 1);
-  });
+  const removedCollNames = persona.collections.map(c => c.name);
+  removedCollNames.forEach(n => { delete collAssignees[n]; delete collOwners[n]; });
   delete personaAssignees[persona.name];
   PERSONA_MAP.splice(pIdx, 1);
+  // Remove ALL pages belonging to this persona, regardless of duplicates
+  for(let i = pages.length - 1; i >= 0; i--){
+    const p = pages[i];
+    if(p.persona === persona.name) { pages.splice(i, 1); continue; }
+    if(p.collection && removedCollNames.includes(p.collection)) pages.splice(i, 1);
+  }
   renderPersonaGrid();
   rebuildPages();
   sbSyncDebounced(true);
@@ -4158,6 +4163,26 @@ function _dedupeAll(){
     const before = customCols.length;
     customCols = _dedupeByKeys(customCols);
     removed += (before - customCols.length);
+  }
+  // Orphan cleanup: any collection page whose collection no longer exists in
+  // PERSONA_MAP gets removed (likely stuck around from earlier sync bugs).
+  // Guard: only run when PERSONA_MAP has data (avoids wiping during partial loads).
+  if(window._personaMapReady && Array.isArray(PERSONA_MAP) && PERSONA_MAP.length > 0 && Array.isArray(pages)){
+    const validCollNames = new Set();
+    PERSONA_MAP.forEach(persona => {
+      if(Array.isArray(persona.collections)){
+        persona.collections.forEach(coll => { if(coll && coll.name) validCollNames.add(coll.name); });
+      }
+    });
+    if(validCollNames.size > 0){
+      const beforeP = pages.length;
+      const cleaned = pages.filter(p => !p.collection || validCollNames.has(p.collection));
+      if(cleaned.length !== beforeP){
+        pages.length = 0; pages.push(...cleaned);
+        removed += (beforeP - cleaned.length);
+        console.warn('[dedupe] removed', (beforeP - cleaned.length), 'orphaned collection pages');
+      }
+    }
   }
   if(removed > 0){
     console.warn('[dedupe] removed', removed, 'duplicate entries');
@@ -4706,6 +4731,12 @@ _sbUpdateBtn();
 sbLoad().then(() => sbStartRealtime());
 // Fallback poll every 30s — only fires if Realtime isn't connected
 setInterval(sbPoll, 30000);
+// Nuclear-option cleanup, callable from devtools console: window.forceClean()
+window.forceClean = function(){
+  const dropped = _dedupeAll();
+  console.warn('[forceClean] dedupe pass complete; data was', dropped ? 'modified' : 'already clean');
+  sbSyncNow(false);
+};
 document.getElementById('build-badge').textContent = 'v' + BUILD;
 
 document.addEventListener('paste', function(e){
