@@ -2016,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.4.1';
+const BUILD = '1.4.2';
 
 const pages = [
   {
@@ -4084,6 +4084,32 @@ function _idFieldFor(item){
   return null;
 }
 
+// Return ALL possible identifying keys for an item (prefixed by field).
+// Used so we can match items even when one side has _uid and the other doesn't
+// (migration period when cloud data hasn't been re-stamped yet).
+function _itemKeys(item){
+  const keys = [];
+  if(item && typeof item === 'object'){
+    if(item._uid !== undefined) keys.push('u:' + item._uid);
+    if(item.id !== undefined) keys.push('i:' + item.id);
+    if(item.collection !== undefined) keys.push('c:' + item.collection);
+    if(item.name !== undefined && typeof item.name === 'string') keys.push('n:' + item.name);
+  }
+  return keys;
+}
+function _indexByAllKeys(arr){
+  const map = new Map();
+  if(!Array.isArray(arr)) return map;
+  arr.forEach(item => _itemKeys(item).forEach(k => { if(!map.has(k)) map.set(k, item); }));
+  return map;
+}
+function _findMatch(item, indexMap){
+  for(const k of _itemKeys(item)){
+    if(indexMap.has(k)) return indexMap.get(k);
+  }
+  return null;
+}
+
 function _genUid(prefix){
   return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
 }
@@ -4113,36 +4139,35 @@ function _ensureUids(){
   return changed;
 }
 
-function _mergeArrayOfObjects(local, cloud, base, idField){
+function _mergeArrayOfObjects(local, cloud, base /*, idField unused */){
   base = base || [];
-  const baseMap  = new Map(base .map(x => [x[idField], x]));
-  const localMap = new Map(local.map(x => [x[idField], x]));
-  const cloudMap = new Map(cloud.map(x => [x[idField], x]));
+  const baseIdx  = _indexByAllKeys(base);
+  const cloudIdx = _indexByAllKeys(cloud);
   const out = [];
-  const seen = new Set();
+  const usedCloud = new Set(); // identity of cloud items we've already matched
   // Walk local first to preserve local ordering for items we touched
   for(const item of local){
-    const id = item[idField];
-    seen.add(id);
-    if(cloudMap.has(id)){
-      out.push(_merge3(item, cloudMap.get(id), baseMap.get(id)));
+    const cloudMatch = _findMatch(item, cloudIdx);
+    const baseMatch  = _findMatch(item, baseIdx);
+    if(cloudMatch){
+      usedCloud.add(cloudMatch);
+      out.push(_merge3(item, cloudMatch, baseMatch));
     } else {
-      // Cloud doesn't have it. Either we added (not in base — keep) or cloud removed (in base — preserve our edits anyway).
+      // Cloud doesn't have any matching key — either we added it new, or cloud removed.
       out.push(item);
     }
   }
   for(const item of cloud){
-    const id = item[idField];
-    if(seen.has(id)) continue;
-    // Cloud has it, we don't. Either cloud added (keep) or we removed (in base, not in local).
-    if(baseMap.has(id) && !localMap.has(id)){
-      // We removed. Did cloud modify it since baseline? If yes, preserve (no overwrites). If no, honor our delete.
-      const baseItem = baseMap.get(id);
-      const cloudItem = item;
-      const cloudModified = JSON.stringify(baseItem) !== JSON.stringify(cloudItem);
-      if(cloudModified) out.push(cloudItem); // they touched it — keep their edit
-      // else: honor our delete
+    if(usedCloud.has(item)) continue;
+    const baseMatch = _findMatch(item, baseIdx);
+    if(baseMatch){
+      // Cloud has it, we don't, and base did too — we deleted.
+      // Preserve only if cloud genuinely modified it since baseline; else honor the delete.
+      const cloudModified = JSON.stringify(baseMatch) !== JSON.stringify(item);
+      if(cloudModified) out.push(item);
+      // else: honor our delete (do not push)
     } else {
+      // Cloud added it new — keep
       out.push(item);
     }
   }
@@ -4166,11 +4191,10 @@ function _merge3(local, cloud, base){
     if(sample === null || typeof sample !== 'object'){
       return _mergeArrayOfPrimitives(local, cloud, base);
     }
-    const idField = _idFieldFor(sample);
-    if(idField){
-      return _mergeArrayOfObjects(local, cloud, base, idField);
+    // Use multi-key matcher — handles items that have any of _uid / id / collection / name
+    if(_itemKeys(sample).length){
+      return _mergeArrayOfObjects(local, cloud, base);
     }
-    // No identifiable field — fall back to "prefer local"
     return local;
   }
   // Plain object
