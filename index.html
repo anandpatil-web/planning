@@ -2,6 +2,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Go-Live Marketing Assets — Visual Guide</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: -apple-system, 'Inter', 'Segoe UI', sans-serif; background: #f0f0f8; color: #1a1a2e; min-height: 100vh; padding: 32px 28px; }
@@ -2015,7 +2016,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.3.0';
+const BUILD = '1.4.0';
 
 const pages = [
   {
@@ -3077,41 +3078,41 @@ function adj(pi,wi,key,delta){
   const w=gw(pi,wi); w[key]=Math.max(0,(w[key]||0)+delta);
   document.getElementById(`pills-${pi}-${wi}`).innerHTML=pillsHTML(pi,wi);
   refreshChips(pi); updateTally();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function addTag(pi,wi,sel){
   if(!sel.value)return; saveHistory(); gw(pi,wi)[sel.value]=1;
   document.getElementById(`pills-${pi}-${wi}`).innerHTML=pillsHTML(pi,wi);
   refreshChips(pi); updateTally(); sel.value='';
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function toggleProd(pi,wi){
   saveHistory();
   gw(pi,wi).prodDep=!gw(pi,wi).prodDep;
   document.getElementById(`prod-${pi}-${wi}`).innerHTML=prodHTML(pi,wi);
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function updateNotes(pi,wi,el){
   const v=el.textContent.trim(); if(v===(gw(pi,wi).notes||'')) return;
   saveHistory(); gw(pi,wi).notes=v;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function updateName(pi,wi,el){
   const v=el.textContent.trim(); if(v===gw(pi,wi).name) return;
   saveHistory(); gw(pi,wi).name=v;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function updateReq(pi,wi,el){
   const v=el.textContent.trim(); if(v===(gw(pi,wi).req||'')) return;
   saveHistory(); gw(pi,wi).req=v;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function cycleStatus(pi,wi){
   saveHistory();
   const w=gw(pi,wi), idx=S_CYCLE.indexOf(w.status||'');
   w.status=S_CYCLE[(idx+1)%S_CYCLE.length];
   document.getElementById(`status-${pi}-${wi}`).innerHTML=statusHTML(pi,wi);
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function refreshChips(pi){
@@ -3231,56 +3232,56 @@ function buildPage(page, pi){
 function updatePageName(pi,el){
   const v=el.textContent.trim(); if(v===pages[pi].name) return;
   saveHistory(); pages[pi].name=v;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function updateColLabel(colId,el){
   const c=customCols.find(c=>c.id===colId); if(!c) return;
   const v=el.textContent.trim(); if(v===c.label) return;
   saveHistory(); c.label=v;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function updateCustomCell(pi,wi,colId,el){
   const w=gw(pi,wi); if(!w.customData) w.customData={};
   const v=el.textContent.trim(); if(v===(w.customData[colId]||'')) return;
   saveHistory(); w.customData[colId]=v;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function addRow(pi){
   saveHistory();
   pages[pi].widgets.push({name:'New Widget',req:'',type:'—',shot:0,shotVid:0,render:0,renderVid:0,ai:0,aiVid:0,prodDep:false,notes:'',customData:{},assignees:[],figma:'',startDate:null,endDate:null});
   rebuildPages(); refreshChips(pi); updateTally();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function deleteRow(pi,wi){
   saveHistory();
   pages[pi].widgets.splice(wi,1);
   rebuildPages(); refreshChips(pi); updateTally();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function addPage(){
   saveHistory();
   const pi=pages.length;
   pages.push({name:'New Section',widgets:[]});
   rebuildPages(pi);
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function deletePage(pi){
   if(!confirm(`Delete section "${pages[pi].name}"?`)) return;
   saveHistory();
   pages.splice(pi,1); rebuildPages(); updateTally();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function addCol(){
   saveHistory();
   customCols.push({id:'col_'+Date.now(),label:'New Column'});
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 function deleteCol(colId){
   saveHistory();
   customCols=customCols.filter(c=>c.id!==colId);
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function rebuildPages(newOpenIdx){
@@ -3486,7 +3487,7 @@ function toggleWidgetAssignee(pi, wi, personId){
     dd._pi = pi; dd._wi = wi;
   }
   saveHistory();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 // ─── Timeline ─────────────────────────────────────────────────────────────────
@@ -3593,7 +3594,7 @@ function clearTimeline(pi, wi){
   const cell = document.getElementById(`tl-${pi}-${wi}`);
   if(cell) cell.innerHTML = timelineHTML(pi, wi);
   document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 // ─── Collection owner ─────────────────────────────────────────────────────────
@@ -3678,7 +3679,7 @@ function setCollOwner(collName, newOwnerId){
   }
   rebuildPages();
   renderPersonaGrid();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 // ─── Figma links ──────────────────────────────────────────────────────────────
@@ -3730,7 +3731,7 @@ function saveFigmaLink(pi, wi){
   const cell = document.getElementById(`figma-${pi}-${wi}`);
   if(cell) cell.innerHTML = figmaHTML(pi, wi);
   document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function openPageFigmaDropdown(pi, el){
@@ -3768,7 +3769,7 @@ function savePageFigma(pi){
   const icon = document.getElementById(`pfigma-${pi}`);
   if(icon){ icon.classList.toggle('has-link', !!url); icon.title = url ? 'Figma: ' + url : 'Add Figma link'; }
   document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 // ─── CLP Template & Collection Pages ──────────────────────────────────────────
@@ -3902,7 +3903,7 @@ function updatePersonaName(pIdx, el){
   // Update collection pages' persona reference
   pages.forEach(p => { if(p.persona === oldName) p.persona = newName; });
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function updateCollName(pIdx, cIdx, el){
@@ -3922,7 +3923,7 @@ function updateCollName(pIdx, cIdx, el){
   if(collOwners[oldName]){ collOwners[newName] = collOwners[oldName]; delete collOwners[oldName]; }
   if(collAssignees[oldName]){ collAssignees[newName] = collAssignees[oldName]; delete collAssignees[oldName]; }
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function updateCollSub(pIdx, cIdx, el){
@@ -3933,7 +3934,7 @@ function updateCollSub(pIdx, cIdx, el){
   coll.sub = newSub;
   const idx = _findCollPageIdx(coll.name);
   if(idx !== -1) pages[idx].sub = newSub;
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function addCollection(pIdx){
@@ -3953,7 +3954,7 @@ function addCollection(pIdx){
   });
   renderPersonaGrid();
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function deleteCollection(pIdx, cIdx){
@@ -3970,14 +3971,14 @@ function deleteCollection(pIdx, cIdx){
   if(idx !== -1) pages.splice(idx, 1);
   renderPersonaGrid();
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function addPersona(){
   saveHistory();
   PERSONA_MAP.push({ name: 'New Persona', collections: [] });
   renderPersonaGrid();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function deletePersona(pIdx){
@@ -3995,7 +3996,7 @@ function deletePersona(pIdx){
   PERSONA_MAP.splice(pIdx, 1);
   renderPersonaGrid();
   rebuildPages();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 // Initial render — runs after PERSONA_MAP is defined
@@ -4194,6 +4195,26 @@ function _applyMergedState(merged){
   rebuildPages(); updateTally();
 }
 
+// Debounced sync — batch rapid edits into a single push after 800ms of idle.
+let _syncDebounceTimer = null;
+function sbSyncDebounced(silent){
+  silent = silent !== false;
+  // Subtle "pending sync" indicator
+  const lbl = document.getElementById('autosave-lbl');
+  if(lbl) lbl.dataset.pending = '1';
+  if(_syncDebounceTimer) clearTimeout(_syncDebounceTimer);
+  _syncDebounceTimer = setTimeout(() => {
+    _syncDebounceTimer = null;
+    if(lbl) delete lbl.dataset.pending;
+    sbSync(silent);
+  }, 800);
+}
+// Force immediate sync — flushes any pending debounced sync first.
+function sbSyncNow(silent){
+  if(_syncDebounceTimer){ clearTimeout(_syncDebounceTimer); _syncDebounceTimer = null; }
+  return sbSync(silent);
+}
+
 async function sbSync(silent){
   const { url, key } = sbCfg();
   if(!url || !key){ if(!silent) showSbSetup(); return; }
@@ -4340,9 +4361,10 @@ async function sbLoad(quiet){
 // Poll cloud every 12s — if updated_at changed (another device wrote),
 // reload silently. Skip if user is actively editing to avoid clobbering input.
 async function sbPoll(){
+  // Polling fallback for when Realtime isn't connected.
+  if(_realtimeActive) return;
   const { url, key } = sbCfg();
   if(!url || !key) return;
-  // Don't poll if user is currently editing a text field
   const ae = document.activeElement;
   if(ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA')) return;
   try {
@@ -4356,11 +4378,78 @@ async function sbPoll(){
     if(!cloudStamp) return;
     if(!_lastCloudUpdate){ _lastCloudUpdate = cloudStamp; return; }
     if(cloudStamp !== _lastCloudUpdate){
-      // Remote change detected — pull silently
       await sbLoad(true);
     }
+  } catch(_){}
+}
+
+// ─── Supabase Realtime ────────────────────────────────────────────────────────
+let _sbClient = null;
+let _sbChannel = null;
+let _realtimeActive = false;
+
+function sbStartRealtime(){
+  if(!window.supabase || !window.supabase.createClient){
+    console.warn('[realtime] Supabase JS SDK not loaded — falling back to polling');
+    return;
+  }
+  const { url, key } = sbCfg();
+  try {
+    _sbClient = window.supabase.createClient(url, key, {
+      auth: { persistSession: false, autoRefreshToken: false },
+      realtime: { params: { eventsPerSecond: 10 } }
+    });
+    _sbChannel = _sbClient
+      .channel('marketing-state-' + Date.now())
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: SB_TABLE,
+        filter: `id=eq.${SB_ROW}`
+      }, payload => {
+        const rec = payload && payload.new;
+        if(!rec) return;
+        // Ignore echoes of our own writes — we already have this state
+        if(rec.updated_at && rec.updated_at === _lastCloudUpdate) return;
+        _lastCloudUpdate = rec.updated_at || _lastCloudUpdate;
+        const ae = document.activeElement;
+        const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
+        if(!rec.data){ return; }
+        if(_baseline){
+          const localData = _snapshotForCloud();
+          const merged = mergeStates(localData, rec.data, _baseline);
+          if(!userTyping) _applyMergedState(merged);
+          _baseline = _deepClone(merged);
+          // Push merged back so other devices see our local edits applied to the remote state
+          if(!userTyping) sbSyncDebounced(true);
+        } else {
+          // No baseline yet — replace local with cloud
+          if(!userTyping){
+            if(Array.isArray(rec.data.pages)){ pages.length = 0; pages.push(...rec.data.pages); }
+            customCols = rec.data.customCols || [];
+            people = rec.data.people || [];
+            collAssignees = rec.data.collAssignees || {};
+            personaAssignees = rec.data.personaAssignees || {};
+            collOwners = rec.data.collOwners || {};
+            if(rec.data.personaMap){ PERSONA_MAP = rec.data.personaMap; renderPersonaGrid(); }
+            rebuildPages(); updateTally();
+            _baseline = _deepClone(_snapshotForCloud());
+          }
+        }
+        _sbSetLbl('Synced ↻', 'saved', 1500);
+      })
+      .subscribe(status => {
+        if(status === 'SUBSCRIBED'){
+          _realtimeActive = true;
+          console.log('[realtime] connected');
+        } else if(status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED'){
+          _realtimeActive = false;
+          console.warn('[realtime] disconnected:', status, '— polling fallback active');
+        }
+      });
   } catch(err){
-    // Silent — polling errors shouldn't disturb the UI
+    console.error('[realtime] setup failed:', err);
+    _realtimeActive = false;
   }
 }
 
@@ -4415,9 +4504,9 @@ function _asUpdateLbl(){
 function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
 _asInterval = setInterval(_asTick, 1000);
 _sbUpdateBtn();
-sbLoad();
-// Cross-device live sync — poll every 12s for remote changes
-setInterval(sbPoll, 12000);
+sbLoad().then(() => sbStartRealtime());
+// Fallback poll every 30s — only fires if Realtime isn't connected
+setInterval(sbPoll, 30000);
 document.getElementById('build-badge').textContent = 'v' + BUILD;
 
 document.addEventListener('paste', function(e){
@@ -4428,7 +4517,7 @@ document.addEventListener('paste', function(e){
 });
 
 document.addEventListener('keydown', function(e){
-  if((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='s'){ e.preventDefault(); const c=sbCfg(); (c.url&&c.key) ? sbSync() : saveFile(); return; }
+  if((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='s'){ e.preventDefault(); const c=sbCfg(); (c.url&&c.key) ? sbSyncNow(false) : saveFile(); return; }
   const inEdit = document.activeElement && document.activeElement.isContentEditable;
   if(inEdit) return;
   if((e.ctrlKey||e.metaKey) && !e.shiftKey && e.key==='z'){ e.preventDefault(); undo(); }
@@ -4590,7 +4679,7 @@ function togglePersonaAssignee(personaName, personId){
   else personaAssignees[personaName].splice(idx,1);
   document.getElementById('drawer-body').innerHTML = _personaBodyHTML(personaName);
   saveHistory();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function toggleCollAssignee(collName, personId){
@@ -4601,7 +4690,7 @@ function toggleCollAssignee(collName, personId){
   const persona = PERSONA_MAP.find(p=>p.collections.some(c=>c.name===collName));
   if(persona) document.getElementById('drawer-body').innerHTML = _personaBodyHTML(persona.name);
   saveHistory();
-  sbSync(true);
+  sbSyncDebounced(true);
 }
 
 function saveFile() {
