@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.0.0';
+const BUILD = '2.0.1';
 
 const pages = [
   {
@@ -4125,6 +4125,10 @@ function initCollectionClicks(){ /* drawer disabled — cards are editable inste
 // ─── Supabase sync ─────────────────────────────────────────────────────────────
 const SB_TABLE = 'marketing_state';
 const SB_ROW   = 'main';
+// Per-tab client ID — stamped on every write we send. Used by the realtime
+// handler to skip echoes of our own writes (which previously could race the
+// _lastCloudUpdate update and clobber in-flight local edits).
+const CLIENT_ID = 'c_' + Date.now().toString(36) + Math.random().toString(36).slice(2,10);
 
 // Baked-in defaults so every visitor connects automatically. Anon key is safe
 // to expose — protected by RLS policies on the table.
@@ -4545,7 +4549,7 @@ async function sbSync(silent){
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates,return=representation'
       },
-      body: JSON.stringify({ id: SB_ROW, data: localData, updated_at: stamp })
+      body: JSON.stringify({ id: SB_ROW, data: { ...localData, _writerId: CLIENT_ID }, updated_at: stamp })
     });
     if(!r.ok) throw new Error(await r.text());
     try {
@@ -4679,7 +4683,9 @@ function sbStartRealtime(){
       }, payload => {
         const rec = payload && payload.new;
         if(!rec) return;
-        // Ignore echoes of our own writes — we already have this state
+        // Ignore echoes of our OWN writes (content-based check — no race).
+        if(rec.data && rec.data._writerId === CLIENT_ID) return;
+        // Belt-and-suspenders timing check.
         if(rec.updated_at && rec.updated_at === _lastCloudUpdate) return;
         _lastCloudUpdate = rec.updated_at || _lastCloudUpdate;
         const ae = document.activeElement;
