@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.3.1';
+const BUILD = '2.3.2';
 
 const pages = [
   {
@@ -4661,8 +4661,8 @@ async function sbLoad(quiet){
   if(!url || !key){ if(!quiet) _sbSetLbl('⚠ No credentials', 'err', 4000); return; }
   if(!quiet) _sbSetLbl('Loading cloud data…', '');
   try {
-    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
-      headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at&_=${Date.now()}`, {
+      headers:{ 'apikey': key, 'Authorization': `Bearer ${key}`, 'Cache-Control': 'no-cache, no-store', 'Pragma': 'no-cache' }
     });
     if(!r.ok){
       const body = await r.text();
@@ -4901,6 +4901,72 @@ window.forceClean = function(){
 window.pullLatest = function(){
   console.warn('[pullLatest] fetching cloud state…');
   return sbLoad(false);
+};
+// DIAGNOSTIC: shows what's actually in cloud for a collection.
+// Usage in console:  window.checkCloud('Wild Rose')
+window.checkCloud = async function(collName){
+  const { url, key } = sbCfg();
+  const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
+    headers:{ 'apikey': key, 'Authorization': `Bearer ${key}`, 'Cache-Control': 'no-cache' }
+  });
+  if(!r.ok){ console.error('checkCloud failed:', r.status); return; }
+  const rows = await r.json();
+  if(!rows.length){ console.warn('No row in cloud yet'); return; }
+  const data = rows[0].data;
+  console.log('Cloud updated_at:', rows[0].updated_at);
+  console.log('Cloud _writerId:', data._writerId);
+  const page = (data.pages || []).find(p => p.collection === collName);
+  if(!page){ console.warn('Collection "'+collName+'" not found in cloud'); console.log('Available collection pages:', (data.pages || []).filter(p=>p.collection).map(p=>p.collection)); return; }
+  console.log('Cloud "'+collName+'" page:', page);
+  console.log('Cloud "'+collName+'" widget dates:');
+  (page.widgets || []).forEach((w, i) => {
+    console.log(`  [${i}] ${w.name}: start=${w.startDate||'—'} end=${w.endDate||'—'}  _uid=${w._uid||'(no uid)'}`);
+  });
+  return page;
+};
+// Compare local vs cloud for a specific collection
+window.checkLocal = function(collName){
+  const page = (pages || []).find(p => p.collection === collName);
+  if(!page){ console.warn('Collection "'+collName+'" not in local'); return; }
+  console.log('Local "'+collName+'" widget dates:');
+  (page.widgets || []).forEach((w, i) => {
+    console.log(`  [${i}] ${w.name}: start=${w.startDate||'—'} end=${w.endDate||'—'}  _uid=${w._uid||'(no uid)'}`);
+  });
+  return page;
+};
+// Push current state and immediately verify it stuck
+window.pushAndVerify = async function(){
+  console.warn('[push&verify] pushing local state…');
+  await sbSyncNow(false);
+  await new Promise(r => setTimeout(r, 500));
+  console.warn('[push&verify] re-fetching from cloud to verify…');
+  const { url, key } = sbCfg();
+  const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
+    headers:{ 'apikey': key, 'Authorization': `Bearer ${key}`, 'Cache-Control': 'no-cache' }
+  });
+  const rows = await r.json();
+  if(!rows.length){ console.error('PUSH FAILED — no row in cloud'); return; }
+  const cloudData = rows[0].data;
+  const localData = _snapshotForCloud();
+  // Compare pages by length and any date discrepancies
+  const lpages = localData.pages || [];
+  const cpages = cloudData.pages || [];
+  console.log('Local pages count:', lpages.length, 'Cloud pages count:', cpages.length);
+  let mismatches = 0;
+  lpages.forEach(lp => {
+    const cp = cpages.find(p => p._uid === lp._uid) || cpages.find(p => p.collection === lp.collection && p.collection);
+    if(!cp){ console.warn('MISSING IN CLOUD:', lp.name, lp.collection); mismatches++; return; }
+    (lp.widgets||[]).forEach(lw => {
+      const cw = (cp.widgets||[]).find(w => w._uid === lw._uid) || (cp.widgets||[]).find(w => w.name === lw.name);
+      if(!cw){ console.warn('Widget missing in cloud:', lp.name+' › '+lw.name); mismatches++; return; }
+      if((lw.startDate||null) !== (cw.startDate||null) || (lw.endDate||null) !== (cw.endDate||null)){
+        console.warn('DATE MISMATCH:', lp.name+' › '+lw.name, 'local:', lw.startDate, lw.endDate, 'cloud:', cw.startDate, cw.endDate);
+        mismatches++;
+      }
+    });
+  });
+  if(mismatches === 0) console.log('%c✅ All data verified in cloud', 'color:#16a34a;font-weight:bold');
+  else console.warn(`⚠ ${mismatches} mismatches between local and cloud`);
 };
 document.getElementById('build-badge').textContent = 'v' + BUILD;
 
