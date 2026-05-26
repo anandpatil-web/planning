@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.1.1';
+const BUILD = '2.1.2';
 
 const pages = [
   {
@@ -3012,6 +3012,8 @@ function snapshot(){
   return JSON.stringify({pages, customCols, people, collAssignees, personaAssignees, collOwners, personaMap: pm});
 }
 function saveHistory(){
+  // ANY local mutation extends the grace window — realtime won't clobber for 3s
+  window._lastLocalEditAt = Date.now();
   undoStack.push(snapshot());
   if(undoStack.length > MAX_HIST) undoStack.shift();
   redoStack = [];
@@ -3592,15 +3594,12 @@ function openTimelineDropdown(pi, wi, el){
   setTimeout(()=>document.addEventListener('mousedown', window._tlCloseHandler), 0);
 }
 
-let _tlSyncTimer = null;
 function updateTimeline(pi, wi, field, value){
   saveHistory();
   gw(pi, wi)[field] = value || null;
   const cell = document.getElementById(`tl-${pi}-${wi}`);
   if(cell) cell.innerHTML = timelineHTML(pi, wi);
-  // debounce so start+end changes only fire one sync
-  clearTimeout(_tlSyncTimer);
-  _tlSyncTimer = setTimeout(()=>sbSync(true), 800);
+  sbSyncDebounced(true); // uses the global debouncer + sets _lastLocalEditAt
 }
 
 function clearTimeline(pi, wi){
@@ -4159,13 +4158,11 @@ function _sbSetLbl(text, cls, reset){
 // Tracks the cloud row's last-known updated_at — used by the poller to detect
 // remote changes from other devices.
 let _lastCloudUpdate = null;
-// Track the most recent local mutation time. Realtime events arriving within
-// a short grace window after a local edit are ignored — closes every timing
-// race where an echo of our own (or a stale) write could clobber fresh edits.
-let _lastLocalEditAt = 0;
-// Track the timestamp of our last successful push — any realtime event with
-// an older updated_at is stale and gets ignored.
-let _lastPushedStamp = null;
+// NOTE: _lastLocalEditAt and _lastPushedStamp are kept on `window` (not `let`)
+// because saveHistory() is called during initial module load BEFORE these
+// declarations would be reached — `let` would throw TDZ. window.* is hoisted-safe.
+window._lastLocalEditAt = window._lastLocalEditAt || 0;
+window._lastPushedStamp = window._lastPushedStamp || null;
 // Master debug toggle — set window.DEBUG_SYNC = true in console for verbose logs
 window.DEBUG_SYNC = window.DEBUG_SYNC || false;
 function _dbg(...a){ if(window.DEBUG_SYNC) console.log('[sync]', ...a); }
@@ -4524,7 +4521,7 @@ function _applyMergedState(merged){
 let _syncDebounceTimer = null;
 function sbSyncDebounced(silent){
   silent = silent !== false;
-  _lastLocalEditAt = Date.now();
+  window._lastLocalEditAt = Date.now();
   _dbg('debounced push queued');
   const lbl = document.getElementById('autosave-lbl');
   if(lbl) lbl.dataset.pending = '1';
@@ -4551,7 +4548,7 @@ async function sbSync(silent){
   if(!silent) _sbSetLbl('Syncing…', '');
   try {
     const stamp = new Date().toISOString();
-    _lastPushedStamp = stamp;
+    window._lastPushedStamp = stamp;
     const localData = _snapshotForCloud();
     _dbg('push start', { stamp, peopleCount: people.length, pagesCount: pages.length });
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
@@ -4569,7 +4566,7 @@ async function sbSync(silent){
       const rows = await r.json();
       if(rows && rows[0] && rows[0].updated_at){
         _lastCloudUpdate = rows[0].updated_at;
-        _lastPushedStamp = rows[0].updated_at;
+        window._lastPushedStamp = rows[0].updated_at;
       } else _lastCloudUpdate = stamp;
     } catch(_){ _lastCloudUpdate = stamp; }
     _dbg('push ok', { stamp: _lastCloudUpdate });
@@ -4708,13 +4705,13 @@ function sbStartRealtime(){
         // incoming events. Closes every remaining timing race where Realtime
         // events could arrive faster than our debounce settles or the cloud
         // replays an old event after a reconnect.
-        if(Date.now() - _lastLocalEditAt < 3000){
+        if(Date.now() - window._lastLocalEditAt < 3000){
           _dbg('realtime: skip (in local-edit grace window)');
           return;
         }
         // Guard 3: stale event — if updated_at is older than our last successful
         // push, ignore (could happen on Realtime reconnect-replay).
-        if(_lastPushedStamp && rec.updated_at && rec.updated_at <= _lastPushedStamp){
+        if(window._lastPushedStamp && rec.updated_at && rec.updated_at <= window._lastPushedStamp){
           _dbg('realtime: skip (stale, older than last push)');
           return;
         }
