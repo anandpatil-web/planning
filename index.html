@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.1.0';
+const BUILD = '2.1.1';
 
 const pages = [
   {
@@ -4791,26 +4791,18 @@ window.addEventListener('DOMContentLoaded', () => {
   if(m) m.addEventListener('click', function(e){ if(e.target===this) closeJbSetup(); });
 });
 
-// ─── Autosave ──────────────────────────────────────────────────────────────────
-let _asCountdown = 300, _asInterval = null;
-function _asTick(){
-  _asCountdown--;
-  if(_asCountdown <= 0){
-    _asCountdown = 300;
-    const { url, key } = sbCfg();
-    if(url && key) sbSync(true);
-    else _asUpdateLbl();
-  } else { _asUpdateLbl(); }
-}
+// ─── Sync status label ─────────────────────────────────────────────────────────
+// (The 5-min countdown autosave is removed in v2.1.1 — redundant since every
+//  edit already syncs within 500ms via sbSyncDebounced.)
+let _asCountdown = 0, _asInterval = null;
+function _asTick(){}        // no-op kept for back-compat
+function _asReset(){}       // no-op kept for back-compat
 function _asUpdateLbl(){
   const lbl=document.getElementById('autosave-lbl'); if(!lbl) return;
-  const m=Math.floor(_asCountdown/60), s=_asCountdown%60;
   const last = localStorage.getItem('sb_last_sync');
-  const lastStr = last ? ` · synced ${last}` : '';
-  lbl.textContent=`Autosave ${m}:${String(s).padStart(2,'0')}${lastStr}`;
+  lbl.textContent = last ? `Synced ${last}` : 'Not synced yet';
 }
-function _asReset(){ _asCountdown=300; _asUpdateLbl(); }
-_asInterval = setInterval(_asTick, 1000);
+_asUpdateLbl();
 _sbUpdateBtn();
 sbLoad().then(() => sbStartRealtime());
 // Fallback poll every 30s — only fires if Realtime isn't connected
