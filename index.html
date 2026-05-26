@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.3.0';
+const BUILD = '2.3.1';
 
 const pages = [
   {
@@ -3431,31 +3431,30 @@ function assignHTML(pi, wi){
 }
 
 function openAssignDropdown(pi, wi, el){
-  // close any open dropdown first
   document.querySelectorAll('.assign-dropdown').forEach(d=>d.remove());
   if(window._assignCloseHandler){ document.removeEventListener('mousedown', window._assignCloseHandler); }
 
+  const w = gw(pi, wi);
+  if(!w){ console.warn('[assign] widget not found:', pi, wi); return; }
+  if(!w._uid) w._uid = _genUid('w');
+  const uid = w._uid;
+
   const dd = document.createElement('div');
   dd.className = 'assign-dropdown';
+  dd.dataset.uid = uid;
 
   if(!people.length){
     dd.innerHTML = '<div class="assign-empty">No team members yet.<br>Add people via ⚙ Settings.</div>';
   } else {
-    const w = gw(pi, wi);
     if(!w.assignees) w.assignees = [];
-    const renderOpts = () => {
-      dd.innerHTML = people.map(p => {
-        const active = w.assignees.includes(p.id);
-        return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();toggleWidgetAssignee(${pi},${wi},'${p.id}')">
-          <span class="avatar" style="background:${p.color};margin-left:0">${p.initials}</span>
-          <span style="flex:1">${p.name}</span>
-          ${active ? '<span style="color:#7c5cfc;font-size:13px">✓</span>' : ''}
-        </div>`;
-      }).join('');
-    };
-    renderOpts();
-    // re-render opts when assignees change
-    dd._pi = pi; dd._wi = wi;
+    dd.innerHTML = people.map(p => {
+      const active = w.assignees.includes(p.id);
+      return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();toggleWidgetAssigneeByUid('${uid}','${p.id}')">
+        <span class="avatar" style="background:${p.color};margin-left:0">${p.initials}</span>
+        <span style="flex:1">${p.name}</span>
+        ${active ? '<span style="color:#7c5cfc;font-size:13px">✓</span>' : ''}
+      </div>`;
+    }).join('');
   }
 
   document.body.appendChild(dd);
@@ -3483,27 +3482,41 @@ function openAssignDropdown(pi, wi, el){
   setTimeout(()=>document.addEventListener('mousedown', window._assignCloseHandler), 0);
 }
 
-function toggleWidgetAssignee(pi, wi, personId){
-  const w = gw(pi, wi);
+// _uid-based: safe against table reorders/rebuilds
+function toggleWidgetAssigneeByUid(uid, personId){
+  const hit = _findWidgetByUid(uid);
+  if(!hit){ console.warn('[assign] widget not found:', uid); return; }
+  const { pi, wi, w } = hit;
   if(!w.assignees) w.assignees = [];
   const idx = w.assignees.indexOf(personId);
   if(idx === -1) w.assignees.push(personId); else w.assignees.splice(idx, 1);
-  // update cell
   const cell = document.getElementById(`assign-${pi}-${wi}`);
   if(cell) cell.innerHTML = assignHTML(pi, wi);
-  // re-render open dropdown options in place
   const dd = document.querySelector('.assign-dropdown');
-  if(dd && dd._pi === pi && dd._wi === wi){
+  if(dd && dd.dataset.uid === uid){
     dd.innerHTML = people.map(p => {
       const active = w.assignees.includes(p.id);
-      return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();toggleWidgetAssignee(${pi},${wi},'${p.id}')">
+      return `<div class="assign-opt${active?' active':''}" onmousedown="event.preventDefault();toggleWidgetAssigneeByUid('${uid}','${p.id}')">
         <span class="avatar" style="background:${p.color};margin-left:0">${p.initials}</span>
         <span style="flex:1">${p.name}</span>
         ${active ? '<span style="color:#7c5cfc;font-size:13px">✓</span>' : ''}
       </div>`;
     }).join('');
-    dd._pi = pi; dd._wi = wi;
   }
+  saveHistory();
+  sbSyncDebounced(true);
+}
+
+// Legacy wrapper (kept so any cached DOM still works)
+function toggleWidgetAssignee(pi, wi, personId){
+  const w = gw(pi, wi);
+  if(w && w._uid) return toggleWidgetAssigneeByUid(w._uid, personId);
+  if(!w) return;
+  if(!w.assignees) w.assignees = [];
+  const idx = w.assignees.indexOf(personId);
+  if(idx === -1) w.assignees.push(personId); else w.assignees.splice(idx, 1);
+  const cell = document.getElementById(`assign-${pi}-${wi}`);
+  if(cell) cell.innerHTML = assignHTML(pi, wi);
   saveHistory();
   sbSyncDebounced(true);
 }
@@ -3838,16 +3851,20 @@ function figmaHTML(pi, wi){
 
 function openFigmaDropdown(pi, wi, el){
   document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
-  if(window._figmaCloseHandler){ document.removeEventListener('mousedown', window._figmaCloseHandler); }
+  if(window._figmaCloseHandler){ document.removeEventListener('mousedown', window._figmaCloseHandler); window._figmaCloseHandler = null; }
   const w = gw(pi, wi);
+  if(!w){ return; }
+  if(!w._uid) w._uid = _genUid('w');
+  const uid = w._uid;
   const dd = document.createElement('div');
   dd.className = 'figma-dropdown';
+  dd.dataset.uid = uid;
   dd.innerHTML = `
     <label>Figma URL</label>
-    <input type="url" id="figma-inp-${pi}-${wi}" placeholder="https://figma.com/file/…" value="${w.figma||''}" />
+    <input type="url" id="figma-inp-${uid}" placeholder="https://figma.com/file/…" value="${w.figma||''}" />
     <div class="figma-actions">
       ${w.figma ? `<a class="open-btn" href="${w.figma}" target="_blank" rel="noopener">Open ↗</a>` : ''}
-      <button class="save-btn-mini" onclick="saveFigmaLink(${pi},${wi})">Save</button>
+      <button class="save-btn-mini" onclick="saveFigmaLinkByUid('${uid}')">Save</button>
     </div>`;
   document.body.appendChild(dd);
   const r = el.getBoundingClientRect();
@@ -3857,16 +3874,27 @@ function openFigmaDropdown(pi, wi, el){
   let left = r.left;
   if(left + 290 > window.innerWidth) left = window.innerWidth - 298;
   dd.style.left = left + 'px';
-  setTimeout(()=>document.getElementById(`figma-inp-${pi}-${wi}`).focus(), 50);
-  window._figmaCloseHandler = (e) => {
-    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
-      dd.remove(); document.removeEventListener('mousedown', window._figmaCloseHandler); window._figmaCloseHandler = null;
-    }
-  };
-  setTimeout(()=>document.addEventListener('mousedown', window._figmaCloseHandler), 0);
+  setTimeout(()=>{ const inp = document.getElementById(`figma-inp-${uid}`); if(inp) inp.focus(); }, 50);
+  // No outside-click auto-close — user closes via Save button
+}
+
+function saveFigmaLinkByUid(uid){
+  const hit = _findWidgetByUid(uid);
+  if(!hit){ console.warn('[figma] widget not found:', uid); return; }
+  const inp = document.getElementById(`figma-inp-${uid}`);
+  if(!inp) return;
+  const url = inp.value.trim();
+  saveHistory();
+  hit.w.figma = url;
+  const cell = document.getElementById(`figma-${hit.pi}-${hit.wi}`);
+  if(cell) cell.innerHTML = figmaHTML(hit.pi, hit.wi);
+  document.querySelectorAll('.figma-dropdown').forEach(d=>d.remove());
+  sbSyncDebounced(true);
 }
 
 function saveFigmaLink(pi, wi){
+  const w = gw(pi, wi);
+  if(w && w._uid) return saveFigmaLinkByUid(w._uid);
   const url = document.getElementById(`figma-inp-${pi}-${wi}`).value.trim();
   saveHistory();
   gw(pi, wi).figma = url;
