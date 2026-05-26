@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.2.0';
+const BUILD = '2.2.1';
 
 const pages = [
   {
@@ -3557,19 +3557,36 @@ function timelineHTML(pi, wi){
   </div>`;
 }
 
+// Resolve a widget by its stable _uid — survives reorderings/rebuilds.
+function _findWidgetByUid(uid){
+  for(let pi=0; pi<pages.length; pi++){
+    const ws = pages[pi].widgets;
+    if(!Array.isArray(ws)) continue;
+    for(let wi=0; wi<ws.length; wi++){
+      if(ws[wi] && ws[wi]._uid === uid) return { pi, wi, w: ws[wi] };
+    }
+  }
+  return null;
+}
+
 function openTimelineDropdown(pi, wi, el){
+  // Close any open dropdown — but only when explicitly closed, not on outside click.
   document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
-  if(window._tlCloseHandler){ document.removeEventListener('mousedown', window._tlCloseHandler); }
+  if(window._tlCloseHandler){ document.removeEventListener('mousedown', window._tlCloseHandler); window._tlCloseHandler = null; }
   const w = gw(pi, wi);
+  if(!w){ console.warn('[timeline] widget not found at', pi, wi); return; }
+  if(!w._uid) w._uid = _genUid('w'); // safety
+  const uid = w._uid;
   const dd = document.createElement('div');
   dd.className = 'tl-dropdown';
+  dd.dataset.uid = uid;
   dd.innerHTML = `
     <label>Start Date</label>
-    <input type="date" id="tl-start-${pi}-${wi}" value="${w.startDate||''}" onchange="updateTimeline(${pi},${wi},'startDate',this.value)">
+    <input type="date" id="tl-start-${uid}" value="${w.startDate||''}" onchange="updateTimelineByUid('${uid}','startDate',this.value)">
     <label>End Date</label>
-    <input type="date" id="tl-end-${pi}-${wi}" value="${w.endDate||''}" onchange="updateTimeline(${pi},${wi},'endDate',this.value)">
+    <input type="date" id="tl-end-${uid}" value="${w.endDate||''}" onchange="updateTimelineByUid('${uid}','endDate',this.value)">
     <div class="tl-dd-actions">
-      <button class="tl-dd-clear" onclick="clearTimeline(${pi},${wi})">Clear</button>
+      <button class="tl-dd-clear" onclick="clearTimelineByUid('${uid}')">Clear</button>
       <button class="tl-dd-done" onclick="document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove())">Done</button>
     </div>`;
   document.body.appendChild(dd);
@@ -3584,28 +3601,49 @@ function openTimelineDropdown(pi, wi, el){
   let left = r.left;
   if(left + 230 > window.innerWidth) left = window.innerWidth - 238;
   dd.style.left = left + 'px';
-  window._tlCloseHandler = (e) => {
-    if(!dd.contains(e.target) && e.target !== el && !el.contains(e.target)){
-      dd.remove();
-      document.removeEventListener('mousedown', window._tlCloseHandler);
-      window._tlCloseHandler = null;
-    }
-  };
-  setTimeout(()=>document.addEventListener('mousedown', window._tlCloseHandler), 0);
+  // NO outside-click close handler — the native date picker popup was triggering
+  // it as "outside click" on some browsers, prematurely closing the dropdown
+  // before the date committed. User closes via Done button.
 }
 
-function updateTimeline(pi, wi, field, value){
+// _uid-based mutation — safe against table reorders/rebuilds.
+function updateTimelineByUid(uid, field, value){
+  const hit = _findWidgetByUid(uid);
+  if(!hit){ console.warn('[updateTimelineByUid] not found:', uid); return; }
   saveHistory();
-  gw(pi, wi)[field] = value || null;
+  hit.w[field] = value || null;
+  const cell = document.getElementById(`tl-${hit.pi}-${hit.wi}`);
+  if(cell) cell.innerHTML = timelineHTML(hit.pi, hit.wi);
+  sbSyncDebounced(true);
+}
+
+function clearTimelineByUid(uid){
+  const hit = _findWidgetByUid(uid);
+  if(!hit) return;
+  saveHistory();
+  hit.w.startDate = null; hit.w.endDate = null;
+  const cell = document.getElementById(`tl-${hit.pi}-${hit.wi}`);
+  if(cell) cell.innerHTML = timelineHTML(hit.pi, hit.wi);
+  document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
+  sbSyncDebounced(true);
+}
+
+// Legacy wrappers kept for backwards compatibility with any old DOM that may
+// still reference the positional functions.
+function updateTimeline(pi, wi, field, value){
+  const w = gw(pi, wi);
+  if(w && w._uid) return updateTimelineByUid(w._uid, field, value);
+  saveHistory();
+  if(w) w[field] = value || null;
   const cell = document.getElementById(`tl-${pi}-${wi}`);
   if(cell) cell.innerHTML = timelineHTML(pi, wi);
-  sbSyncDebounced(true); // uses the global debouncer + sets _lastLocalEditAt
+  sbSyncDebounced(true);
 }
-
 function clearTimeline(pi, wi){
-  saveHistory();
   const w = gw(pi, wi);
-  w.startDate = null; w.endDate = null;
+  if(w && w._uid) return clearTimelineByUid(w._uid);
+  saveHistory();
+  if(w){ w.startDate = null; w.endDate = null; }
   const cell = document.getElementById(`tl-${pi}-${wi}`);
   if(cell) cell.innerHTML = timelineHTML(pi, wi);
   document.querySelectorAll('.tl-dropdown').forEach(d=>d.remove());
