@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.2.1';
+const BUILD = '2.3.0';
 
 const pages = [
   {
@@ -4657,7 +4657,10 @@ async function sbLoad(quiet){
     const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
     if(userTyping && quiet) return;
 
-    // SOLO-USER MODE: cloud is truth, replace local with cloud directly.
+    // SOLO-USER MODE: cloud is truth — replace local with cloud directly.
+    // CRITICAL: do NOT mutate the loaded data here (no dedupe, no seeding,
+    // no auto-sync). Any mutation triggers an auto-sync that could push
+    // partial/stripped state back to cloud, undoing your last write.
     if(Array.isArray(rec.pages)){ pages.length = 0; pages.push(...rec.pages); }
     customCols = rec.customCols || [];
     people = rec.people || [];
@@ -4668,15 +4671,35 @@ async function sbLoad(quiet){
       PERSONA_MAP = rec.personaMap;
       renderPersonaGrid();
     }
-    const seededAny = initCollectionPages();
-    _dedupeAll();
-    const stampedAny = _ensureUids();
-    if(seededAny || stampedAny){
-      setTimeout(()=>sbSyncDebounced(true), 200);
+    // Only seed collection pages for collections that have NO corresponding page yet.
+    // Skip the asset-count "migration" — it modifies data we just loaded.
+    const existingCollNames = new Set(pages.filter(p=>p.collection).map(p=>p.collection));
+    let addedNew = false;
+    if(Array.isArray(PERSONA_MAP)){
+      PERSONA_MAP.forEach(persona => {
+        if(!Array.isArray(persona.collections)) return;
+        persona.collections.forEach(coll => {
+          if(existingCollNames.has(coll.name)) return;
+          pages.push({
+            _uid: _genUid('pg'),
+            name: coll.name, persona: persona.name, collection: coll.name,
+            sub: coll.sub || '', figma: '',
+            widgets: CLP_TEMPLATE.map(_newCLPWidget)
+          });
+          addedNew = true;
+        });
+      });
     }
+    // Stamp _uids silently — needed for the safer uid-based handlers
+    _ensureUids();
     rebuildPages(0); updateTally();
     _sbUpdateBtn();
     _sbSetLbl(quiet ? 'Synced ↻' : 'Loaded ✓ from cloud', 'saved', quiet ? 1500 : 2500);
+    // Only push back if we genuinely added a brand-new collection page —
+    // never push back just because uids were stamped.
+    if(addedNew){
+      setTimeout(()=>sbSyncDebounced(true), 500);
+    }
   } catch(err){
     console.error('Supabase load failed:', err);
     if(!quiet) _sbSetLbl('⚠ Cloud load failed — offline?', 'err', 5000);
