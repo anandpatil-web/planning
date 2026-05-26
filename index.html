@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.4.0';
+const BUILD = '2.3.1';
 
 const pages = [
   {
@@ -4661,8 +4661,8 @@ async function sbLoad(quiet){
   if(!url || !key){ if(!quiet) _sbSetLbl('⚠ No credentials', 'err', 4000); return; }
   if(!quiet) _sbSetLbl('Loading cloud data…', '');
   try {
-    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at&_=${Date.now()}`, {
-      headers:{ 'apikey': key, 'Authorization': `Bearer ${key}`, 'Cache-Control': 'no-cache, no-store', 'Pragma': 'no-cache' }
+    const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
+      headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
     });
     if(!r.ok){
       const body = await r.text();
@@ -4685,31 +4685,19 @@ async function sbLoad(quiet){
     const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
     if(userTyping && quiet) return;
 
-    // SOLO-USER MODE: cloud is truth, BUT defend against empty-cloud wiping
-    // the hardcoded fallback. Only replace local when cloud actually has data.
-    const cloudHasPages = Array.isArray(rec.pages) && rec.pages.length > 0;
-    const cloudHasPersonaMap = Array.isArray(rec.personaMap) && rec.personaMap.length > 0;
-    if(cloudHasPages){
-      pages.length = 0; pages.push(...rec.pages);
-    } else {
-      console.warn('[sbLoad] cloud pages empty/missing — keeping local hardcoded fallback');
-    }
-    if(Array.isArray(rec.customCols)) customCols = rec.customCols;
-    if(Array.isArray(rec.people)) people = rec.people;
-    if(rec.collAssignees && typeof rec.collAssignees === 'object') collAssignees = rec.collAssignees;
-    if(rec.personaAssignees && typeof rec.personaAssignees === 'object') personaAssignees = rec.personaAssignees;
-    if(rec.collOwners && typeof rec.collOwners === 'object') collOwners = rec.collOwners;
-    if(cloudHasPersonaMap){
+    // SOLO-USER MODE: cloud is truth — replace local with cloud directly.
+    // CRITICAL: do NOT mutate the loaded data here (no dedupe, no seeding,
+    // no auto-sync). Any mutation triggers an auto-sync that could push
+    // partial/stripped state back to cloud, undoing your last write.
+    if(Array.isArray(rec.pages)){ pages.length = 0; pages.push(...rec.pages); }
+    customCols = rec.customCols || [];
+    people = rec.people || [];
+    collAssignees = rec.collAssignees || {};
+    personaAssignees = rec.personaAssignees || {};
+    collOwners = rec.collOwners || {};
+    if(rec.personaMap && Array.isArray(rec.personaMap)){
       PERSONA_MAP = rec.personaMap;
       renderPersonaGrid();
-    } else {
-      console.warn('[sbLoad] cloud personaMap empty/missing — keeping local hardcoded fallback');
-      renderPersonaGrid();
-    }
-    // If cloud was empty, push our (hardcoded) state up so the cloud gets re-seeded
-    if(!cloudHasPages || !cloudHasPersonaMap){
-      _sbSetLbl('Restoring hardcoded data → cloud', '', 4000);
-      setTimeout(()=>sbSyncDebounced(true), 600);
     }
     // Only seed collection pages for collections that have NO corresponding page yet.
     // Skip the asset-count "migration" — it modifies data we just loaded.
@@ -4913,72 +4901,6 @@ window.forceClean = function(){
 window.pullLatest = function(){
   console.warn('[pullLatest] fetching cloud state…');
   return sbLoad(false);
-};
-// DIAGNOSTIC: shows what's actually in cloud for a collection.
-// Usage in console:  window.checkCloud('Wild Rose')
-window.checkCloud = async function(collName){
-  const { url, key } = sbCfg();
-  const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
-    headers:{ 'apikey': key, 'Authorization': `Bearer ${key}`, 'Cache-Control': 'no-cache' }
-  });
-  if(!r.ok){ console.error('checkCloud failed:', r.status); return; }
-  const rows = await r.json();
-  if(!rows.length){ console.warn('No row in cloud yet'); return; }
-  const data = rows[0].data;
-  console.log('Cloud updated_at:', rows[0].updated_at);
-  console.log('Cloud _writerId:', data._writerId);
-  const page = (data.pages || []).find(p => p.collection === collName);
-  if(!page){ console.warn('Collection "'+collName+'" not found in cloud'); console.log('Available collection pages:', (data.pages || []).filter(p=>p.collection).map(p=>p.collection)); return; }
-  console.log('Cloud "'+collName+'" page:', page);
-  console.log('Cloud "'+collName+'" widget dates:');
-  (page.widgets || []).forEach((w, i) => {
-    console.log(`  [${i}] ${w.name}: start=${w.startDate||'—'} end=${w.endDate||'—'}  _uid=${w._uid||'(no uid)'}`);
-  });
-  return page;
-};
-// Compare local vs cloud for a specific collection
-window.checkLocal = function(collName){
-  const page = (pages || []).find(p => p.collection === collName);
-  if(!page){ console.warn('Collection "'+collName+'" not in local'); return; }
-  console.log('Local "'+collName+'" widget dates:');
-  (page.widgets || []).forEach((w, i) => {
-    console.log(`  [${i}] ${w.name}: start=${w.startDate||'—'} end=${w.endDate||'—'}  _uid=${w._uid||'(no uid)'}`);
-  });
-  return page;
-};
-// Push current state and immediately verify it stuck
-window.pushAndVerify = async function(){
-  console.warn('[push&verify] pushing local state…');
-  await sbSyncNow(false);
-  await new Promise(r => setTimeout(r, 500));
-  console.warn('[push&verify] re-fetching from cloud to verify…');
-  const { url, key } = sbCfg();
-  const r = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
-    headers:{ 'apikey': key, 'Authorization': `Bearer ${key}`, 'Cache-Control': 'no-cache' }
-  });
-  const rows = await r.json();
-  if(!rows.length){ console.error('PUSH FAILED — no row in cloud'); return; }
-  const cloudData = rows[0].data;
-  const localData = _snapshotForCloud();
-  // Compare pages by length and any date discrepancies
-  const lpages = localData.pages || [];
-  const cpages = cloudData.pages || [];
-  console.log('Local pages count:', lpages.length, 'Cloud pages count:', cpages.length);
-  let mismatches = 0;
-  lpages.forEach(lp => {
-    const cp = cpages.find(p => p._uid === lp._uid) || cpages.find(p => p.collection === lp.collection && p.collection);
-    if(!cp){ console.warn('MISSING IN CLOUD:', lp.name, lp.collection); mismatches++; return; }
-    (lp.widgets||[]).forEach(lw => {
-      const cw = (cp.widgets||[]).find(w => w._uid === lw._uid) || (cp.widgets||[]).find(w => w.name === lw.name);
-      if(!cw){ console.warn('Widget missing in cloud:', lp.name+' › '+lw.name); mismatches++; return; }
-      if((lw.startDate||null) !== (cw.startDate||null) || (lw.endDate||null) !== (cw.endDate||null)){
-        console.warn('DATE MISMATCH:', lp.name+' › '+lw.name, 'local:', lw.startDate, lw.endDate, 'cloud:', cw.startDate, cw.endDate);
-        mismatches++;
-      }
-    });
-  });
-  if(mismatches === 0) console.log('%c✅ All data verified in cloud', 'color:#16a34a;font-weight:bold');
-  else console.warn(`⚠ ${mismatches} mismatches between local and cloud`);
 };
 document.getElementById('build-badge').textContent = 'v' + BUILD;
 
