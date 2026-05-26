@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.3.2';
+const BUILD = '2.3.3';
 
 const pages = [
   {
@@ -4685,19 +4685,23 @@ async function sbLoad(quiet){
     const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
     if(userTyping && quiet) return;
 
-    // SOLO-USER MODE: cloud is truth — replace local with cloud directly.
-    // CRITICAL: do NOT mutate the loaded data here (no dedupe, no seeding,
-    // no auto-sync). Any mutation triggers an auto-sync that could push
-    // partial/stripped state back to cloud, undoing your last write.
-    if(Array.isArray(rec.pages)){ pages.length = 0; pages.push(...rec.pages); }
-    customCols = rec.customCols || [];
-    people = rec.people || [];
-    collAssignees = rec.collAssignees || {};
-    personaAssignees = rec.personaAssignees || {};
-    collOwners = rec.collOwners || {};
-    if(rec.personaMap && Array.isArray(rec.personaMap)){
+    // SOLO-USER MODE: cloud is truth — but DEFEND against empty/corrupted cloud
+    // wiping the local hardcoded fallback. Only replace if cloud actually has data.
+    if(Array.isArray(rec.pages) && rec.pages.length > 0){
+      pages.length = 0; pages.push(...rec.pages);
+    } else {
+      console.warn('[sbLoad] cloud pages empty — keeping local hardcoded fallback');
+    }
+    if(Array.isArray(rec.customCols)) customCols = rec.customCols;
+    if(Array.isArray(rec.people)) people = rec.people;
+    if(rec.collAssignees && typeof rec.collAssignees === 'object') collAssignees = rec.collAssignees;
+    if(rec.personaAssignees && typeof rec.personaAssignees === 'object') personaAssignees = rec.personaAssignees;
+    if(rec.collOwners && typeof rec.collOwners === 'object') collOwners = rec.collOwners;
+    if(Array.isArray(rec.personaMap) && rec.personaMap.length > 0){
       PERSONA_MAP = rec.personaMap;
       renderPersonaGrid();
+    } else {
+      console.warn('[sbLoad] cloud personaMap empty — keeping local hardcoded fallback');
     }
     // Only seed collection pages for collections that have NO corresponding page yet.
     // Skip the asset-count "migration" — it modifies data we just loaded.
@@ -4901,6 +4905,20 @@ window.forceClean = function(){
 window.pullLatest = function(){
   console.warn('[pullLatest] fetching cloud state…');
   return sbLoad(false);
+};
+// EMERGENCY RECOVERY — clears cloud + reloads page so the hardcoded
+// initial state takes over. Use only if cloud got corrupted.
+// Usage:  window.factoryReset()
+window.factoryReset = async function(){
+  if(!confirm('WARNING: This will wipe all data in the cloud and reload the page with hardcoded defaults. Continue?')) return;
+  const { url, key } = sbCfg();
+  // Delete the row entirely
+  await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}`, {
+    method: 'DELETE',
+    headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
+  });
+  console.warn('[factoryReset] cloud row deleted. Reloading…');
+  setTimeout(() => location.reload(), 500);
 };
 // DIAGNOSTIC: shows what's actually in cloud for a collection.
 // Usage in console:  window.checkCloud('Wild Rose')
