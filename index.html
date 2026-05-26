@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '2.1.2';
+const BUILD = '2.2.0';
 
 const pages = [
   {
@@ -4729,19 +4729,14 @@ function sbStartRealtime(){
         }
         if(!rec.data){ _dbg('realtime: no data'); return; }
         _lastCloudUpdate = rec.updated_at || _lastCloudUpdate;
-        _dbg('realtime: APPLY remote state', { from: rec.data._writerId, stamp: rec.updated_at });
-        // Replace local with cloud directly
-        if(Array.isArray(rec.data.pages)){ pages.length = 0; pages.push(...rec.data.pages); }
-        customCols = rec.data.customCols || [];
-        people = rec.data.people || [];
-        collAssignees = rec.data.collAssignees || {};
-        personaAssignees = rec.data.personaAssignees || {};
-        collOwners = rec.data.collOwners || {};
-        if(rec.data.personaMap){ PERSONA_MAP = rec.data.personaMap; renderPersonaGrid(); }
-        _dedupeAll();
-        _ensureUids();
-        rebuildPages(); updateTally();
-        _sbSetLbl('Synced ↻', 'saved', 1500);
+        // SOLO-USER MODE: do NOT auto-apply remote state. The user is the only
+        // editor; auto-applying mid-edit caused dates and assignments to be
+        // clobbered when the merge or rebuild logic ran on top of in-flight
+        // local mutations. Instead, surface a small notice — if another tab
+        // genuinely needs the update, user can refresh manually.
+        _dbg('realtime: remote change detected — NOT auto-applying (solo mode)', { from: rec.data._writerId, stamp: rec.updated_at });
+        _sbSetLbl('Cloud updated — refresh to pull', '', 4000);
+        window._cloudHasUpdate = true;
       })
       .subscribe(status => {
         if(status === 'SUBSCRIBED'){
@@ -4810,6 +4805,13 @@ window.forceClean = function(){
   const dropped = _dedupeAll();
   console.warn('[forceClean] dedupe pass complete; data was', dropped ? 'modified' : 'already clean');
   sbSyncNow(false);
+};
+// Manually pull latest cloud state — only needed if another tab/device wrote.
+// Will replace local state with whatever cloud has. Use after the "Cloud updated"
+// notice if you want to incorporate changes from another tab.
+window.pullLatest = function(){
+  console.warn('[pullLatest] fetching cloud state…');
+  return sbLoad(false);
 };
 document.getElementById('build-badge').textContent = 'v' + BUILD;
 
