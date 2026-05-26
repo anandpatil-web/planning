@@ -2031,7 +2031,7 @@
     status                — '' | 'done' | 'pending renders'  (clickable cycle)
 */
 
-const BUILD = '1.6.0';
+const BUILD = '2.0.0';
 
 const pages = [
   {
@@ -4518,7 +4518,7 @@ function sbSyncDebounced(silent){
     _syncDebounceTimer = null;
     if(lbl) delete lbl.dataset.pending;
     sbSync(silent);
-  }, 800);
+  }, 500);
 }
 // Force immediate sync — flushes any pending debounced sync first.
 function sbSyncNow(silent){
@@ -4526,42 +4526,17 @@ function sbSyncNow(silent){
   return sbSync(silent);
 }
 
+// SOLO-USER MODE: push local state directly. Last write wins.
+// (No fetch-and-merge — that complexity caused edits to silently disappear.)
 async function sbSync(silent){
   const { url, key } = sbCfg();
   if(!url || !key){ if(!silent) showSbSetup(); return; }
-  // Coalesce overlapping syncs — if one is already in-flight, mark another as pending
   if(_syncing){ _pendingSync = true; return; }
   _syncing = true;
   if(!silent) _sbSetLbl('Syncing…', '');
   try {
-    // 1) Fetch cloud's current state for a three-way merge
-    let cloudData = null;
-    try {
-      const rGet = await fetch(`${url}/rest/v1/${SB_TABLE}?id=eq.${SB_ROW}&select=data,updated_at`, {
-        headers:{ 'apikey': key, 'Authorization': `Bearer ${key}` }
-      });
-      if(rGet.ok){
-        const rows = await rGet.json();
-        if(rows.length && rows[0].data){
-          cloudData = rows[0].data;
-          _lastCloudUpdate = rows[0].updated_at || _lastCloudUpdate;
-        }
-      }
-    } catch(_){}
-
-    // 2) Merge our local state with cloud's, using _baseline as the common ancestor
-    const localData = _snapshotForCloud();
-    const merged = cloudData ? mergeStates(localData, cloudData, _baseline) : localData;
-
-    // 3) Apply the merged result to our local state (so cloud-added items appear) — but only if user isn't editing
-    const ae = document.activeElement;
-    const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
-    if(cloudData && !userTyping){
-      _applyMergedState(merged);
-    }
-
-    // 4) Push the merged state
     const stamp = new Date().toISOString();
+    const localData = _snapshotForCloud();
     const r = await fetch(`${url}/rest/v1/${SB_TABLE}`, {
       method: 'POST',
       headers:{
@@ -4570,22 +4545,14 @@ async function sbSync(silent){
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates,return=representation'
       },
-      body: JSON.stringify({ id: SB_ROW, data: merged, updated_at: stamp })
+      body: JSON.stringify({ id: SB_ROW, data: localData, updated_at: stamp })
     });
     if(!r.ok) throw new Error(await r.text());
-
     try {
       const rows = await r.json();
       if(rows && rows[0] && rows[0].updated_at) _lastCloudUpdate = rows[0].updated_at;
       else _lastCloudUpdate = stamp;
     } catch(_){ _lastCloudUpdate = stamp; }
-
-    // 5) New baseline = what we just pushed
-    _dedupeAll();
-    _ensureUids();
-      _dedupeAll();
-      _ensureUids();
-      _baseline = _deepClone(merged);
 
     if(!silent) _asReset();
     const _now = new Date();
@@ -4602,7 +4569,6 @@ async function sbSync(silent){
     _sbSetLbl('Sync failed ✗', 'err', 3000);
   } finally {
     _syncing = false;
-    // If another sync was requested during this one, run it now
     if(_pendingSync){ _pendingSync = false; setTimeout(()=>sbSync(true), 80); }
   }
 }
@@ -4634,43 +4600,26 @@ async function sbLoad(quiet){
     // Skip applying remote state if user is currently editing — preserves typing
     const ae = document.activeElement;
     const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
-    if(userTyping && quiet) return; // poll-triggered: let the next poll handle it
+    if(userTyping && quiet) return;
 
-    // If we already had a baseline (we've been editing), merge cloud with local
-    let appliedData;
-    if(_baseline){
-      const localData = _snapshotForCloud();
-      appliedData = mergeStates(localData, rec, _baseline);
-      // After merge, push back so cloud reflects the merged result (without spamming)
-      _applyMergedState(appliedData);
-      _dedupeAll();
-      _ensureUids();
-      _baseline = _deepClone(appliedData);
-      // Trigger a silent sync to write merged result
-      setTimeout(()=>sbSync(true), 100);
-    } else {
-      // First load — just replace local with cloud
-      appliedData = rec;
-      if(Array.isArray(appliedData.pages)){ pages.length = 0; pages.push(...appliedData.pages); }
-      customCols = appliedData.customCols || [];
-      people = appliedData.people || [];
-      collAssignees = appliedData.collAssignees || {};
-      personaAssignees = appliedData.personaAssignees || {};
-      collOwners = appliedData.collOwners || {};
-      if(appliedData.personaMap && Array.isArray(appliedData.personaMap)){
-        PERSONA_MAP = appliedData.personaMap;
-        renderPersonaGrid();
-      }
-      const seededAny = initCollectionPages();
-      _dedupeAll();
-      const stampedAny = _ensureUids();
-      if(seededAny || stampedAny){
-        // Push the seeded/stamped state up so other devices get the same UIDs
-        setTimeout(()=>sbSyncDebounced(true), 200);
-      }
-      rebuildPages(0); updateTally();
-      _baseline = _deepClone(_snapshotForCloud());
+    // SOLO-USER MODE: cloud is truth, replace local with cloud directly.
+    if(Array.isArray(rec.pages)){ pages.length = 0; pages.push(...rec.pages); }
+    customCols = rec.customCols || [];
+    people = rec.people || [];
+    collAssignees = rec.collAssignees || {};
+    personaAssignees = rec.personaAssignees || {};
+    collOwners = rec.collOwners || {};
+    if(rec.personaMap && Array.isArray(rec.personaMap)){
+      PERSONA_MAP = rec.personaMap;
+      renderPersonaGrid();
     }
+    const seededAny = initCollectionPages();
+    _dedupeAll();
+    const stampedAny = _ensureUids();
+    if(seededAny || stampedAny){
+      setTimeout(()=>sbSyncDebounced(true), 200);
+    }
+    rebuildPages(0); updateTally();
     _sbUpdateBtn();
     _sbSetLbl(quiet ? 'Synced ↻' : 'Loaded ✓ from cloud', 'saved', quiet ? 1500 : 2500);
   } catch(err){
@@ -4735,30 +4684,20 @@ function sbStartRealtime(){
         _lastCloudUpdate = rec.updated_at || _lastCloudUpdate;
         const ae = document.activeElement;
         const userTyping = ae && (ae.isContentEditable || ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA');
-        if(!rec.data){ return; }
-        if(_baseline){
-          const localData = _snapshotForCloud();
-          const merged = mergeStates(localData, rec.data, _baseline);
-          if(!userTyping) _applyMergedState(merged);
-          _baseline = _deepClone(merged);
-          // Push merged back so other devices see our local edits applied to the remote state
-          if(!userTyping) sbSyncDebounced(true);
-        } else {
-          // No baseline yet — replace local with cloud
-          if(!userTyping){
-            if(Array.isArray(rec.data.pages)){ pages.length = 0; pages.push(...rec.data.pages); }
-            customCols = rec.data.customCols || [];
-            people = rec.data.people || [];
-            collAssignees = rec.data.collAssignees || {};
-            personaAssignees = rec.data.personaAssignees || {};
-            collOwners = rec.data.collOwners || {};
-            if(rec.data.personaMap){ PERSONA_MAP = rec.data.personaMap; renderPersonaGrid(); }
-            _dedupeAll();
-            _ensureUids();
-            rebuildPages(); updateTally();
-            _baseline = _deepClone(_snapshotForCloud());
-          }
-        }
+        if(!rec.data) return;
+        // SOLO-USER MODE: cloud is truth — replace local state directly.
+        // (Skipped while user is typing to avoid clobbering an in-progress edit.)
+        if(userTyping) return;
+        if(Array.isArray(rec.data.pages)){ pages.length = 0; pages.push(...rec.data.pages); }
+        customCols = rec.data.customCols || [];
+        people = rec.data.people || [];
+        collAssignees = rec.data.collAssignees || {};
+        personaAssignees = rec.data.personaAssignees || {};
+        collOwners = rec.data.collOwners || {};
+        if(rec.data.personaMap){ PERSONA_MAP = rec.data.personaMap; renderPersonaGrid(); }
+        _dedupeAll();
+        _ensureUids();
+        rebuildPages(); updateTally();
         _sbSetLbl('Synced ↻', 'saved', 1500);
       })
       .subscribe(status => {
@@ -4829,7 +4768,8 @@ _asInterval = setInterval(_asTick, 1000);
 _sbUpdateBtn();
 sbLoad().then(() => sbStartRealtime());
 // Fallback poll every 30s — only fires if Realtime isn't connected
-setInterval(sbPoll, 30000);
+// Polling removed — Realtime alone is sufficient for solo-user mode.
+// (If Realtime ever falls back, a manual Cmd+S still works.)
 // Nuclear-option cleanup, callable from devtools console: window.forceClean()
 window.forceClean = function(){
   const dropped = _dedupeAll();
